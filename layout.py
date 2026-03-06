@@ -1,4 +1,4 @@
-from customtkinter import CTkFrame, CTkLabel, CTkButton
+from customtkinter import CTkFrame, CTkLabel, CTkButton, StringVar
 from tkinter.messagebox import askokcancel
 from utils.image import image
 from utils.clear import clear
@@ -45,10 +45,18 @@ class Layout:
         self.cur = cur
 
         clear(self.root)
+        self.init_sale_vars()
         self.init_side_bar()
         self.main_frame = CTkFrame(self.root, fg_color="transparent")
         self.main_frame.pack(expand=True)
         self.init_ui()
+
+    def init_sale_vars(self):
+        self.selected_products = []
+        self.customer_var = StringVar(value="نقدي")
+        self.customer_id = None
+        self.discount_type = "amount"
+        self.discount_value = 0.0
 
     def init_ui(self):
         CTkLabel(
@@ -117,6 +125,12 @@ class Layout:
         self.side_bar = CTkFrame(self.root, border_width=1)
         self.side_bar.pack(side="right", fill="y")
 
+        CTkLabel(
+            self.side_bar,
+            text="Dealzora | النسخة التجريبيه\nانتهاء التجربه 7 ايام🕐",
+            font=("Cairo", 14),
+        ).pack(pady=5, padx=4)
+
         button_style = {
             "font": ("Cairo", 30, "bold"),
             "corner_radius": 20,
@@ -171,6 +185,12 @@ class Layout:
                 self.sale_itmes_db,
                 self.stock_movements_db,
                 self.settings,
+                self.selected_products,
+                self.customer_var,
+                self.customer_id,
+                self.discount_type,
+                self.discount_value,
+                self.con,
             )
 
         elif screen_type == "products":

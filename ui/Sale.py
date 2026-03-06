@@ -34,6 +34,12 @@ class Sale:
         sale_items_db,
         stock_movements_db,
         settings_db,
+        selected_products,
+        customer_var,
+        customer_id,
+        discount_type,
+        discount_value,
+        con
     ):
         self.root = root
 
@@ -44,27 +50,30 @@ class Sale:
         self.sale_items_db = sale_items_db
         self.stock_movements_db = stock_movements_db
         self.settings_db = settings_db
+        self.con = con
 
         self.c = self.settings_db.get_setting("currency")  # get currency
         self.tax_rate = self.settings_db.get_setting("tax")  # get Tax
 
         # بيانات
         self.products = self.safe_fetch(self.products_db.get_products)
-        self.selected_products = []
+        self.selected_products = selected_products
 
         # خصم وضريبة
-        self.discount_type = "amount"
-        self.discount_value = 0.0
+        self.discount_type = discount_type
+        self.discount_value = discount_value
         self.invoice_number = f'INV-{strftime("%Y%m%d%H%M%S")}'
 
         # العميل والمدفوع
-        self.customer_var = StringVar(value="نقدي")
-        self.paid_amount = 0.0
-        self.customer_id = None
+        self.customer_var = customer_var
+        self.customer_id = customer_id
 
         # واجهة المستخدم
         self.build_ui()
         self.refresh_table()
+
+        # تحميل المنتجات المختارة مسبقاً
+        self.load_selected_products()
 
     # =============================
     # Utilities
@@ -151,7 +160,7 @@ class Sale:
         frame = CTkFrame(container, fg_color="transparent")
         frame.pack(anchor="e", padx=5, pady=5, fill="x")
 
-        CTkLabel(frame, text="📦 قائمة المنتجات", font=("Cairo", 16, "bold")).pack(
+        CTkLabel(frame, text="قائمة المنتجات", font=("Cairo", 16, "bold")).pack(
             side="right"
         )
         CTkLabel(
@@ -244,7 +253,7 @@ class Sale:
         discount_frame = CTkFrame(frame, fg_color="transparent")
         discount_frame.pack(anchor="e", pady=2)
 
-        CTkLabel(discount_frame, text="الخصم:", font=("Cairo", 14)).pack(side="right")
+        CTkLabel(discount_frame, text=":الخصم", font=("Cairo", 14)).pack(side="right")
 
         self.discount_value_var = StringVar(value="0")
         discount_entry = CTkEntry(
@@ -285,7 +294,7 @@ class Sale:
         tax_frame = CTkFrame(frame, fg_color="transparent")
         tax_frame.pack(anchor="e", pady=2)
 
-        CTkLabel(tax_frame, text="الضريبة:", font=("Cairo", 14)).pack(side="right")
+        CTkLabel(tax_frame, text=":الضريبة", font=("Cairo", 14)).pack(side="right")
 
         self.tax_var = StringVar(value=str(self.tax_rate))
         tax_entry = CTkEntry(
@@ -417,7 +426,7 @@ class Sale:
         for c in categorys:
             cid = c[0]
             name = c[1]
-            name = "..."+name[:10] if len(name) > 10 else name
+            name = "..." + name[:10] if len(name) > 10 else name
             self.category_map[name] = cid
 
         self.categorys_menu.configure(values=list(self.category_map.keys()))
@@ -425,6 +434,17 @@ class Sale:
     # =============================
     # Cart & Products
     # =============================
+    def load_selected_products(self):
+        if not self.selected_products:
+            return
+
+        for product in self.selected_products:
+            product["widget"] = None
+            self.update_product_widget(product)
+
+        self.update_cart_count()
+        self.calculate_total()
+
     def check_stock(self, product_data, pid):
         if product_data[5] <= 0:
             return "out_of_stock", None
@@ -547,7 +567,12 @@ class Sale:
                 if not is_number(val):
                     qty_entry_var.set(str(product["qty"]))
                     return
-                qty = int(val)
+                
+                try:
+                    qty = int(val)
+                except:
+                    qty = float(val)
+
                 prod_data = self.products_db.get_product(product["id"])
                 max_qty = prod_data[5]
                 if qty > max_qty:
@@ -603,7 +628,7 @@ class Sale:
                 image=image("assets/حذف.png", (20, 20)),
                 command=lambda p=product: self.remove_from_cart(p),
             ).pack(side="left", padx=10)
-
+        
         # تحديث السعر الفرعي
         product["sub_total_label"].configure(
             text=f"{product['price']} × {product['qty']} = {format_currency(product['price']*product['qty'])}"
@@ -750,7 +775,7 @@ class Sale:
 
             CTkLabel(
                 row,
-                text=f"{p['name']} × {p['qty']}",
+                text=f"{p['name']}  {p['price']} × {p['qty']}",
                 font=("Cairo", 13),
                 anchor="e",
             ).pack(side="right")
@@ -890,7 +915,7 @@ class Sale:
                     )
 
                     self.stock_movements_db.add_movement(
-                        product_id=pid,
+                        product_id=p["id"],
                         quantity=-qty,  # سالب للخصم
                         movement_type="بيع",
                         reference_id=sale_id,
@@ -903,6 +928,7 @@ class Sale:
                 self.sale_items_db.add_sale_items(sale_id, sale_items_data)
 
             except Exception as e:
+                self.con.rollback()
                 messagebox.showerror("خطأ", f"فشل حفظ الفاتورة: {e}")
                 return
 

@@ -164,6 +164,22 @@ class ProductsModel:
         if supplier_name and not supplier_id:
             supplier_id = self.suppliers_db.get_or_create_supplier_id(supplier_name)
 
+        if barcode:
+            self.cur.execute("SELECT id, quantity FROM products WHERE barcode=?", (barcode,))
+            row = self.cur.fetchone()
+
+            if row:
+                product_id, old_qty = row
+                new_qty = old_qty + quantity
+
+                self.cur.execute(
+                    "UPDATE products SET quantity=? WHERE id=?",
+                    (new_qty, product_id)
+                )
+
+                self.con.commit()
+                return
+        
         self.cur.execute(
             """INSERT INTO products
             (name,barcode,buy_price,sell_price,quantity,category_id,image_path,low_stock,supplier_id)

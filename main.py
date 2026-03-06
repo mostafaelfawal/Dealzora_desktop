@@ -1,5 +1,6 @@
 from customtkinter import set_appearance_mode, CTk
 from sqlite3 import connect
+from os import makedirs
 from layout import Layout
 from utils.backup_database import backup_database
 from ui.Auth import Auth
@@ -35,6 +36,7 @@ class Dealzora:
         self.root.destroy()
 
     def init_db(self):
+        makedirs("db", exist_ok=True)
         self.con = connect("db/dealzora.db")
         self.cur = self.con.cursor()
         self.cur.execute("PRAGMA foreign_key = ON")

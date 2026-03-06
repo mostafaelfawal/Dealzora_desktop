@@ -629,7 +629,7 @@ class Reports:
             WHERE s.date BETWEEN ? AND ?
             GROUP BY si.product_id
             ORDER BY total_qty DESC
-            LIMIT 10
+            LIMIT 7
         """,
             (start, end),
         )
