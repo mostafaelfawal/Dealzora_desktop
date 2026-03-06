@@ -127,7 +127,7 @@ class SupplierModal:
         cols = ("المعرف", "اسم المورد", "رقم الهاتف")
         widths = (100, 300, 300)
 
-        self.tree_view = TreeView(tree_frame, cols, widths, [])
+        self.tree_view = TreeView(tree_frame, cols, widths)
         key_shortcut(
             self.tree_view.tree, ["<Double-1>", "<Return>"], self.edit_selected
         )

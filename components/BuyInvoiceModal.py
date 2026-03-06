@@ -158,7 +158,7 @@ class BuyInvoiceModal:
         cols = ("المنتج", "الباركود", "الكمية", "سعر الشراء", "الإجمالي")
         widths = (300, 150, 100, 120, 120)
 
-        self.tree_view = TreeView(table_container, cols, widths, [])
+        self.tree_view = TreeView(table_container, cols, widths)
 
         # ربط حدث النقر المزدوج للحذف
         key_shortcut(self.tree_view.tree, "<Double-1>", self.on_item_double_click)

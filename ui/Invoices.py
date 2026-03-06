@@ -274,7 +274,6 @@ class Invoices:
                 "الباقي",
             ),
             (50, 120, 70, 100, 100, 100, 100, 100),
-            self.invoices,
         )
 
         # ربط double-click لعرض التفاصيل

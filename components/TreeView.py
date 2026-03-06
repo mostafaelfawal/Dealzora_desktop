@@ -3,9 +3,8 @@ from utils.key_shortcut import key_shortcut
 
 
 class TreeView:
-    def __init__(self, parent, cols: tuple, width: tuple, data):
+    def __init__(self, parent, cols: tuple, width: tuple):
         self.parent = parent
-        self.data = data
 
         vsb = ttk.Scrollbar(self.parent, orient="vertical")
         vsb.pack(side="right", fill="y")

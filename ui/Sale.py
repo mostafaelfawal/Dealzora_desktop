@@ -174,7 +174,6 @@ class Sale:
             container,
             ("ID", "المنتج", "السعر", "المخزون", "الباركود"),
             (50, 200, 80, 80, 120),
-            self.products,
         )
         key_shortcut(
             self.tree.tree, ["<Double-1>", "<Return>"], self.handle_add_product

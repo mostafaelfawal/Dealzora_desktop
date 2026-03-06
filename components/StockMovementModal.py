@@ -175,7 +175,7 @@ class StockMovementsModal:
 
         widths = (30, 140, 100, 120, 120, 100, 140, 150)
 
-        self.tree = TreeView(table_frame, cols, widths, [])
+        self.tree = TreeView(table_frame, cols, widths)
 
         # تخصيص ألوان الصفوف حسب نوع الحركة
         self.tree.tree.tag_configure("بيع", background="#489e7c")

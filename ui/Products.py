@@ -181,7 +181,6 @@ class Products:
             container,
             ("ID", "الأسم", "الباركود", "الكمية", "سعر البيع"),
             (50, 250, 200, 100, 100),
-            self.products,
         )
 
         # Key Shortcuts

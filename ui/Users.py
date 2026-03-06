@@ -116,7 +116,7 @@ class UsersManagement:
         widths = (30, 150, 250, 150, 120)
 
         # إنشاء Treeview مخصص
-        self.tree_view = TreeView(self.tree_frame, cols, widths, [])
+        self.tree_view = TreeView(self.tree_frame, cols, widths)
 
         # ربط الأحداث
         key_shortcut(

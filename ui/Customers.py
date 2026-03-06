@@ -208,7 +208,6 @@ class Customers:
             container,
             ("ID", "الدين", "الهاتف", "الأسم"),
             (50, 150, 250, 300),
-            self.customers,
         )
 
         self.refresh_table()

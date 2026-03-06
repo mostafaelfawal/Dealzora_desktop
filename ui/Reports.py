@@ -1,8 +1,10 @@
 # ui/Reports.py
 import tkinter as tk
+from components.TreeView import TreeView
 from tkinter import ttk
 from customtkinter import (
     CTkFrame,
+    CTkScrollableFrame,
     CTkLabel,
     CTkButton,
     CTkTabview,
@@ -222,10 +224,10 @@ class Reports:
     def init_stock_tab(self):
         """تهيئة تبويب المخزون"""
         tab = self.tab_view.tab("المخزون")
-
+        
         # إطار علوي للملخصات
         summary_frame = CTkFrame(tab)
-        summary_frame.pack(fill="x", padx=10, pady=10)
+        summary_frame.pack(fill="x", pady=10)
 
         self.stock_summary_widgets = {}
         summaries = [
@@ -248,10 +250,14 @@ class Reports:
 
         for i in range(4):
             summary_frame.grid_columnconfigure(i, weight=1)
+            
+        # Scrollable Frame للتبويب كله
+        scrollable_tab = CTkScrollableFrame(tab, height=400)
+        scrollable_tab.pack(fill="both", expand=True, padx=10, pady=10)
 
         # إطار للرسوم البيانية
-        charts_frame = CTkFrame(tab)
-        charts_frame.pack(fill="both", expand=True, padx=10, pady=10)
+        charts_frame = CTkFrame(scrollable_tab)
+        charts_frame.pack(fill="both", expand=True, pady=10)
 
         charts_frame.grid_columnconfigure(0, weight=1)
         charts_frame.grid_columnconfigure(1, weight=1)
@@ -290,8 +296,8 @@ class Reports:
         self.stock_status_canvas.get_tk_widget().pack(fill="both", expand=True)
 
         # جدول المنتجات المنخفضة
-        low_stock_frame = CTkFrame(tab)
-        low_stock_frame.pack(fill="both", expand=True, padx=10, pady=10)
+        low_stock_frame = CTkFrame(scrollable_tab)
+        low_stock_frame.pack(fill="both", expand=True, pady=10)
 
         CTkLabel(
             low_stock_frame,
@@ -301,23 +307,12 @@ class Reports:
 
         # إنشاء جدول
         columns = ("المنتج", "الكمية", "الحد الأدنى", "الحالة")
-        self.low_stock_tree = ttk.Treeview(
-            low_stock_frame, columns=columns, show="headings", height=8
-        )
+        self.low_stock_tree = TreeView(low_stock_frame, columns, (100, 100, 200, 30))
 
         for col in columns:
-            self.low_stock_tree.heading(col, text=col)
-            self.low_stock_tree.column(col, width=150, anchor="center")
-
-        # شريط تمرير
-        scrollbar = ttk.Scrollbar(
-            low_stock_frame, orient="vertical", command=self.low_stock_tree.yview
-        )
-        self.low_stock_tree.configure(yscrollcommand=scrollbar.set)
-
-        self.low_stock_tree.pack(side="right", fill="both", expand=True)
-        scrollbar.pack(side="right", fill="y")
-
+            self.low_stock_tree.tree.heading(col, text=col)
+            self.low_stock_tree.tree.column(col, width=150, anchor="center")
+        
     def init_customers_tab(self):
         """تهيئة تبويب العملاء"""
         tab = self.tab_view.tab("العملاء")
@@ -771,12 +766,12 @@ class Reports:
         low_stock_items = self.cur.fetchall()
 
         # مسح الجدول
-        for item in self.low_stock_tree.get_children():
-            self.low_stock_tree.delete(item)
+        for item in self.low_stock_tree.tree.get_children():
+            self.low_stock_tree.tree.delete(item)
 
         # إضافة البيانات
         for item in low_stock_items:
-            self.low_stock_tree.insert("", tk.END, values=item)
+            self.low_stock_tree.tree.insert("", tk.END, values=item)
 
     def load_customers_report(self):
         """تحميل تقرير العملاء"""
