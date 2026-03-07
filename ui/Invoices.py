@@ -451,10 +451,10 @@ class Invoices:
                     image=image("assets/حذف.png", (20, 20)),
                     fg_color="transparent",
                     width=0,
-                    command=lambda single_item=item: self.return_product(
+                    command=lambda single_item=item, pid=product_id: self.return_product(
                         single_item,
                         invoice_number,
-                        product_id,
+                        pid,
                         invoice_id,
                         customer_id,
                         dialog,

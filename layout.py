@@ -45,7 +45,7 @@ class Layout:
         self.cur = cur
         theme = self.settings.get_setting("theme")
         set_appearance_mode(theme)
-        
+
         clear(self.root)
         self.init_sale_vars()
         self.init_side_bar()
@@ -127,10 +127,18 @@ class Layout:
         self.side_bar = CTkFrame(self.root, border_width=1)
         self.side_bar.pack(side="right", fill="y")
 
+        # CTkLabel(
+        #     self.side_bar,
+        #     text="Dealzora | النسخة التجريبيه\nانتهاء التجربه 7 ايام🕐",
+        #     font=("Cairo", 14),
+        # ).pack(pady=5, padx=4)
         CTkLabel(
             self.side_bar,
-            text="Dealzora | النسخة التجريبيه\nانتهاء التجربه 7 ايام🕐",
-            font=("Cairo", 14),
+            image=image("assets/icon.png"),
+            compound="right",
+            text="Dealzora",
+            font=("Cairo", 35, "bold"),
+            text_color="#00b7ff",
         ).pack(pady=5, padx=4)
 
         button_style = {

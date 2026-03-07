@@ -329,7 +329,7 @@ class Reports:
         summaries = [
             ("total_customers", "إجمالي العملاء", "0"),
             ("total_debts", "إجمالي الديون", "0"),
-            ("top_customer", "أكثر عميل", "لا يوجد"),
+            ("top_customer", "افضل عميل", "لا يوجد"),
             ("avg_debt", "متوسط الدين", "0"),
         ]
 
