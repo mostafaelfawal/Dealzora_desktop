@@ -528,7 +528,7 @@ class Sale:
                 info_frame,
                 text=product["name"],
                 font=("Cairo", 11, "bold"),
-                text_color="#00a72a",
+                text_color=("#167000", "#00a72a"),
                 anchor="e",
             ).pack(fill="x", padx=10)
 
@@ -536,7 +536,7 @@ class Sale:
                 info_frame,
                 text="",
                 font=("Cairo", 10),
-                text_color="#b4b4b4",
+                text_color=("#6d6d6d","#b4b4b4"),
                 anchor="e",
             )
             sub_total.pack(fill="x", padx=10)
@@ -622,8 +622,8 @@ class Sale:
                 text="",
                 width=28,
                 height=28,
-                fg_color="#8f0000",
-                hover_color="#740000",
+                fg_color=("#b30000", "#8f0000"),
+                hover_color=("#8D0000","#740000"),
                 image=image("assets/حذف.png", (20, 20)),
                 command=lambda p=product: self.remove_from_cart(p),
             ).pack(side="left", padx=10)
@@ -823,7 +823,7 @@ class Sale:
 
         CTkLabel(
             payment_frame,
-            text="المدفوع:",
+            text=":المدفوع",
             font=("Cairo", 14),
         ).pack(anchor="e")
 
@@ -835,7 +835,7 @@ class Sale:
             font=("Cairo", 14),
             justify="center",
         )
-        paid_entry.pack(fill="x", pady=5)
+        paid_entry.pack(fill="x", pady=5, padx=5)
 
         remaining_label = CTkLabel(
             payment_frame,

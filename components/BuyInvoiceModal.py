@@ -12,6 +12,7 @@ from tkinter import messagebox
 from tkcalendar import DateEntry
 from utils.key_shortcut import key_shortcut
 from utils.center_modal import center_modal
+from utils.image import image
 from components.ProductModal import ProductModal
 from components.TreeView import TreeView
 from models.settings import SettingsModel
@@ -41,15 +42,17 @@ class BuyInvoiceModal:
             return
 
         # إطار رئيسي
-        self.main_frame = CTkFrame(self.window, fg_color="#1a1a1a")
+        self.main_frame = CTkFrame(self.window, fg_color=("#ebebeb", "#1a1a1a"))
         self.main_frame.pack(fill="both", expand=True)
 
         # عنوان النافذة
         title_label = CTkLabel(
             self.main_frame,
-            text="🧾 فاتورة شراء جديدة",
+            text="فاتورة شراء جديدة",
             font=("Cairo", 24, "bold"),
             text_color="#2563eb",
+            image=image("assets/فواتير.png"),
+            compound="left"
         )
         title_label.pack(pady=(10, 20))
 
@@ -163,7 +166,7 @@ class BuyInvoiceModal:
         # ربط حدث النقر المزدوج للحذف
         key_shortcut(self.tree_view.tree, "<Double-1>", self.on_item_double_click)
         # ========== إطار الإجماليات ==========
-        totals_frame = CTkFrame(self.main_frame, fg_color="#2d2d2d")
+        totals_frame = CTkFrame(self.main_frame, fg_color=("#B9B9B9","#2d2d2d"))
         totals_frame.pack(fill="x", padx=20, pady=20)
 
         # إجمالي الفاتورة
@@ -187,7 +190,7 @@ class BuyInvoiceModal:
         )
 
         self.items_count_label = CTkLabel(
-            totals_frame, text="0", font=("Cairo", 18, "bold"), text_color="#f59e0b"
+            totals_frame, text="0", font=("Cairo", 18, "bold"), text_color=("#cf8709", "#f59e0b")
         )
         self.items_count_label.pack(side="left", padx=5, pady=10)
 
@@ -269,7 +272,7 @@ class BuyInvoiceModal:
                 return
 
             for product in results:
-                product_frame = CTkFrame(results_frame, fg_color="#2d2d2d")
+                product_frame = CTkFrame(results_frame, fg_color=("#B9B9B9","#2d2d2d"))
                 product_frame.pack(fill="x", pady=2)
 
                 CTkLabel(

@@ -93,12 +93,12 @@ class Products:
             width=140,
             height=38,
             corner_radius=10,
-            fg_color="#1f1f1f",
-            button_color="#2563eb",
-            button_hover_color="#1749b6",
-            dropdown_fg_color="#1f1f1f",
-            dropdown_hover_color="#2a2a2a",
-            text_color="white",
+            fg_color=("#f1f5f9", "#1f1f1f"),
+            button_color=("#3b82f6", "#2563eb"),
+            button_hover_color=("#2563eb", "#1749b6"),
+            dropdown_fg_color=("#ffffff", "#1f1f1f"),
+            dropdown_hover_color=("#e5e7eb", "#2a2a2a"),
+            text_color=("black", "white"),
         )
         self.search_type.pack(side="right", padx=10, pady=10)
 
@@ -168,12 +168,12 @@ class Products:
             width=150,
             height=38,
             corner_radius=10,
-            fg_color="#1f1f1f",
-            button_color="#2563eb",
-            button_hover_color="#1749b6",
-            dropdown_fg_color="#1f1f1f",
-            dropdown_hover_color="#2a2a2a",
-            text_color="white",
+            fg_color=("#f1f5f9", "#1f1f1f"),
+            button_color=("#3b82f6", "#2563eb"),
+            button_hover_color=("#2563eb", "#1749b6"),
+            dropdown_fg_color=("#ffffff", "#1f1f1f"),
+            dropdown_hover_color=("#e5e7eb", "#2a2a2a"),
+            text_color=("black", "white"),
         )
         self.category_filter.set("الكل")
         self.category_filter.pack(side="left", padx=5)

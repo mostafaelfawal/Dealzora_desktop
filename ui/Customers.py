@@ -37,7 +37,7 @@ class Customers:
 
         self.init_search_frame()
         self.init_customers_table()
-        self.init_action_buttons()
+        BackupButton(self.root)
 
     # ------------------------ Helpers ------------------------
     def get_all_customers(self):
@@ -104,12 +104,12 @@ class Customers:
             width=140,
             height=38,
             corner_radius=10,
-            fg_color="#1f1f1f",
-            button_color="#2563eb",
-            button_hover_color="#1749b6",
-            dropdown_fg_color="#1f1f1f",
-            dropdown_hover_color="#2a2a2a",
-            text_color="white",
+            fg_color=("#f1f5f9", "#1f1f1f"),
+            button_color=("#3b82f6", "#2563eb"),
+            button_hover_color=("#2563eb", "#1749b6"),
+            dropdown_fg_color=("#ffffff", "#1f1f1f"),
+            dropdown_hover_color=("#e5e7eb", "#2a2a2a"),
+            text_color=("black", "white"),
         )
         self.search_type.pack(side="right", padx=10, pady=10)
 
@@ -195,19 +195,17 @@ class Customers:
             height=40,
             corner_radius=12,
             border_width=1,
-            fg_color="#1f1f1f",
-            selected_color="#2563eb",
-            selected_hover_color="#1749b6",
-            unselected_color="#2a2a2a",
-            unselected_hover_color="#3a3a3a",
-            text_color="white",
+            fg_color=("#f1f5f9", "#1f1f1f"),
+            unselected_color=("#c7c7c7", "#2a2a2a"),
+            unselected_hover_color=("#e6e6e6", "#3a3a3a"),
+            text_color=("black", "white"),
         )
         self.filter_buttons.pack(side="left", padx=5)
-
+        
         self.tree = TreeView(
             container,
             ("ID", "الدين", "الهاتف", "الأسم"),
-            (50, 150, 250, 300),
+            (50, 150, 250, 250),
         )
 
         self.refresh_table()
@@ -359,10 +357,3 @@ class Customers:
 
     def edit_customer_modal(self):
         self._customer_modal("edit")
-
-    # ------------------------ Buttons ------------------------
-    def init_action_buttons(self):
-        frame = CTkFrame(self.root, border_width=1)
-        frame.pack(padx=10, pady=10)
-
-        BackupButton(frame)

@@ -73,7 +73,9 @@ class Stock:
 
     # ================= STATS =================
     def build_stats(self):
-        self.stats_frame = CTkFrame(self.root, fg_color="#111827", corner_radius=15)
+        self.stats_frame = CTkFrame(
+            self.root, fg_color=("#CCCCCC", "#111827"), corner_radius=15
+        )
         self.stats_frame.pack(fill="x", padx=20)
 
         # إطار داخلي للتوسيط
@@ -111,7 +113,9 @@ class Stock:
 
     # ================= CONTROLS =================
     def build_controls(self):
-        control_frame = CTkFrame(self.root, fg_color="#1f2937", corner_radius=15)
+        control_frame = CTkFrame(
+            self.root, fg_color=("#CCCCCC", "#111827"), corner_radius=15
+        )
         control_frame.pack(fill="x", padx=20, pady=10)
 
         # =========================================
@@ -143,9 +147,10 @@ class Stock:
             width=80,
             height=40,
             font=("Cairo", 13),
-            fg_color="#4b5563",
-            hover_color="#6b7280",
+            fg_color=("#acb9ca", "#4b5563"),
+            hover_color=("#909cac", "#6b7280"),
             command=self.clear_search,
+            text_color=("black", "white"),
         ).grid(row=0, column=1, padx=5)
 
         CTkButton(
@@ -169,7 +174,7 @@ class Stock:
 
         # التصنيف
         CTkLabel(
-            filter_row, text="📂 التصنيف:", font=("Cairo", 14), text_color="#9ca3af"
+            filter_row, text="📂 التصنيف:", font=("Cairo", 14), text_color="#78859c"
         ).grid(row=0, column=0, padx=5, pady=5, sticky="w")
 
         self.category_var = StringVar(value="الكل")
@@ -181,16 +186,17 @@ class Stock:
             values=["الكل"],
             font=("Cairo", 13),
             dropdown_font=("Cairo", 13),
-            fg_color="#374151",
-            button_color="#4b5563",
-            button_hover_color="#6b7280",
+            fg_color=("#acb9ca", "#4b5563"),
+            button_color=("#acb9ca", "#4b5563"),
+            button_hover_color=("#909dad", "#6b7280"),
             height=35,
+            text_color=("black", "white"),
         )
         self.category_menu.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
 
         # المورد
         CTkLabel(
-            filter_row, text="🏭 المورد:", font=("Cairo", 14), text_color="#9ca3af"
+            filter_row, text="🏭 المورد:", font=("Cairo", 14), text_color="#78859c"
         ).grid(row=0, column=2, padx=5, pady=5, sticky="w")
 
         self.supplier_var = StringVar(value="الكل")
@@ -202,10 +208,11 @@ class Stock:
             values=["الكل"],
             font=("Cairo", 13),
             dropdown_font=("Cairo", 13),
-            fg_color="#374151",
-            button_color="#4b5563",
-            button_hover_color="#6b7280",
+            fg_color=("#acb9ca", "#4b5563"),
+            button_color=("#acb9ca", "#4b5563"),
+            button_hover_color=("#909dad", "#6b7280"),
             height=35,
+            text_color=("black", "white"),
         )
         self.supplier_menu.grid(row=0, column=3, padx=5, pady=5, sticky="ew")
 
@@ -269,7 +276,7 @@ class Stock:
 
     # ================= TABLE محسن =================
     def build_table(self):
-        table_frame = CTkFrame(self.root, corner_radius=15, fg_color="#1f2937")
+        table_frame = CTkFrame(self.root, corner_radius=15)
         table_frame.pack(fill="both", expand=True, padx=20)
 
         # عنوان الجدول

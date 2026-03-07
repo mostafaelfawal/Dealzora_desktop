@@ -4,7 +4,7 @@ from customtkinter import (
     CTkLabel,
     CTkEntry,
     CTkButton,
-    CTkComboBox,
+    CTkOptionMenu,
     StringVar,
     set_appearance_mode,
 )
@@ -161,14 +161,13 @@ class Settings:
         var = StringVar(value=value)
         self.vars[var_name] = var
 
-        combo = CTkComboBox(
+        combo = CTkOptionMenu(
             frame,
             values=options,
             variable=var,
             font=("Cairo", 16),
             height=45,
             corner_radius=8,
-            border_width=2,
             dropdown_font=("Cairo", 14),
         )
         combo.pack(fill="x")

@@ -1,7 +1,6 @@
 # ui/Reports.py
 import tkinter as tk
 from components.TreeView import TreeView
-from tkinter import ttk
 from customtkinter import (
     CTkFrame,
     CTkScrollableFrame,
@@ -17,6 +16,7 @@ from matplotlib.figure import Figure
 import numpy as np
 from utils.format_currency import format_currency
 from utils.ar_support import ar
+from utils.image import image
 from tkinter.messagebox import showinfo
 
 
@@ -35,7 +35,11 @@ class Reports:
         header_frame.pack_propagate(False)
 
         CTkLabel(
-            header_frame, text="التقارير والإحصائيات", font=("Cairo", 24, "bold")
+            header_frame,
+            text="التقارير والإحصائيات",
+            image=image("assets/تقارير.png"),
+            font=("Cairo", 24, "bold"),
+            compound="left",
         ).pack(side="right", padx=10)
 
         # إطار التحكم بالفترة
@@ -74,7 +78,7 @@ class Reports:
 
         # تاريخ البداية
         CTkLabel(filter_frame, text="من:", font=("Cairo", 14)).pack(
-            side="right", padx=(0, 5)
+            side="right", padx=(0, 5), pady=10
         )
         self.start_date = CTkEntry(filter_frame, width=120, font=("Cairo", 14))
         self.start_date.pack(side="right", padx=5)
@@ -224,7 +228,7 @@ class Reports:
     def init_stock_tab(self):
         """تهيئة تبويب المخزون"""
         tab = self.tab_view.tab("المخزون")
-        
+
         # إطار علوي للملخصات
         summary_frame = CTkFrame(tab)
         summary_frame.pack(fill="x", pady=10)
@@ -250,7 +254,7 @@ class Reports:
 
         for i in range(4):
             summary_frame.grid_columnconfigure(i, weight=1)
-            
+
         # Scrollable Frame للتبويب كله
         scrollable_tab = CTkScrollableFrame(tab, height=400)
         scrollable_tab.pack(fill="both", expand=True, padx=10, pady=10)
@@ -312,7 +316,7 @@ class Reports:
         for col in columns:
             self.low_stock_tree.tree.heading(col, text=col)
             self.low_stock_tree.tree.column(col, width=150, anchor="center")
-        
+
     def init_customers_tab(self):
         """تهيئة تبويب العملاء"""
         tab = self.tab_view.tab("العملاء")
@@ -460,7 +464,10 @@ class Reports:
             summary_frame.grid_columnconfigure(i, weight=1)
 
         # إطار للرسوم البيانية
-        charts_frame = CTkFrame(tab)
+        scrollable_tab = CTkScrollableFrame(tab, height=400)
+        scrollable_tab.pack(fill="both", expand=True, padx=10, pady=10)
+
+        charts_frame = CTkFrame(scrollable_tab)
         charts_frame.pack(fill="both", expand=True, padx=10, pady=10)
 
         charts_frame.grid_columnconfigure(0, weight=1)
@@ -589,18 +596,11 @@ class Reports:
             totals = [row[1] for row in daily_sales]
 
             self.daily_sales_plot.plot(
-                dates,
-                totals,
-                marker="o",
-                linewidth=2,
-                color="#28a745"
+                dates, totals, marker="o", linewidth=2, color="#28a745"
             )
 
             self.daily_sales_plot.fill_between(
-                dates,
-                totals,
-                alpha=0.2,
-                color="#28a745"
+                dates, totals, alpha=0.2, color="#28a745"
             )
             self.daily_sales_plot.set_xlabel(ar("التاريخ"), color="white")
             self.daily_sales_plot.set_ylabel(ar("المبيعات"), color="white")
@@ -706,7 +706,12 @@ class Reports:
                 )
             else:
                 self.category_plot.text(
-                    0.5, 0.5, ar("لا توجد بيانات"), ha="center", va="center", color="white"
+                    0.5,
+                    0.5,
+                    ar("لا توجد بيانات"),
+                    ha="center",
+                    va="center",
+                    color="white",
                 )
         else:
             self.category_plot.text(
@@ -738,7 +743,12 @@ class Reports:
                 )
             else:
                 self.stock_status_plot.text(
-                    0.5, 0.5, ar("لا توجد بيانات"), ha="center", va="center", color="white"
+                    0.5,
+                    0.5,
+                    ar("لا توجد بيانات"),
+                    ha="center",
+                    va="center",
+                    color="white",
                 )
         else:
             self.stock_status_plot.text(
@@ -1144,7 +1154,9 @@ class Reports:
 
         self.category_profit_plot.clear()
         if category_profits:
-            names = [ar(row[0]) if row[0] else ar("بدون فئة") for row in category_profits]
+            names = [
+                ar(row[0]) if row[0] else ar("بدون فئة") for row in category_profits
+            ]
             profits = [row[1] for row in category_profits]
 
             colors = plt.cm.Set1(np.linspace(0, 1, len(names)))

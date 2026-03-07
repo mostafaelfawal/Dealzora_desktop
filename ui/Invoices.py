@@ -130,8 +130,8 @@ class Invoices:
             self.root,
             corner_radius=15,
             border_width=1,
-            border_color="#3f3f46",
-            fg_color="#1f1f1f",
+            border_color=("#AFAFAF", "#3f3f46"),
+            fg_color=("#DDDDDD", "#1f1f1f"),
         )
         search_card.pack(fill="x", padx=20, pady=15)
 
@@ -144,7 +144,6 @@ class Invoices:
             search_card,
             text="🔎 بحث وفلترة الفواتير",
             font=("Cairo", 20, "bold"),
-            text_color="#f3f4f6",
         )
         title.grid(row=0, column=0, columnspan=3, sticky="e", padx=20, pady=(15, 20))
 
@@ -153,7 +152,6 @@ class Invoices:
             search_card,
             text="📅 من تاريخ",
             font=("Cairo", 14, "bold"),
-            text_color="#f3f4f6",
         )
         from_label.grid(row=0, column=0, sticky="w", padx=10, pady=(0, 2))
 
@@ -174,7 +172,6 @@ class Invoices:
             search_card,
             text="📅 إلى تاريخ",
             font=("Cairo", 14, "bold"),
-            text_color="#f3f4f6",
         )
         to_label.grid(row=0, column=1, sticky="w", padx=10, pady=(0, 2))
 
@@ -506,7 +503,7 @@ class Invoices:
                         customer_id,
                         dialog,
                     ),
-                ).pack(side="left", padx=5)
+                ).pack(side="left", padx=5, pady=5)
 
         # =========================
         # الملخص المالي
@@ -514,7 +511,7 @@ class Invoices:
         summary = CTkFrame(container, corner_radius=12)
         summary.pack(fill="x", pady=10, padx=5)
 
-        def summary_row(label, value, color="white"):
+        def summary_row(label, value, color=None):
             row = CTkFrame(summary, fg_color="transparent")
             row.pack(fill="x", padx=10, pady=3)
 
@@ -522,7 +519,7 @@ class Invoices:
                 row,
                 text=value,
                 font=("Arial", 16, "bold"),
-                text_color=color,
+                text_color=color if color else ("black", "white"),
             ).pack(side="left")
             CTkLabel(row, text=label, font=("Arial", 16)).pack(side="right")
 

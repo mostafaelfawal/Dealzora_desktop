@@ -1,4 +1,4 @@
-from customtkinter import CTkFrame, CTkLabel, CTkButton, StringVar
+from customtkinter import CTkFrame, CTkLabel, CTkButton, StringVar, set_appearance_mode
 from tkinter.messagebox import askokcancel
 from utils.image import image
 from utils.clear import clear
@@ -43,7 +43,9 @@ class Layout:
         self.settings = settings
         self.con = con
         self.cur = cur
-
+        theme = self.settings.get_setting("theme")
+        set_appearance_mode(theme)
+        
         clear(self.root)
         self.init_sale_vars()
         self.init_side_bar()

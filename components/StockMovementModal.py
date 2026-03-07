@@ -28,7 +28,9 @@ class StockMovementsModal:
         self.window.grab_set()
         self.window.state("zoomed")
 
-        if not self.users_db.check_permission(self.uid, "stock_movements_view" or "all"):
+        if not self.users_db.check_permission(
+            self.uid, "stock_movements_view" or "all"
+        ):
             RejectUI(self.window)
             return
 
@@ -43,7 +45,9 @@ class StockMovementsModal:
         """بناء واجهة المستخدم"""
 
         # ========== الإطار الرئيسي ==========
-        main_frame = CTkFrame(self.window, fg_color="#1f2937", corner_radius=15)
+        main_frame = CTkFrame(
+            self.window, fg_color=("#ebebeb", "#1a1a1a"), corner_radius=15
+        )
         main_frame.pack(fill="both", expand=True, padx=20, pady=20)
 
         # ========== الهيدر ==========
@@ -62,13 +66,15 @@ class StockMovementsModal:
             text="🔄 تحديث",
             width=100,
             font=("Cairo", 13),
-            fg_color="#1f2937",
-            hover_color="#2d3a4f",
+            fg_color=("#00ccff","#1f2937"),
+            hover_color=("#00a6cf", "#2d3a4f"),
             command=self.load_movements,
         ).pack(side="left", padx=5)
 
         # ========== أدوات التحكم والفلترة ==========
-        controls_frame = CTkFrame(main_frame, fg_color="#111827", corner_radius=10)
+        controls_frame = CTkFrame(
+            main_frame, fg_color=("#cccccc", "#111827"), corner_radius=10
+        )
         controls_frame.pack(fill="x", padx=20, pady=10)
 
         # الصف الأول: البحث والفلترة
@@ -82,7 +88,10 @@ class StockMovementsModal:
 
         # ===== فلترة حسب المنتج =====
         CTkLabel(
-            filter_row, text="📦 المنتج:", font=("Cairo", 14), text_color="#9ca3af"
+            filter_row,
+            text="📦 المنتج:",
+            font=("Cairo", 14),
+            text_color=("black", "#9ca3af"),
         ).grid(row=0, column=0, padx=5, pady=5, sticky="w")
 
         self.product_var = StringVar(value="الكل")
@@ -92,9 +101,9 @@ class StockMovementsModal:
             values=["الكل"],
             font=("Cairo", 13),
             dropdown_font=("Cairo", 13),
-            fg_color="#374151",
-            button_color="#4b5563",
-            button_hover_color="#6b7280",
+            fg_color=("#758AAC", "#374151"),
+            button_color=("#92A3BE", "#4b5563"),
+            button_hover_color=("#8492A8", "#6b7280"),
             height=35,
             command=lambda x: self.filter_movements(),
         )
@@ -102,7 +111,10 @@ class StockMovementsModal:
 
         # ===== فلترة حسب نوع الحركة =====
         CTkLabel(
-            filter_row, text="📋 نوع الحركة:", font=("Cairo", 14), text_color="#9ca3af"
+            filter_row,
+            text="📋 نوع الحركة:",
+            font=("Cairo", 14),
+            text_color=("black", "#9ca3af"),
         ).grid(row=0, column=2, padx=5, pady=5, sticky="w")
 
         self.type_var = StringVar(value="الكل")
@@ -113,9 +125,9 @@ class StockMovementsModal:
             values=["الكل", "شراء", "بيع", "ارجاع", "يدوي"],
             font=("Cairo", 13),
             dropdown_font=("Cairo", 13),
-            fg_color="#374151",
-            button_color="#4b5563",
-            button_hover_color="#6b7280",
+            fg_color=("#758AAC", "#374151"),
+            button_color=("#92A3BE", "#4b5563"),
+            button_hover_color=("#8492A8", "#6b7280"),
             height=35,
             command=lambda x: self.filter_movements(),
         )
@@ -123,7 +135,10 @@ class StockMovementsModal:
 
         # ===== فلترة حسب التاريخ =====
         CTkLabel(
-            filter_row, text="📅 التاريخ:", font=("Cairo", 14), text_color="#9ca3af"
+            filter_row,
+            text="📅 التاريخ:",
+            font=("Cairo", 14),
+            text_color=("black", "#9ca3af"),
         ).grid(row=0, column=4, padx=5, pady=5, sticky="w")
 
         date_frame = CTkFrame(filter_row, fg_color="transparent")
@@ -143,9 +158,9 @@ class StockMovementsModal:
         )
         self.from_date.grid(row=0, column=0, padx=2, sticky="ew")
 
-        CTkLabel(date_frame, text="→", font=("Cairo", 14), text_color="#9ca3af").grid(
-            row=0, column=1, padx=5
-        )
+        CTkLabel(
+            date_frame, text="→", font=("Cairo", 14), text_color=("black", "#9ca3af")
+        ).grid(row=0, column=1, padx=5)
 
         self.to_date = CTkEntry(
             date_frame,
@@ -195,7 +210,7 @@ class StockMovementsModal:
 
         # ========== شريط الحالة ==========
         self.status_bar = CTkFrame(
-            main_frame, fg_color="#111827", height=30, corner_radius=5
+            main_frame, fg_color=("#cccccc", "#111827"), height=30, corner_radius=5
         )
         self.status_bar.pack(fill="x", padx=20, pady=(0, 15))
 
@@ -203,7 +218,7 @@ class StockMovementsModal:
             self.status_bar,
             text="عدد الحركات: 0",
             font=("Cairo", 12),
-            text_color="#9ca3af",
+            text_color=("black", "#9ca3af"),
         )
         self.status_label.pack(side="left", padx=15, pady=5)
 
@@ -211,7 +226,7 @@ class StockMovementsModal:
             self.status_bar,
             text="إجمالي الكميات: 0",
             font=("Cairo", 12),
-            text_color="#9ca3af",
+            text_color=("black", "#9ca3af"),
         )
         self.total_label.pack(side="right", padx=15, pady=5)
 
