@@ -11,6 +11,7 @@ from tkinter import messagebox
 from components.TreeView import TreeView
 from utils.key_shortcut import key_shortcut
 from ui.RejectUI import RejectUI
+from datetime import datetime, timedelta
 
 
 class StockMovementsModal:
@@ -66,7 +67,7 @@ class StockMovementsModal:
             text="🔄 تحديث",
             width=100,
             font=("Cairo", 13),
-            fg_color=("#00ccff","#1f2937"),
+            fg_color=("#00ccff", "#1f2937"),
             hover_color=("#00a6cf", "#2d3a4f"),
             command=self.load_movements,
         ).pack(side="left", padx=5)
@@ -148,9 +149,10 @@ class StockMovementsModal:
         date_frame.grid_columnconfigure(1, weight=0)
         date_frame.grid_columnconfigure(2, weight=1)
 
+        self.from_date_var = StringVar()
         self.from_date = CTkEntry(
             date_frame,
-            placeholder_text="من (YYYY-MM-DD)",
+            textvariable=self.from_date_var,
             height=35,
             font=("Cairo", 12),
             border_width=2,
@@ -162,15 +164,21 @@ class StockMovementsModal:
             date_frame, text="→", font=("Cairo", 14), text_color=("black", "#9ca3af")
         ).grid(row=0, column=1, padx=5)
 
+        self.to_date_var = StringVar()
         self.to_date = CTkEntry(
             date_frame,
-            placeholder_text="إلى (YYYY-MM-DD)",
+            textvariable=self.to_date_var,
             height=35,
             font=("Cairo", 12),
             border_width=2,
             border_color="#374151",
         )
         self.to_date.grid(row=0, column=2, padx=2, sticky="ew")
+
+        self.set_quick_date()
+
+        self.from_date_var.trace_add("write", lambda *args: self.filter_movements())
+        self.to_date_var.trace_add("write", lambda *args: self.filter_movements())
 
         # ========== جدول حركات المخزون ==========
         table_frame = CTkFrame(main_frame, fg_color="transparent")
@@ -318,43 +326,29 @@ class StockMovementsModal:
         self.status_label.configure(text=f"عدد الحركات: {len(movements)}")
         self.total_label.configure(text=f"إجمالي الكميات: {total_qty:.2f}")
 
-    def filter_movements(self):
-        """تطبيق الفلترة على الحركات"""
+    def filter_movements(self, event=None):
         try:
             selected_product = self.product_var.get()
             movement_type = self.type_var.get()
             from_date = self.from_date.get().strip()
             to_date = self.to_date.get().strip()
 
-            # الحصول على جميع الحركات
-            movements = self.stock_movement_model.get_movements()
+            # تحويل اسم المنتج إلى product_id
+            product_id = None
+            if selected_product != "الكل":
+                for p in self.products_model.get_products():
+                    if p[1] == selected_product:
+                        product_id = p[0]
+                        break
 
-            # تطبيق الفلاتر
-            filtered_movements = []
-            for movement in movements:
-                (_, product_id, _, _, _, m_type, _, _, date) = movement
+            movements = self.stock_movement_model.filter_by_date(
+                from_date=from_date or None,
+                to_date=to_date or None,
+                product_id=product_id,
+                movement_type=None if movement_type == "الكل" else movement_type,
+            )
 
-                # فلترة حسب المنتج
-                if selected_product != "الكل":
-                    product_name = self.products_model.get_product(product_id)[1]
-                    if product_name != selected_product:
-                        continue
-
-                # فلترة حسب نوع الحركة
-                if movement_type != "الكل" and m_type != movement_type:
-                    continue
-
-                # فلترة حسب التاريخ
-                if from_date and date:
-                    if date[:10] < from_date:
-                        continue
-                if to_date and date:
-                    if date[:10] > to_date:
-                        continue
-
-                filtered_movements.append(movement)
-
-            self.display_movements(filtered_movements)
+            self.display_movements(movements)
 
         except Exception as e:
             messagebox.showerror("خطأ", f"حدث خطأ أثناء الفلترة: {str(e)}")
@@ -447,3 +441,10 @@ class StockMovementsModal:
         if messagebox.askokcancel("تأكد", "هل انت متأكد؟"):
             self.stock_movement_model.delete_movement(ids)
             self.load_movements()
+
+    def set_quick_date(self):
+        """تعيين تاريخ سريع"""
+        self.from_date_var.set(
+            (datetime.now() - timedelta(days=30)).strftime("%Y-%m-%d")
+        )
+        self.to_date_var.set(datetime.now().strftime("%Y-%m-%d"))

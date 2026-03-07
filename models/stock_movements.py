@@ -84,6 +84,32 @@ class StockMovementsModel:
         row = self.cur.fetchall()
         return row
 
+    def filter_by_date(
+        self, from_date=None, to_date=None, product_id=None, movement_type=None
+    ):
+        query = "SELECT * FROM stock_movements WHERE 1=1"
+        params = []
+
+        if from_date:
+            query += " AND date(date) >= ?"
+            params.append(from_date)
+
+        if to_date:
+            query += " AND date(date) <= ?"
+            params.append(to_date)
+
+        if product_id:
+            query += " AND product_id = ?"
+            params.append(product_id)
+
+        if movement_type:
+            query += " AND movement_type = ?"
+            params.append(movement_type)
+
+        query += " ORDER BY id DESC"
+        self.cur.execute(query, params)
+        return self.cur.fetchall()
+
     # ===============================
     # Delete movements
     # ===============================
