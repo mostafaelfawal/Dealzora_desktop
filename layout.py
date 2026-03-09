@@ -127,11 +127,6 @@ class Layout:
         self.side_bar = CTkFrame(self.root, border_width=1)
         self.side_bar.pack(side="right", fill="y")
 
-        # CTkLabel(
-        #     self.side_bar,
-        #     text="Dealzora | النسخة التجريبيه\nانتهاء التجربه 7 ايام🕐",
-        #     font=("Cairo", 14),
-        # ).pack(pady=5, padx=4)
         CTkLabel(
             self.side_bar,
             image=image("assets/icon.png"),
@@ -139,7 +134,7 @@ class Layout:
             text="Dealzora",
             font=("Cairo", 35, "bold"),
             text_color="#00b7ff",
-        ).pack(pady=5, padx=4)
+        ).pack(padx=4)
 
         button_style = {
             "font": ("Cairo", 30, "bold"),

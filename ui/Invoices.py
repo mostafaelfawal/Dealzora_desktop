@@ -644,7 +644,7 @@ class Invoices:
             # =========================
             # تحديث المخزون
             # =========================
-            diff_qty = new_qty - old_qty
+            diff_qty = old_qty - new_qty
 
             if diff_qty > 0:
                 self.stock_movements_db.add_movement(
@@ -659,7 +659,7 @@ class Invoices:
                 self.stock_movements_db.add_movement(
                     product_id=product_id,
                     quantity=diff_qty,
-                    movement_type="يدوي",
+                    movement_type="بيع",
                     reference_id=sale_id,
                     reference_number=invoice_number,
                 )

@@ -286,7 +286,7 @@ class StockMovementsModal:
 
             # الحصول على اسم المنتج
             product = self.products_model.get_product(product_id)
-            product_name = product[1]
+            product_name = product[1] if product else "منتج محذوف"
 
             # تنسيق الكمية مع إشارة
             qty_display = f"+{quantity}" if quantity > 0 else str(quantity)
