@@ -134,6 +134,7 @@ class Stock:
         self.search_entry = CTkEntry(
             search_row,
             textvariable=self.search_var,
+            justify="right",
             height=40,
             font=("Cairo", 14),
             border_width=2,

@@ -2,6 +2,8 @@ from customtkinter import CTkFrame, CTkLabel, CTkButton, StringVar, set_appearan
 from tkinter.messagebox import askokcancel
 from utils.image import image
 from utils.clear import clear
+from utils.trial import get_remaining_days
+from utils.license import is_license_valid
 
 # import UIs
 from ui.Sale import Sale
@@ -127,14 +129,23 @@ class Layout:
         self.side_bar = CTkFrame(self.root, border_width=1)
         self.side_bar.pack(side="right", fill="y")
 
-        CTkLabel(
-            self.side_bar,
-            image=image("assets/icon.png"),
-            compound="right",
-            text="Dealzora",
-            font=("Cairo", 35, "bold"),
-            text_color="#00b7ff",
-        ).pack(padx=4)
+        if not is_license_valid():
+            days = get_remaining_days()
+            CTkLabel(
+                self.side_bar,
+                text=f"Dealzora | الفترة التجريبيه\nباقي {days} يوم🕐",
+                font=("Cairo", 14),
+                text_color=("#997a00","#facc15"),
+            ).pack(pady=10)
+        else:
+            CTkLabel(
+                self.side_bar,
+                image=image("assets/icon.png"),
+                compound="right",
+                text="Dealzora",
+                font=("Cairo", 35, "bold"),
+                text_color="#00b7ff",
+            ).pack(padx=4)
 
         button_style = {
             "font": ("Cairo", 30, "bold"),
@@ -149,7 +160,7 @@ class Layout:
                 text=button["text"],
                 image=image(button["icon"]),
                 command=button["com"],
-                **button_style
+                **button_style,
             ).pack(padx=30, pady=5, fill="x")
 
         CTkButton(
@@ -157,7 +168,7 @@ class Layout:
             text="خروج",
             image=image("assets/خروج.png"),
             command=self.quit_window,
-            **button_style
+            **button_style,
         ).pack(padx=30, pady=5, fill="x")
 
     def quit_window(self):

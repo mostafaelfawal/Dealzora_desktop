@@ -31,7 +31,6 @@ class SupplierModal:
         self.modal = CTkToplevel(self.root)
         self.modal.title("إدارة الموردين | Dealzora")
         self.modal.geometry("800x600")
-        self.modal.state("zoomed")
         center_modal(self.modal)
 
         if not self.users_db.check_permission(self.uid, "suppliers_management" or "all"):
@@ -56,9 +55,9 @@ class SupplierModal:
 
         CTkLabel(
             search_frame,
-            text="🔍 بحث:",
+            text=":بحث 🔍",
             font=("Cairo", 14),
-        ).pack(side="left", padx=(0, 10))
+        ).pack(side="right", padx=(0, 10))
 
         self.search_entry = CTkEntry(
             search_frame,
@@ -67,7 +66,7 @@ class SupplierModal:
             font=("Cairo", 14),
             placeholder_text="ابحث باسم المورد...",
         )
-        self.search_entry.pack(side="left", padx=(0, 10))
+        self.search_entry.pack(side="right", padx=(0, 10))
         key_shortcut(self.search_entry, "<KeyRelease>", self.filter_suppliers)
         key_shortcut(self.modal, "<Escape>", lambda: self.modal.destroy())
         
@@ -84,7 +83,7 @@ class SupplierModal:
             fg_color="#f59e0b",
             hover_color="#d97706",
             command=self.edit_selected,
-        ).pack(side="left", padx=5)
+        ).pack(side="right", padx=5)
 
         CTkButton(
             btn_frame,
@@ -95,7 +94,7 @@ class SupplierModal:
             fg_color="#ef4444",
             hover_color="#dc2626",
             command=self.delete_selected,
-        ).pack(side="left", padx=5)
+        ).pack(side="right", padx=5)
 
         CTkButton(
             btn_frame,
@@ -106,7 +105,7 @@ class SupplierModal:
             fg_color="#2563eb",
             hover_color="#1d4ed8",
             command=self.open_add_modal,
-        ).pack(side="left", padx=5)
+        ).pack(side="right", padx=5)
 
         CTkButton(
             btn_frame,
@@ -117,7 +116,7 @@ class SupplierModal:
             fg_color="#6b7280",
             hover_color="#4b5563",
             command=self.load_suppliers,
-        ).pack(side="left", padx=5)
+        ).pack(side="right", padx=5)
 
         # ========== جدول عرض الموردين ==========
         tree_frame = CTkFrame(main_frame)
