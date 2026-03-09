@@ -28,7 +28,7 @@ class Dealzora:
             self.start_app()
         else:
             from ui.license_screen import LicenseScreen
-            LicenseScreen(pro, self.start_app)
+            LicenseScreen(self.root, self.start_app)
 
     def start_app(self):
         from ui.Auth import Auth

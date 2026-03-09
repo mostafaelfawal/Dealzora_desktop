@@ -1,5 +1,6 @@
 import hashlib
 import winreg
+import socket
 from pathlib import Path
 
 SECRET_KEY = "mostafa-hamdi-dealzora"
@@ -9,13 +10,15 @@ LICENSE_FILE = Path.home() / ".dealzora_license"
 def get_machine_guid():
     try:
         key = winreg.OpenKey(
-            winreg.HKEY_LOCAL_MACHINE,
-            r"SOFTWARE\Microsoft\Cryptography"
+            winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Cryptography"
         )
         guid, _ = winreg.QueryValueEx(key, "MachineGuid")
         return guid
     except Exception:
-        return None
+        try:
+            return socket.gethostname()
+        except:
+            return "UNKNOWN_MACHINE"
 
 
 def generate_expected_license():
