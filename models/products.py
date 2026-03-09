@@ -98,8 +98,8 @@ class ProductsModel:
 
     def get_old_qty(self, pid):
         self.cur.execute("SELECT quantity FROM products WHERE id=?", (pid,))
-        qty = self.cur.fetchone()[0]
-        return qty
+        qty = self.cur.fetchone()
+        return qty[0] if qty else 0
 
     def get_categorys(self):
         self.cur.execute("SELECT * FROM category")
@@ -118,7 +118,7 @@ class ProductsModel:
                 "SELECT * FROM products WHERE category_id=?", (category_id,)
             )
         return self.cur.fetchall()
-    
+
     def get_or_create_category_id(self, name):
         self.cur.execute("SELECT id FROM category WHERE name=?", (name,))
         row = self.cur.fetchone()
@@ -128,7 +128,7 @@ class ProductsModel:
         self.cur.execute("INSERT INTO category (name) VALUES (?)", (name,))
         self.con.commit()
         return self.cur.lastrowid
-    
+
     def search_products_by_category(self, keyword, category_name):
         keyword = keyword.strip()
 
@@ -165,7 +165,9 @@ class ProductsModel:
             supplier_id = self.suppliers_db.get_or_create_supplier_id(supplier_name)
 
         if barcode:
-            self.cur.execute("SELECT id, quantity FROM products WHERE barcode=?", (barcode,))
+            self.cur.execute(
+                "SELECT id, quantity FROM products WHERE barcode=?", (barcode,)
+            )
             row = self.cur.fetchone()
 
             if row:
@@ -173,13 +175,12 @@ class ProductsModel:
                 new_qty = old_qty + quantity
 
                 self.cur.execute(
-                    "UPDATE products SET quantity=? WHERE id=?",
-                    (new_qty, product_id)
+                    "UPDATE products SET quantity=? WHERE id=?", (new_qty, product_id)
                 )
 
                 self.con.commit()
                 return
-        
+
         self.cur.execute(
             """INSERT INTO products
             (name,barcode,buy_price,sell_price,quantity,category_id,image_path,low_stock,supplier_id)

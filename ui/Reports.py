@@ -66,9 +66,9 @@ class Reports:
         self.init_customers_tab()
         self.init_suppliers_tab()
         self.init_profits_tab()
-
-        # تحميل البيانات الافتراضية
-        self.load_all_reports()
+        
+        # تحميل البيانات الأفتراضيه الأسبوعيه
+        self.set_quick_date(7)
 
     def init_controls(self):
         """تهيئة عناصر التحكم بالفترة"""

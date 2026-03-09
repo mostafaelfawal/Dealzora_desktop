@@ -40,7 +40,7 @@ class CustomersModel:
     def get_customer(self, cid):
         self.cur.execute("SELECT * FROM customers WHERE id=?", (cid,))
         row = self.cur.fetchone()
-        return row
+        return row if row else None
 
     def add_customer(self, name, phone, debt):
         self.cur.execute(

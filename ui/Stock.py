@@ -383,7 +383,11 @@ class Stock:
                 continue
 
             # فلترة المورد
-            if selected_supplier != "الكل" and supplier_name[1] != selected_supplier:
+            if (
+                selected_supplier != "الكل"
+                and supplier_name
+                and supplier_name[1] != selected_supplier
+            ):
                 continue
 
             # تحديد حالة المخزون

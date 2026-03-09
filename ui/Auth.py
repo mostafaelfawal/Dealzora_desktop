@@ -153,6 +153,8 @@ class Auth:
 
     def login(self):
         """وظيفة تسجيل الدخول"""
+        if not self.password_entry.winfo_exists():
+            return
         password = self.password_entry.get()
         role = self.role_var.get()
 

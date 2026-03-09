@@ -731,7 +731,7 @@ class Invoices:
             self.refresh_table()
 
             dialog.destroy()
-            messagebox.showinfo("نجاح", "تم إرجاع الفاتورة وتحديث الدين بنجاح ✅")
+            messagebox.showinfo("نجاح", "تم إرجاع الفاتورة و تحديث المخزون بنجاح ✅")
 
         except Exception as e:
             self.con.rollback()

@@ -39,7 +39,7 @@ class Sale:
         customer_id,
         discount_type,
         discount_value,
-        con
+        con,
     ):
         self.root = root
 
@@ -425,7 +425,6 @@ class Sale:
         for c in categorys:
             cid = c[0]
             name = c[1]
-            name = "..." + name[:10] if len(name) > 10 else name
             self.category_map[name] = cid
 
         self.categorys_menu.configure(values=list(self.category_map.keys()))
@@ -536,7 +535,7 @@ class Sale:
                 info_frame,
                 text="",
                 font=("Cairo", 10),
-                text_color=("#6d6d6d","#b4b4b4"),
+                text_color=("#6d6d6d", "#b4b4b4"),
                 anchor="e",
             )
             sub_total.pack(fill="x", padx=10)
@@ -566,7 +565,7 @@ class Sale:
                 if not is_number(val):
                     qty_entry_var.set(str(product["qty"]))
                     return
-                
+
                 try:
                     qty = int(val)
                 except:
@@ -623,11 +622,11 @@ class Sale:
                 width=28,
                 height=28,
                 fg_color=("#b30000", "#8f0000"),
-                hover_color=("#8D0000","#740000"),
+                hover_color=("#8D0000", "#740000"),
                 image=image("assets/حذف.png", (20, 20)),
                 command=lambda p=product: self.remove_from_cart(p),
             ).pack(side="left", padx=10)
-        
+
         # تحديث السعر الفرعي
         product["sub_total_label"].configure(
             text=f"{product['price']} × {product['qty']} = {format_currency(product['price']*product['qty'])}"
@@ -860,7 +859,7 @@ class Sale:
         # تأكيد
         # =========================
         def confirm():
-            if not is_number(paid_var.get()):
+            if not is_number(paid_var.get()) or float(paid_var.get()) < 0:
                 messagebox.showerror("خطأ", "الرجاء إدخال رقم صحيح")
                 return
 
@@ -972,40 +971,6 @@ class Sale:
         )
         search_entry.pack(side="right", fill="x", expand=True)
 
-        search_type_var = StringVar(value="name")
-
-        CTkRadioButton(
-            search_frame,
-            text="اسم",
-            variable=search_type_var,
-            value="name",
-            font=("Cairo", 12),
-        ).pack(side="right", padx=5)
-
-        CTkRadioButton(
-            search_frame,
-            text="هاتف",
-            variable=search_type_var,
-            value="phone",
-            font=("Cairo", 12),
-        ).pack(side="right")
-
-        CTkLabel(dialog, text="دآئن", font=("Cairo", 16), text_color="#dac400").pack(
-            anchor="e", padx=2
-        )
-        CTkLabel(dialog, text="مديون", font=("Cairo", 16), text_color="#c50000").pack(
-            anchor="e", padx=2
-        )
-        CTkLabel(
-            dialog,
-            text="غير مديون",
-            font=("Cairo", 16),
-            text_color="#69da00",
-        ).pack(anchor="e", padx=2)
-
-        results_frame = CTkScrollableFrame(dialog, height=350)
-        results_frame.pack(fill="both", expand=True, padx=10, pady=5)
-
         def refresh_results(*args):
             clear(results_frame)
 
@@ -1047,6 +1012,39 @@ class Sale:
                     text_color="black",
                     font=("Cairo", 13),
                 ).pack(fill="x", pady=2)
+
+        search_type_var = StringVar(value="name")
+
+        CTkRadioButton(
+            search_frame,
+            text="اسم",
+            variable=search_type_var,
+            value="name",
+            font=("Cairo", 12),
+            command=refresh_results,
+        ).pack(side="right", padx=5)
+
+        CTkRadioButton(
+            search_frame,
+            text="هاتف",
+            variable=search_type_var,
+            value="phone",
+            font=("Cairo", 12),
+            command=refresh_results,
+        ).pack(side="right")
+
+        CTkLabel(dialog, text="دآئن", font=("Cairo", 16), text_color="#dac400").pack(
+            anchor="e", padx=2
+        )
+        CTkLabel(dialog, text="مديون", font=("Cairo", 16), text_color="#c50000").pack(
+            anchor="e", padx=2
+        )
+        CTkLabel(
+            dialog, text="غير مديون", font=("Cairo", 16), text_color="#69da00"
+        ).pack(anchor="e", padx=2)
+
+        results_frame = CTkScrollableFrame(dialog, height=350)
+        results_frame.pack(fill="both", expand=True, padx=10, pady=5)
 
         search_var.trace_add("write", refresh_results)
 

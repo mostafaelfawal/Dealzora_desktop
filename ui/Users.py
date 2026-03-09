@@ -175,6 +175,7 @@ class UsersManagement:
             "inventory_management": "إدارة المخزون",
             "reports_view": "رؤية التقارير",
             "customers_management": "إدارة العملاء",
+            "users_management": "إدارة المستخدمين",
             "invoices_management": "إدارة الفواتير",
             "settings_edit": "تعديل الإعدادات",
             "suppliers_management": "إدارة الموردين",
