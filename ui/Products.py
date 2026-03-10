@@ -282,12 +282,9 @@ class Products:
         frame = CTkFrame(self.root, border_width=1)
         frame.pack(padx=10, pady=10)
 
-        BackupButton(frame)
-
         CTkButton(
             frame,
             text="Excel/CVS استيراد",
-            width=120,
             fg_color="#af6300",
             hover_color="#854b00",
             font=("Cairo", 20, "bold"),
@@ -298,7 +295,6 @@ class Products:
         CTkButton(
             frame,
             text="Excel/CVS تصدير",
-            width=120,
             fg_color="#af7800",
             hover_color="#946500",
             font=("Cairo", 20, "bold"),
@@ -307,3 +303,15 @@ class Products:
                 self.products, self.products_db.get_category
             ),
         ).pack(side="left", padx=5, pady=10)
+
+        # CTkButton(
+        #     frame,
+        #     text="انشاء باركود",
+        #     fg_color="#008caf",
+        #     hover_color="#00728f",
+        #     image=image("assets/باركود.png"),
+        #     font=("Cairo", 20, "bold"),
+        #     command=lambda: messagebox.showinfo(
+        #         "قريبا", "سيتم اضافة هذه الميزه قريبا تابع التحديثات"
+        #     ),
+        # ).pack(side="left", padx=5, pady=10)

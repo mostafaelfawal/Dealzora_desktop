@@ -137,7 +137,7 @@ class Layout:
                 text=f"Dealzora | الفترة التجريبيه\nباقي {days} يوم🕐",
                 font=("Cairo", 14),
                 text_color=("#997a00","#facc15"),
-            ).pack(pady=10)
+            ).pack()
         else:
             CTkLabel(
                 self.side_bar,

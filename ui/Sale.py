@@ -523,7 +523,7 @@ class Sale:
             container = CTkFrame(
                 self.cart_frame, corner_radius=8, border_width=1, border_color="#e5e5e5"
             )
-            container.pack(fill="x", pady=3, padx=3)
+            container.pack(side="bottom", fill="x", pady=3, padx=3)
             product["widget"] = container
 
             top_row = CTkFrame(container, fg_color="transparent")

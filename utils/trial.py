@@ -21,7 +21,7 @@ def init_trial():
     if machine_guid is None:
         import socket
 
-        machine_guid = socket.gethostname()  # أو أي معرف بديل
+        machine_guid = socket.gethostname()
 
     data = {"start": datetime.now().isoformat(), "guid": _hash(machine_guid)}
     TRIAL_FILE.write_text(json.dumps(data))
@@ -30,21 +30,24 @@ def init_trial():
 def get_remaining_days():
     if not TRIAL_FILE.exists():
         return 0
+    try:
+        data = json.loads(TRIAL_FILE.read_text())
 
-    data = json.loads(TRIAL_FILE.read_text())
+        machine_guid = get_machine_guid()
+        if machine_guid is None:
+            import socket
 
-    machine_guid = get_machine_guid()
-    if machine_guid is None:
-        import socket
+            machine_guid = socket.gethostname()
 
-        machine_guid = socket.gethostname()
+        if _hash(machine_guid) != data["guid"]:
+            return 0  # محاولة نقل البرنامج لجهاز آخر
 
-    if _hash(machine_guid) != data["guid"]:
-        return 0  # محاولة نقل البرنامج لجهاز آخر
+        start_date = datetime.fromisoformat(data["start"])
+        used_days = (datetime.now() - start_date).days
+        return max(0, TRIAL_DAYS - used_days)
 
-    start_date = datetime.fromisoformat(data["start"])
-    used_days = (datetime.now() - start_date).days
-    return max(0, TRIAL_DAYS - used_days)
+    except Exception:
+        return 0
 
 
 def is_trial_valid():

@@ -124,7 +124,7 @@ class Invoices:
         self.payment_status.configure(command=self.filter_invoices)
 
     def init_search_bar(self):
-        """شريط البحث والفلترة مع DateEntry مدمج وDark Theme"""
+        """شريط البحث والفلترة مع DateEntry"""
 
         search_card = CTkFrame(
             self.root,

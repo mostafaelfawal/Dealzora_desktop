@@ -15,6 +15,6 @@ class BackupButton:
             image=image("assets/نسخ_احتياطي.png"),
             command=lambda: (
                 backup_database(),
-                showinfo("تم", "تم عمل نسخة احتياطية"),
+                showinfo("تم", "تم عمل نسخة احتياطية\nفي ملف backup/dealzora.db"),
             ),
         ).pack(side="left", padx=5)

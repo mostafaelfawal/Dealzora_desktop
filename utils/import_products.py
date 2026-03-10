@@ -7,7 +7,7 @@ from models.products import ProductsModel
 
 def import_products(self):
     file_path = filedialog.askopenfilename(
-        filetypes=[("Excel files", "*.xlsx *.xls"), ("CSV files", "*.csv")]
+        filetypes=[("CSV files", "*.csv")]
     )
     if not file_path:
         return
@@ -28,7 +28,7 @@ def import_products(self):
             df_columns = {col.lower(): col for col in df.columns}
             column_map = {}
             # احتمالات لأسماء الأعمدة
-            name_cols = ["name", "الاسم", "الأسم", "الاسم المنتج", "product_name"]
+            name_cols = ["name", "الاسم", "الأسم", "الاسم المنتج", "product_name", "product name"]
             barcode_cols = ["barcode", "code", "كود", "الباركود"]
             buy_price_cols = ["buy_price", "سعر الشراء", "cost", "الشراء", "شراء"]
             sell_price_cols = ["sell_price", "سعر البيع", "price", "السعر", "سعر"]
