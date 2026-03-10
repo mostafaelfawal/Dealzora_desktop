@@ -19,7 +19,7 @@ class LicenseScreen(CTkFrame):
             text=(
                 "للتفعيل:\n"
                 "انسخ كود الجهاز ●\n"
-                "ابعت الكود على الرقم: 01151083509 ●\n"
+                "ابعت الكود على الرقم واتساب: 01151083509 ●\n"
                 "سيتم التواصل معك في أقرب وقت بكود التفعيل ●\n"
                 "الصق كود التفعيل في الحقل بالأسفل ثم شغّل البرنامج ●"
             ),
@@ -78,6 +78,7 @@ class LicenseScreen(CTkFrame):
                 text="▶ الدخول بالفترة التجريبية",
                 height=40,
                 fg_color="#22c55e",
+                text_color="black",
                 hover_color="#16a34a",
                 font=("Cairo", 16),
                 command=lambda: self.enter_trial(on_success),

@@ -47,6 +47,7 @@ class Layout:
         self.cur = cur
         theme = self.settings.get_setting("theme")
         set_appearance_mode(theme)
+        self.root.title("Dealzora | Basic")
 
         clear(self.root)
         self.init_sale_vars()

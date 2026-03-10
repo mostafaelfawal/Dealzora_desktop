@@ -435,13 +435,26 @@ class Sale:
     def load_selected_products(self):
         if not self.selected_products:
             return
-
+        out_of_stock_alert = False
         for product in self.selected_products:
+            product_from_db = self.products_db.get_product(product["id"])
             product["widget"] = None
+            product["name"] = product_from_db[1]
+            product["price"] = product_from_db[4]
+            product["image"] = product_from_db[7]
+            if product_from_db[5] < product["qty"]:
+                product["qty"] = product_from_db[5]
+                out_of_stock_alert = True
             self.update_product_widget(product)
 
         self.update_cart_count()
         self.calculate_total()
+
+        if out_of_stock_alert:
+            messagebox.showwarning(
+                "تحذير",
+                "هناك بعض المنتجات المختاره تجاوزت حد المخزون\nتم وضع كمياتها الى اقصى حد",
+            )
 
     def check_stock(self, product_data, pid):
         if product_data[5] <= 0:

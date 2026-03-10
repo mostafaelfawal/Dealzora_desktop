@@ -322,7 +322,7 @@ class Invoices:
                 continue
 
             # فلترة حسب التاريخ
-            current_date = from_date == to_date
+            current_date = from_date == to_date and from_date == str(date.today())
             if from_date and inv[2] < from_date and not current_date:
                 continue
             if to_date and inv[2] > to_date and not current_date:
