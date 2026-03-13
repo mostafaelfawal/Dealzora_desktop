@@ -77,7 +77,7 @@ class Reports:
         filter_frame.pack(fill="x", padx=5, pady=5)
 
         # تاريخ البداية
-        CTkLabel(filter_frame, text="من:", font=("Cairo", 14)).pack(
+        CTkLabel(filter_frame, text=":من", font=("Cairo", 14)).pack(
             side="right", padx=(0, 5), pady=10
         )
         self.start_date = CTkEntry(filter_frame, width=120, font=("Cairo", 14))
@@ -87,7 +87,7 @@ class Reports:
         )
 
         # تاريخ النهاية
-        CTkLabel(filter_frame, text="إلى:", font=("Cairo", 14)).pack(
+        CTkLabel(filter_frame, text=":إلى", font=("Cairo", 14)).pack(
             side="right", padx=(0, 5)
         )
         self.end_date = CTkEntry(filter_frame, width=120, font=("Cairo", 14))
@@ -543,8 +543,8 @@ class Reports:
 
     def load_sales_report(self):
         """تحميل تقرير المبيعات"""
-        start = self.start_date.get()
-        end = self.end_date.get()
+        start = self.start_date.get().strip() + "00:00:00"
+        end = self.end_date.get().strip() + "00:00:00"
 
         # إجمالي المبيعات
         self.cur.execute(
@@ -785,8 +785,8 @@ class Reports:
 
     def load_customers_report(self):
         """تحميل تقرير العملاء"""
-        start = self.start_date.get()
-        end = self.end_date.get()
+        start = self.start_date.get().strip() + "00:00:00"
+        end = self.end_date.get().strip() + "00:00:00"
 
         # إجمالي العملاء
         self.cur.execute("SELECT COUNT(*) FROM customers")
@@ -993,8 +993,8 @@ class Reports:
 
     def load_profits_report(self):
         """تحميل تقرير الأرباح"""
-        start = self.start_date.get()
-        end = self.end_date.get()
+        start = self.start_date.get().strip() + "00:00:00"
+        end = self.end_date.get().strip() + "00:00:00"
 
         # حساب الإيرادات والتكلفة والأرباح
         self.cur.execute(
