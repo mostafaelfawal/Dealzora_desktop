@@ -22,7 +22,7 @@ from utils.format_currency import format_currency
 
 from time import strftime
 from components.TreeView import TreeView
-
+from components.CustomerModal import CustomerModal
 
 class Sale:
     def __init__(
@@ -965,14 +965,14 @@ class Sale:
     # Customer / Discount / Tax Dialogs
     # =============================
     def show_customer_dialog(self):
-        dialog = CTkToplevel(self.root)
-        dialog.title("اختيار العميل | Dealzora")
-        dialog.geometry("400x500")
-        center_modal(dialog)
+        self.customers_dialog = CTkToplevel(self.root)
+        self.customers_dialog.title("اختيار العميل | Dealzora")
+        self.customers_dialog.geometry("400x500")
+        center_modal(self.customers_dialog)
 
-        CTkLabel(dialog, text="اختر العميل", font=("Cairo", 16, "bold")).pack(pady=5)
+        CTkLabel(self.customers_dialog, text="اختر العميل", font=("Cairo", 16, "bold")).pack(pady=5)
 
-        search_frame = CTkFrame(dialog, fg_color="transparent")
+        search_frame = CTkFrame(self.customers_dialog, fg_color="transparent")
         search_frame.pack(fill="x", padx=10, pady=5)
 
         search_var = StringVar()
@@ -989,6 +989,10 @@ class Sale:
 
             keyword = search_var.get().strip()
             if keyword:
+                if keyword and keyword[0] == "0" and search_type_var.get() == "phone":
+                    keyword = keyword[
+                        1:
+                    ]  # لتخطي 0 في الأرقام المصريه للتعامل مع SQlite3
                 customers = self.customers_db.search_customers_by_query(
                     keyword, search_type_var.get()
                 )
@@ -1002,12 +1006,13 @@ class Sale:
                 fg_color="#0086a8",
                 hover_color="#00718d",
                 image=image("assets/اضافة_عميل.png", (20, 20)),
-            ).pack(fill="x", pady=4)
+                command=lambda: self._add_customer_modal(refresh_results)
+            ).pack(fill="x", pady=2)
 
             CTkButton(
                 results_frame,
                 text="نقدي",
-                command=lambda: self.set_customer("نقدي", dialog),
+                command=lambda: self.set_customer("نقدي", self.customers_dialog),
                 font=("Cairo", 13),
             ).pack(fill="x", pady=2)
 
@@ -1027,7 +1032,7 @@ class Sale:
                     results_frame,
                     text=f"{c[1]} - {c[2] or 'بدون هاتف'}",
                     command=lambda name=c[1], cid=c[0]: self.set_customer(
-                        name, dialog, cid
+                        name, self.customers_dialog, cid
                     ),
                     fg_color=fg,
                     hover_color=hover,
@@ -1055,17 +1060,17 @@ class Sale:
             command=refresh_results,
         ).pack(side="right")
 
-        CTkLabel(dialog, text="دآئن", font=("Cairo", 16), text_color="#dac400").pack(
+        CTkLabel(self.customers_dialog, text="دآئن", font=("Cairo", 16), text_color="#dac400").pack(
             anchor="e", padx=2
         )
-        CTkLabel(dialog, text="مديون", font=("Cairo", 16), text_color="#c50000").pack(
+        CTkLabel(self.customers_dialog, text="مديون", font=("Cairo", 16), text_color="#c50000").pack(
             anchor="e", padx=2
         )
         CTkLabel(
-            dialog, text="غير مديون", font=("Cairo", 16), text_color="#69da00"
+            self.customers_dialog, text="غير مديون", font=("Cairo", 16), text_color="#69da00"
         ).pack(anchor="e", padx=2)
 
-        results_frame = CTkScrollableFrame(dialog, height=350)
+        results_frame = CTkScrollableFrame(self.customers_dialog, height=350)
         results_frame.pack(fill="both", expand=True, padx=10, pady=5)
 
         search_var.trace_add("write", refresh_results)
@@ -1106,3 +1111,22 @@ class Sale:
 
         self.date_label.configure(text=f'التاريخ: {strftime("%Y-%m-%d %H:%M")}')
         self.search_entry.focus()
+
+    def add_customer(self, name, phone, debt, modal):
+        try:
+            self.customers_db.add_customer(name, phone, debt)
+            messagebox.showinfo("تم", "تم اضافة العميل بنجاح")
+            modal.destroy()
+        except Exception as e:
+            if "UNIQUE constraint failed: customers.phone" in str(e):
+                messagebox.showerror("خطأ", "رقم الهاتف مستخدم بالفعل")
+            else:
+                messagebox.showerror("خطأ", str(e))
+                
+    def _add_customer_modal(self, refresh_results):
+        CustomerModal(
+            self.tree,
+            self.add_customer,
+            refresh_results=refresh_results,
+            customers_dialog=self.customers_dialog
+        )
