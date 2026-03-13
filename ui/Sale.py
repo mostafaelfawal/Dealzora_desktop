@@ -24,6 +24,7 @@ from time import strftime
 from components.TreeView import TreeView
 from components.CustomerModal import CustomerModal
 
+
 class Sale:
     def __init__(
         self,
@@ -330,7 +331,7 @@ class Sale:
         # الإجمالي النهائي
         # =========================
         self.total_label = CTkLabel(
-            frame, text=f"0 {self.c}", font=("Cairo", 24, "bold")
+            frame, text=f"الإجمالي النهائي: 0 {self.c}", font=("Cairo", 24, "bold")
         )
         self.total_label.pack(anchor="e", pady=5)
 
@@ -702,7 +703,9 @@ class Sale:
         self.subtotal_label.configure(
             text=f"الإجمالي الفرعي: {format_currency(subtotal)}"
         )
-        self.total_label.configure(text=format_currency(total))
+        self.total_label.configure(
+            text=f"الإجمالي النهائي: {format_currency(total)}"
+        )
         return total
 
     # =============================
@@ -970,7 +973,9 @@ class Sale:
         self.customers_dialog.geometry("400x500")
         center_modal(self.customers_dialog)
 
-        CTkLabel(self.customers_dialog, text="اختر العميل", font=("Cairo", 16, "bold")).pack(pady=5)
+        CTkLabel(
+            self.customers_dialog, text="اختر العميل", font=("Cairo", 16, "bold")
+        ).pack(pady=5)
 
         search_frame = CTkFrame(self.customers_dialog, fg_color="transparent")
         search_frame.pack(fill="x", padx=10, pady=5)
@@ -1006,7 +1011,7 @@ class Sale:
                 fg_color="#0086a8",
                 hover_color="#00718d",
                 image=image("assets/اضافة_عميل.png", (20, 20)),
-                command=lambda: self._add_customer_modal(refresh_results)
+                command=lambda: self._add_customer_modal(refresh_results),
             ).pack(fill="x", pady=2)
 
             CTkButton(
@@ -1060,14 +1065,20 @@ class Sale:
             command=refresh_results,
         ).pack(side="right")
 
-        CTkLabel(self.customers_dialog, text="دآئن", font=("Cairo", 16), text_color="#dac400").pack(
-            anchor="e", padx=2
-        )
-        CTkLabel(self.customers_dialog, text="مديون", font=("Cairo", 16), text_color="#c50000").pack(
-            anchor="e", padx=2
-        )
         CTkLabel(
-            self.customers_dialog, text="غير مديون", font=("Cairo", 16), text_color="#69da00"
+            self.customers_dialog, text="دآئن", font=("Cairo", 16), text_color="#dac400"
+        ).pack(anchor="e", padx=2)
+        CTkLabel(
+            self.customers_dialog,
+            text="مديون",
+            font=("Cairo", 16),
+            text_color="#c50000",
+        ).pack(anchor="e", padx=2)
+        CTkLabel(
+            self.customers_dialog,
+            text="غير مديون",
+            font=("Cairo", 16),
+            text_color="#69da00",
         ).pack(anchor="e", padx=2)
 
         results_frame = CTkScrollableFrame(self.customers_dialog, height=350)
@@ -1122,11 +1133,11 @@ class Sale:
                 messagebox.showerror("خطأ", "رقم الهاتف مستخدم بالفعل")
             else:
                 messagebox.showerror("خطأ", str(e))
-                
+
     def _add_customer_modal(self, refresh_results):
         CustomerModal(
             self.tree,
             self.add_customer,
             refresh_results=refresh_results,
-            customers_dialog=self.customers_dialog
+            customers_dialog=self.customers_dialog,
         )

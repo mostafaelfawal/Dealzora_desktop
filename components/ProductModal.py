@@ -156,11 +156,17 @@ class ProductModal:
         low = self.entries["حد التنبيه"].get() or 5
         supplier = self.supplier_select.get().strip() or None
 
+        p = self.products_db.get_product(self.product_id)
+        diffrent_name = name != p[1]
+
         if not name:
             return messagebox.showerror("خطأ", "اكتب اسم المنتج")
-
-        if self.products_db.product_exists(name) and not messagebox.askokcancel(
-            "تأكد", f"هناك منتج موجود بالفعل بهذا الأسم '{name}'\nهل ستضيفه"
+        if (
+            self.products_db.product_exists(name)
+            and diffrent_name
+            and not messagebox.askokcancel(
+                "تأكد", f"هناك منتج موجود بالفعل بهذا الأسم '{name}'\nهل ستضيفه"
+            )
         ):
             return
 
