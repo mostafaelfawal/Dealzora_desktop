@@ -13,7 +13,7 @@ class SalesModel:
             paid REAL NOT NULL,
             change REAL DEFAULT 0,
             customer_id INTEGER,
-            date TEXT DEFAULT (date('now','localtime')),
+            date TEXT DEFAULT (datetime('now','localtime')),
             FOREIGN KEY(customer_id) REFERENCES customers(id)
             )"""
         )

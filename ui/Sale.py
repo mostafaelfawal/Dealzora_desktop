@@ -673,7 +673,7 @@ class Sale:
     def update_cart_count(self):
         count = len(self.selected_products)
         total_items = sum(p["qty"] for p in self.selected_products)
-        self.cart_count_label.configure(text=f"{count} صنف {total_items} | قطعة")
+        self.cart_count_label.configure(text=f"{total_items} صنف {count} | قطعة")
 
     # =============================
     # Calculations
@@ -994,6 +994,15 @@ class Sale:
                 )
             else:
                 customers = self.customers_db.get_customers()
+
+            CTkButton(
+                results_frame,
+                text="اضافة عميل جديد",
+                font=("Cairo", 13),
+                fg_color="#0086a8",
+                hover_color="#00718d",
+                image=image("assets/اضافة_عميل.png", (20, 20)),
+            ).pack(fill="x", pady=4)
 
             CTkButton(
                 results_frame,

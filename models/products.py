@@ -88,6 +88,14 @@ class ProductsModel:
         )
         return self.cur.fetchall()
 
+    def product_exists(self, p_name):
+        self.cur.execute(
+            "SELECT name FROM products WHERE name LIKE ?",
+            (f"{p_name}",),
+        )
+        row = self.cur.fetchone()
+        return True if row else False
+
     def get_products(self):
         self.cur.execute("SELECT * FROM products ORDER BY id DESC")
         return self.cur.fetchall()

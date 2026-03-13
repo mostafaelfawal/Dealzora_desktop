@@ -47,6 +47,7 @@ class ProductModal:
             else "تعديل المنتج | Dealzora"
         )
         self.modal.grab_set()
+        self.modal.resizable(False, False)
         center_modal(self.modal)
 
         self.image_frame = CTkFrame(self.modal, fg_color="transparent")
@@ -157,6 +158,11 @@ class ProductModal:
 
         if not name:
             return messagebox.showerror("خطأ", "اكتب اسم المنتج")
+
+        if self.products_db.product_exists(name) and not messagebox.askokcancel(
+            "تأكد", f"هناك منتج موجود بالفعل بهذا الأسم '{name}'\nهل ستضيفه"
+        ):
+            return
 
         if not all(is_number(v) for v in [buy, sell, qty, low]):
             return messagebox.showerror("خطأ", "القيم الرقمية غير صحيحة")
