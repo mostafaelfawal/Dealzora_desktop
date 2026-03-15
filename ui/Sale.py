@@ -940,6 +940,24 @@ class Sale:
                 # حفظ عناصر الفاتورة
                 # ======================
                 self.sale_items_db.add_sale_items(sale_id, sale_items_data)
+                
+                # ======================
+                # طباعة الفاتورة
+                # ======================
+                auto_print = self.settings_db.get_setting("auto_print")
+                if auto_print:
+                    try:
+                        sale_data = {
+                            'subtotal': subtotal,
+                            'discount': discount,
+                            'tax': tax,
+                            'total': total,
+                            'paid': float(paid_var.get()),
+                            'remaining': float(paid_var.get()) - total
+                        }
+                        self.print_invoice(sale_data)
+                    except Exception as e:
+                        messagebox.showwarning("تحذير", f"تم حفظ الفاتورة لكن فشلت الطباعة: {e}")
 
             except Exception as e:
                 self.con.rollback()
@@ -1141,3 +1159,38 @@ class Sale:
             refresh_results=refresh_results,
             customers_dialog=self.customers_dialog,
         )
+
+    def print_invoice(self, sale_data):
+        """طباعة الفاتورة بعد إتمام البيع"""
+        try:
+            from utils.print_thermal import print_shop_invoice
+
+            # تجهيز بيانات الفاتورة
+            invoice_data = {
+                'invoice_number': self.invoice_number,
+                'date': strftime("%Y-%m-%d"),
+                'time': strftime("%I:%M %p"),
+                'customer_name': self.customer_var.get(),
+                'subtotal': sale_data['subtotal'],
+                'discount': sale_data['discount'],
+                'tax': sale_data['tax'],
+                'total': sale_data['total'],
+                'paid': sale_data['paid'],
+                'remaining': sale_data['remaining']
+            }
+            
+            # تجهيز بيانات المنتجات
+            products = []
+            for p in self.selected_products:
+                products.append({
+                    'name': p['name'],
+                    'price': p['price'],
+                    'qty': p['qty'],
+                    'total': p['price'] * p['qty']
+                })
+            
+            # طباعة الفاتورة
+            print_shop_invoice(invoice_data, products)
+            
+        except Exception as e:
+            messagebox.showwarning("تحذير", f"حدث خطأ في الطباعة: {e}")

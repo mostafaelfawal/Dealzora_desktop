@@ -5,10 +5,13 @@ from customtkinter import (
     CTkEntry,
     CTkButton,
     CTkOptionMenu,
+    CTkCheckBox,
     StringVar,
+    BooleanVar,
     set_appearance_mode,
 )
 from tkinter import messagebox
+import win32print
 from components.UploadImage import UploadImage
 from components.BackupButton import BackupButton
 from utils.image import image
@@ -53,6 +56,9 @@ class Settings:
         # ======= قسم البيانات =======
         self.create_data_section()
 
+        # ======= قسم الطباعة =======
+        self.create_print_section()
+
         # ======= زر حفظ نهائي =======
         CTkButton(
             self.content_frame,
@@ -70,7 +76,7 @@ class Settings:
             backup_frame,
             text="! يتم عمل نسخ احتياطي تلقائي للبيانات",
             text_color=("#9B9B9B", "#616161"),
-            font=("Cairo", 16, "bold")
+            font=("Cairo", 16, "bold"),
         ).pack(side="right")
         BackupButton(backup_frame)
 
@@ -90,6 +96,87 @@ class Settings:
 
         self.upload_logo = UploadImage(logo_section)
         self.upload_logo.set_image(self.settings["logo_path"])
+
+    def create_print_section(self):
+        print_section = CTkFrame(
+            self.content_frame, fg_color=("gray90", "gray20"), corner_radius=15
+        )
+        print_section.pack(fill="x", padx=10, pady=(0, 20))
+
+        CTkLabel(
+            print_section,
+            text="طباعة الفواتير",
+            font=("Cairo", 22, "bold"),
+            text_color="#2b7de9",
+        ).pack(pady=(15, 20))
+
+        container = CTkFrame(print_section, fg_color="transparent")
+        container.pack(fill="x", padx=30, pady=(0, 20))
+
+        # ===== اختيار الطابعة =====
+        printers = self.get_printers()
+
+        CTkLabel(
+            container, text=":اختيار الطابعة", font=("Cairo", 18), anchor="e"
+        ).pack(anchor="e", pady=(0, 5))
+
+        saved_printer = self.settings.get("printer_name")
+
+        # التحقق هل الطابعة مازالت موجودة
+        if saved_printer in printers:
+            printer_var = StringVar(value=saved_printer)
+        else:
+            printer_var = StringVar(value=printers[0])
+            self.settings_db.update_settings(
+                printer_name=printer_var.get()
+            )  # تحديث اسم الطابعة في الإعدادات
+            messagebox.showerror("خطأ", "الطابعة المحددة غير موجودة")
+
+        self.vars["printer_name"] = printer_var
+
+        printer_menu = CTkOptionMenu(
+            container,
+            values=printers,
+            variable=printer_var,
+            font=("Cairo", 16),
+            height=45,
+            corner_radius=8,
+            dropdown_font=("Cairo", 14),
+        )
+        printer_menu.pack(fill="x", pady=(0, 15))
+
+        # ===== عدد الفواتير =====
+        CTkLabel(
+            container,
+            text=":عدد الفواتير لكل عملية بيع",
+            font=("Cairo", 18),
+            anchor="e",
+        ).pack(anchor="e", pady=(0, 5))
+
+        copies_var = StringVar(value=self.settings.get("invoices_per_print", "1"))
+        self.vars["invoices_per_print"] = copies_var
+
+        copies_entry = CTkEntry(
+            container,
+            textvariable=copies_var,
+            justify="center",
+            font=("Cairo", 16),
+            height=45,
+            corner_radius=8,
+            border_width=2,
+        )
+        copies_entry.pack(fill="x")
+        
+        # ===== الطباعة التلقائية =====
+        auto_print_var = BooleanVar(value=self.settings.get("auto_print", True))
+        self.vars["auto_print"] = auto_print_var
+
+        CTkCheckBox(
+            container,
+            text="طباعة الفاتورة تلقائيا بعد عملية البيع",
+            font=("Cairo", 16),
+            variable=auto_print_var,
+        ).pack(anchor="e", pady=(15, 0))
 
     def create_data_section(self):
         data_section = CTkFrame(
@@ -171,11 +258,27 @@ class Settings:
             dropdown_font=("Cairo", 14),
         )
         combo.pack(fill="x")
+        
+    # ------- مساعدة ----------
+    def get_printers(self):
+        printers = []
+        for p in win32print.EnumPrinters(
+            win32print.PRINTER_ENUM_LOCAL | win32print.PRINTER_ENUM_CONNECTIONS
+        ):
+            printers.append(p[2])
+        return printers if printers else ["لا يوجد طابعات"]
 
     # ---------- حفظ الإعدادات ----------
     def save_settings(self):
         try:
             tax = self.vars["tax"].get().strip()
+            copies = self.vars["invoices_per_print"].get()
+
+            try:
+                int(copies)
+            except ValueError:
+                return messagebox.showerror("خطأ", "عدد الفواتير يجب أن يكون رقم")
+
             if is_number(tax):
                 tax = float(tax)
             else:
@@ -193,6 +296,9 @@ class Settings:
                 tax,
                 theme,
                 self.upload_logo.get_image(),
+                self.vars["printer_name"].get(),
+                copies,
+                self.vars["auto_print"].get(),
             )
 
             # ======= تطبيق الـ Theme فوراً =======

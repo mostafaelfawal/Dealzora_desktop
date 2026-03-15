@@ -12,6 +12,9 @@ class SettingsModel:
             "tax": 0,
             "theme": "system",
             "logo_path": "assets/icon.png",
+            "printer_name": "",
+            "invoices_per_print": 1,
+            "auto_print": True
         }
         # لو الملف مش موجود، اعمله
         if not os.path.exists(self.path):
@@ -41,7 +44,15 @@ class SettingsModel:
 
     # تحديث الإعدادات
     def update_settings(
-        self, shop_name=None, currency=None, tax=None, theme=None, logo_path=None
+        self,
+        shop_name=None,
+        currency=None,
+        tax=None,
+        theme=None,
+        logo_path=None,
+        printer_name=None,
+        copies=None,
+        auto_print=None,
     ):
         data = self.get_settings()
         if shop_name is not None:
@@ -60,6 +71,15 @@ class SettingsModel:
                 data["theme"] = "system"
         if logo_path is not None:
             data["logo_path"] = logo_path
+        if printer_name is not None:
+            data["printer_name"] = printer_name
+        if copies is not None:
+            try:
+                data["invoices_per_print"] = int(copies)
+            except (ValueError, TypeError):
+                data["invoices_per_print"] = 1
+        if auto_print is not None:
+            data["auto_print"] = bool(auto_print)
 
         self.save_settings(data)
 

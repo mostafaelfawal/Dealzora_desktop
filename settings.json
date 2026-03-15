@@ -1,7 +1,10 @@
 {
-    "shop_name": "mostafa hamdi",
+    "shop_name": "ماركت الطراوي",
     "currency": "ج.م",
     "tax": 0.0,
     "theme": "dark",
-    "logo_path": "C:/Users/DELL/Pictures/I/7.png"
+    "logo_path": "C:/Users/DELL/Pictures/I/7.png",
+    "printer_name": "Microsoft Print to PDF",
+    "invoices_per_print": 1,
+    "auto_print": true
 }
