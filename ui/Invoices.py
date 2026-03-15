@@ -1,5 +1,3 @@
-from time import strftime
-
 from customtkinter import (
     CTkLabel,
     CTkFrame,
