@@ -3,8 +3,8 @@ from sqlite3 import connect
 from os import makedirs
 from layout import Layout
 from utils.backup_database import backup_database
-from utils.license import is_license_valid
 from utils.trial import init_trial
+from ui.Splash_screen import SplashScreen
 
 # ============== Data bases ==============
 from models.customers import CustomersModel
@@ -24,12 +24,10 @@ class Dealzora:
         self.init_db()
         init_trial()
         
-        if is_license_valid():
-            self.start_app()
-        else:
-            from ui.license_screen import LicenseScreen
-            LicenseScreen(self.root, self.start_app)
-
+        SplashScreen(self.root, self.start_app)
+        
+        
+            
     def start_app(self):
         from ui.Auth import Auth
         Auth(self.root, lambda uid: self.on_success(uid), self.users_db)

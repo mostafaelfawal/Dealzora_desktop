@@ -2,3 +2,6 @@
 *.db
 /build
 /dist
+/_internal
+*/__pycache__
+*.log
