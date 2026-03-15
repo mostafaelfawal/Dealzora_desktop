@@ -637,7 +637,7 @@ class Sale:
                 height=28,
                 fg_color=("#b30000", "#8f0000"),
                 hover_color=("#8D0000", "#740000"),
-                image=image("assets/حذف.png", (20, 20)),
+                image=image("assets/delete.png", (20, 20)),
                 command=lambda p=product: self.remove_from_cart(p),
             ).pack(side="left", padx=10)
 
@@ -1010,7 +1010,7 @@ class Sale:
                 font=("Cairo", 13),
                 fg_color="#0086a8",
                 hover_color="#00718d",
-                image=image("assets/اضافة_عميل.png", (20, 20)),
+                image=image("assets/add_customer.png", (20, 20)),
                 command=lambda: self._add_customer_modal(refresh_results),
             ).pack(fill="x", pady=2)
 

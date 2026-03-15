@@ -87,42 +87,42 @@ class Layout:
         self.side_buttons = [
             {
                 "text": "بيع",
-                "icon": "assets/بيع.png",
+                "icon": "assets/pos.png",
                 "com": lambda: self.change_screen("sale"),
             },
             {
                 "text": "منتجات",
-                "icon": "assets/منتجات.png",
+                "icon": "assets/products.png",
                 "com": lambda: self.change_screen("products"),
             },
             {
                 "text": "مستخدم",
-                "icon": "assets/مستخدمين.png",
+                "icon": "assets/users.png",
                 "com": lambda: self.change_screen("users"),
             },
             {
                 "text": "مخزون",
-                "icon": "assets/مخزون.png",
+                "icon": "assets/stock.png",
                 "com": lambda: self.change_screen("stock"),
             },
             {
                 "text": "تقارير",
-                "icon": "assets/تقارير.png",
+                "icon": "assets/reports.png",
                 "com": lambda: self.change_screen("reports"),
             },
             {
                 "text": "عملاء",
-                "icon": "assets/عملاء.png",
+                "icon": "assets/customers.png",
                 "com": lambda: self.change_screen("customers"),
             },
             {
                 "text": "فواتير",
-                "icon": "assets/فواتير.png",
+                "icon": "assets/invoices.png",
                 "com": lambda: self.change_screen("invoices"),
             },
             {
                 "text": "الأعدادات",
-                "icon": "assets/الأعدادات.png",
+                "icon": "assets/settings.png",
                 "com": lambda: self.change_screen("settings"),
             },
         ]
@@ -167,7 +167,7 @@ class Layout:
         CTkButton(
             self.side_bar,
             text="خروج",
-            image=image("assets/خروج.png"),
+            image=image("assets/exit.png"),
             command=self.quit_window,
             **button_style,
         ).pack(padx=30, pady=5, fill="x")

@@ -27,7 +27,7 @@ class Settings:
         CTkLabel(
             header_frame,
             text="اعدادات النظام",
-            image=image("assets/الأعدادات.png", (40, 40)),
+            image=image("assets/settings.png", (40, 40)),
             font=("Cairo", 36, "bold"),
             compound="right",
             text_color="#2b7de9",

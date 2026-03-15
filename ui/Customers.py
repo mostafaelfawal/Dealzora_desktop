@@ -27,7 +27,7 @@ class Customers:
         CTkLabel(
             self.root,
             text="إدارة العملاء",
-            image=image("assets/عملاء.png"),
+            image=image("assets/customers.png"),
             font=("Cairo", 40, "bold"),
             compound="left",
         ).pack(padx=10, pady=10)
@@ -59,7 +59,7 @@ class Customers:
         CTkButton(
             frame,
             text="اضافة",
-            image=image("assets/اضافة_عميل.png", (20, 20)),
+            image=image("assets/add_customer.png", (20, 20)),
             font=("Cairo", 20, "bold"),
             fg_color="#197c00",
             hover_color="#155c03",
@@ -158,7 +158,7 @@ class Customers:
             fg_color="#2563eb",
             hover_color="#1749b6",
             font=("Cairo", 20, "bold"),
-            image=image("assets/تعديل.png"),
+            image=image("assets/edit.png"),
             command=self.edit_customer_modal,
         ).pack(side="left", padx=5)
 
@@ -169,7 +169,7 @@ class Customers:
             fg_color="#dc2626",
             hover_color="#a11616",
             font=("Cairo", 20, "bold"),
-            image=image("assets/حذف.png"),
+            image=image("assets/delete.png"),
             command=self.delete_selected_customers,
         ).pack(side="left", padx=5)
 

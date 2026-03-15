@@ -51,7 +51,7 @@ class BuyInvoiceModal:
             text="فاتورة شراء جديدة",
             font=("Cairo", 24, "bold"),
             text_color="#2563eb",
-            image=image("assets/فواتير.png"),
+            image=image("assets/invoices.png"),
             compound="left"
         )
         title_label.pack(pady=(10, 20))

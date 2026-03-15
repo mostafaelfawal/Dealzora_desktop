@@ -37,7 +37,7 @@ class Reports:
         CTkLabel(
             header_frame,
             text="التقارير والإحصائيات",
-            image=image("assets/تقارير.png"),
+            image=image("assets/reports.png"),
             font=("Cairo", 24, "bold"),
             compound="left",
         ).pack(side="right", padx=10)

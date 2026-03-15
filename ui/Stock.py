@@ -65,7 +65,7 @@ class Stock:
         CTkLabel(
             header_frame,
             text="إدارة المخزون",
-            image=image("assets/مخزون.png", (40, 40)),
+            image=image("assets/stock.png", (40, 40)),
             font=("Cairo", 32, "bold"),
             compound="left",
             text_color="#2b7de9",

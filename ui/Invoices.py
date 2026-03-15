@@ -46,7 +46,7 @@ class Invoices:
         CTkLabel(
             self.root,
             text="الفواتير",
-            image=image("assets/فواتير.png", (40, 40)),
+            image=image("assets/invoices.png", (40, 40)),
             font=("Cairo", 40, "bold"),
             compound="left",
         ).pack(padx=10, pady=10)
@@ -448,7 +448,7 @@ class Invoices:
                 CTkButton(
                     frame,
                     text="",
-                    image=image("assets/حذف.png", (20, 20)),
+                    image=image("assets/delete.png", (20, 20)),
                     fg_color="transparent",
                     width=0,
                     command=lambda single_item=item, pid=product_id: self.return_product(

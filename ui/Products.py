@@ -34,7 +34,7 @@ class Products:
         CTkLabel(
             self.root,
             text="إدارة المنتجات",
-            image=image("assets/منتجات.png"),
+            image=image("assets/products.png"),
             font=("Cairo", 40, "bold"),
             compound="left",
         ).pack(padx=10, pady=10)
@@ -61,7 +61,7 @@ class Products:
         CTkButton(
             frame,
             text="اضافة",
-            image=image("assets/اضافة_منتج.png", (20, 20)),
+            image=image("assets/add_product.png", (20, 20)),
             font=("Cairo", 20, "bold"),
             fg_color="#197c00",
             hover_color="#155c03",
@@ -144,7 +144,7 @@ class Products:
             fg_color="#2563eb",
             hover_color="#1749b6",
             font=("Cairo", 20, "bold"),
-            image=image("assets/تعديل.png"),
+            image=image("assets/edit.png"),
             command=self.edit_product_modal,
         ).pack(side="left", padx=5)
 
@@ -155,7 +155,7 @@ class Products:
             fg_color="#dc2626",
             hover_color="#a11616",
             font=("Cairo", 20, "bold"),
-            image=image("assets/حذف.png"),
+            image=image("assets/delete.png"),
             command=self.delete_selected_products,
         ).pack(side="left", padx=5)
 
@@ -288,7 +288,7 @@ class Products:
             fg_color="#af6300",
             hover_color="#854b00",
             font=("Cairo", 20, "bold"),
-            image=image("assets/استيراد_المنتجات.png"),
+            image=image("assets/import_products.png"),
             command=lambda: import_products(self),
         ).pack(side="left", padx=5)
 
@@ -298,7 +298,7 @@ class Products:
             fg_color="#af7800",
             hover_color="#946500",
             font=("Cairo", 20, "bold"),
-            image=image("assets/تصدير_المنتجات.png"),
+            image=image("assets/export_products.png"),
             command=lambda: export_products(
                 self.products, self.products_db.get_category
             ),
@@ -309,7 +309,7 @@ class Products:
         #     text="انشاء باركود",
         #     fg_color="#008caf",
         #     hover_color="#00728f",
-        #     image=image("assets/باركود.png"),
+        #     image=image("assets/barcode.png"),
         #     font=("Cairo", 20, "bold"),
         #     command=lambda: messagebox.showinfo(
         #         "قريبا", "سيتم اضافة هذه الميزه قريبا تابع التحديثات"

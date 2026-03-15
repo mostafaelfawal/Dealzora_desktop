@@ -81,7 +81,7 @@ class CustomerModal:
             width=150,
             fg_color="#2563eb",
             hover_color="#1749b6",
-            image=image("assets/اضافة.png" if mode == "add" else "assets/تعديل.png"),
+            image=image("assets/add.png" if mode == "add" else "assets/edit.png"),
             command=save,
         ).pack(side="right", padx=10)
 
@@ -92,7 +92,7 @@ class CustomerModal:
             width=150,
             fg_color="#dc2626",
             hover_color="#a11616",
-            image=image("assets/تنظيف_الحقول.png"),
+            image=image("assets/clear.png"),
             command=clear_fields,
         ).pack(side="right", padx=10)
 

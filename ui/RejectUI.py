@@ -6,7 +6,7 @@ class RejectUI:
     def __init__(self, root):
         self.root = root
         CTkLabel(
-            self.root, text="", image=image("assets/غير مسموح.png", (100, 100))
+            self.root, text="", image=image("assets/unauthorized.png", (100, 100))
         ).pack(pady=5, padx=5)
 
         CTkLabel(

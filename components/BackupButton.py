@@ -12,7 +12,7 @@ class BackupButton:
             fg_color="#25b3eb",
             hover_color="#1b92c2",
             font=("Cairo", 20, "bold"),
-            image=image("assets/نسخ_احتياطي.png"),
+            image=image("assets/backup_db.png"),
             command=lambda: (
                 backup_database(),
                 showinfo("تم", "تم عمل نسخة احتياطية\nفي ملف backup/dealzora.db"),
