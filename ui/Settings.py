@@ -275,7 +275,8 @@ class Settings:
             copies = self.vars["invoices_per_print"].get()
 
             try:
-                int(copies)
+                if int(copies) < 1:
+                    raise ValueError
             except ValueError:
                 return messagebox.showerror("خطأ", "عدد الفواتير يجب أن يكون رقم")
 

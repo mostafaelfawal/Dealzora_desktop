@@ -874,6 +874,22 @@ class Sale:
         # =========================
         # تأكيد
         # =========================
+        def print_util():
+            auto_print = self.settings_db.get_setting("auto_print")
+            if auto_print:
+                try:
+                    sale_data = {
+                        'subtotal': subtotal,
+                        'discount': discount,
+                        'tax': tax,
+                        'total': total,
+                        'paid': float(paid_var.get()),
+                        'remaining': float(paid_var.get()) - total
+                    }
+                    self.print_invoice(sale_data)
+                except Exception as e:
+                    messagebox.showwarning("تحذير", f"تم حفظ الفاتورة لكن فشلت الطباعة: {e}")
+                    
         def confirm():
             if not is_number(paid_var.get()) or float(paid_var.get()) < 0:
                 messagebox.showerror("خطأ", "الرجاء إدخال رقم صحيح")
@@ -944,20 +960,7 @@ class Sale:
                 # ======================
                 # طباعة الفاتورة
                 # ======================
-                auto_print = self.settings_db.get_setting("auto_print")
-                if auto_print:
-                    try:
-                        sale_data = {
-                            'subtotal': subtotal,
-                            'discount': discount,
-                            'tax': tax,
-                            'total': total,
-                            'paid': float(paid_var.get()),
-                            'remaining': float(paid_var.get()) - total
-                        }
-                        self.print_invoice(sale_data)
-                    except Exception as e:
-                        messagebox.showwarning("تحذير", f"تم حفظ الفاتورة لكن فشلت الطباعة: {e}")
+                print_util()
 
             except Exception as e:
                 self.con.rollback()
@@ -973,14 +976,26 @@ class Sale:
             dialog.destroy()
             messagebox.showinfo("نجاح", "تمت عملية البيع")
 
+        actions_frame = CTkFrame(dialog, fg_color="transparent")
+        actions_frame.pack(fill="x", expand=True, pady=15)
+
         CTkButton(
-            dialog,
+            actions_frame,
             text="تأكيد العملية",
             font=("Cairo", 15, "bold"),
             fg_color="#16A34A",
             hover_color="#15803D",
             command=confirm,
-        ).pack(pady=15)
+        ).pack(side="right", padx=10)
+
+        CTkButton(
+            actions_frame,
+            text="طباعة",
+            font=("Cairo", 15, "bold"),
+            fg_color="#1676A3",
+            hover_color="#115B7E",
+            command=print_util,
+        ).pack(side="right", padx=10)
 
     # =============================
     # Customer / Discount / Tax Dialogs

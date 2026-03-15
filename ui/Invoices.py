@@ -1,3 +1,5 @@
+from time import strftime
+
 from customtkinter import (
     CTkLabel,
     CTkFrame,
@@ -812,5 +814,79 @@ class Invoices:
             self.con.rollback()
             messagebox.showerror("خطأ", f"فشل إرجاع المنتج: {e}")
 
-    def print_invoice(self):
-        messagebox.showinfo("قريباً", "هذه الميزة قيد التطوير")
+    def print_invoice(self, event=None):
+        """طباعة الفاتورة بعد اختيارها من الجدول"""
+        selected = self.tree.tree.selection()
+        if not selected:
+            return messagebox.showwarning("تنبيه", "الرجاء اختيار فاتورة")
+
+        invoice_data = self.tree.tree.item(selected[0])["values"]
+        invoice_id = invoice_data[0]
+
+        sale = self.invoices_db.get_sale(invoice_id)
+        if not sale:
+            return messagebox.showerror("خطأ", "الفاتورة غير موجودة")
+
+        # بيانات الفاتورة
+        total = float(sale[2])
+        discount = float(sale[3])
+        tax = float(sale[4])
+        paid = float(sale[5])
+        change = float(sale[6])
+        customer_id = sale[7]
+        date_str = sale[8]
+        
+
+        customer_name = "نقدي"
+        if customer_id:
+            customer = self.customers_db.get_customer(customer_id)
+            if customer:
+                customer_name = customer[1]
+
+        # المنتجات
+        items = self.sale_items_db.get_sale_items(invoice_id)
+        products = []
+        for item in items:
+            product_id = item[2]
+            product = self.products_db.get_product(product_id)
+            product_name = product[1] if product else "منتج محذوف"
+            qty = item[3]
+            price = float(item[4])
+            total_item = float(item[5])
+            products.append({
+                "name": product_name,
+                "qty": qty,
+                "price": price,
+                "total": total_item
+            })
+
+        # فصل الوقت عن التاريخ
+        try:
+            # نفترض التنسيق HH:MM:SS DD-MM-YYYY
+            date_part, time_part = date_str.split(" ", 1)
+        except Exception:
+            # لو التنسيق غريب نخليهم فارغين
+            time_part = ""
+            date_part = date_str
+
+        # بيانات جاهزة للطباعة
+        sale_data = {
+            "invoice_number": sale[1],
+            "date": date_part,     # DD-MM-YYYY
+            "time": time_part,     # HH:MM:SS
+            "customer_name": customer_name,
+            "subtotal": total - discount - tax,
+            "discount": discount,
+            "tax": tax,
+            "total": total,
+            "paid": paid,
+            "remaining": change,
+        }
+
+        from utils.print_thermal import print_shop_invoice
+
+        try:
+            print_shop_invoice(sale_data, products)
+            messagebox.showinfo("نجاح", "تم إرسال الفاتورة للطابعة ✅")
+        except Exception as e:
+            messagebox.showwarning("تحذير", f"حدث خطأ في الطباعة: {e}")

@@ -223,5 +223,6 @@ def print_shop_invoice(sale_data, products_data):
             print_image_to_printer(img, printer_name)
 
     except Exception as e:
-        print(e)
+        if "StartDoc failed" in str(e):
+            return showerror("خطأ في الطباعة", "فشل في بدء عملية الطباعة")
         showerror("خطأ في الطباعة", str(e))
