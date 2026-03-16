@@ -156,9 +156,12 @@ class ProductModal:
         low = self.entries["حد التنبيه"].get() or 5
         supplier = self.supplier_select.get().strip() or None
 
-        p = self.products_db.get_product(self.product_id)
-        diffrent_name = name != p[1]
+        p = self.selected_product
+        diffrent_name = True
 
+        if p:
+            diffrent_name = name != p[1]
+            
         if not name:
             return messagebox.showerror("خطأ", "اكتب اسم المنتج")
         if (
