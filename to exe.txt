@@ -1,0 +1,8 @@
+Dealzora updater
+pyinstaller --noconfirm --onefile --windowed --icon=updater_icon.png --name=Dealzora_update updater.py
+
+Dealzora Basic
+pyinstaller --noconfirm --onedir --windowed --icon=icon.ico --name=Dealzora main.py
+
+Dealzora license
+pyinstaller --noconfirm --onefile --windowed --icon=license_icon.png --name=Dealzora_license license_generator.py

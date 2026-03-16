@@ -26,8 +26,7 @@ class Dealzora:
         
         SplashScreen(self.root, self.start_app)
         
-        
-            
+
     def start_app(self):
         from ui.Auth import Auth
         Auth(self.root, lambda uid: self.on_success(uid), self.users_db)
