@@ -4,9 +4,9 @@
     "tax": 0.0,
     "theme": "dark",
     "logo_path": "assets/icon.png",
-    "printer_name": "Microsoft XPS Document Writer",
+    "printer_name": "",
     "invoices_per_print": 1,
-    "auto_print": false,
-    "auto_backup": true,
-    "backup_path": "D:/my_softweres/desktop"
+    "auto_print": true,
+    "auto_backup": false,
+    "backup_path": "backup"
 }

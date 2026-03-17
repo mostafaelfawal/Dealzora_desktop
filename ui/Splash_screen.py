@@ -5,7 +5,7 @@ from utils.image import image
 from utils.license import is_license_valid
 from utils.update_checker import check_for_update
 
-APP_VERSION = "1.1.2"
+APP_VERSION = "1.2.2"
 
 class SplashScreen:
     def __init__(self, root, on_finish):

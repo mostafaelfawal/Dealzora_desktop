@@ -1,5 +1,6 @@
 import requests
-import subprocess
+import os
+import sys
 import threading
 from utils.image import image
 from customtkinter import CTkLabel, CTkButton, CTkFrame, CTkProgressBar
@@ -137,7 +138,10 @@ class UpdateModal:
             r = requests.get(self.url, stream=True)
             total_size = int(r.headers.get("content-length", 0))
             downloaded = 0
-            with open("Dealzora_update.exe", "wb") as f:
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            temp_update = os.path.join(project_root, "Dealzora_new.exe")
+            print("Temp update path:", temp_update)
+            with open(temp_update, "wb") as f:
                 for chunk in r.iter_content(chunk_size=1024 * 64):
                     if chunk:
                         f.write(chunk)
@@ -163,15 +167,17 @@ class UpdateModal:
         self.percent_label.configure(text="تم التحميل ✓")
         self.size_label.configure(text="")
 
-        import os
-        import sys
         import subprocess
-
-        app_dir = os.path.dirname(sys.executable)
-        updater_path = os.path.join(app_dir, "Dealzora_updater.exe")
+        import os
+        # المسار الكامل للملف
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        updater_path = os.path.join(project_root, "Dealzora_update.exe")
+        if not os.path.exists(updater_path):
+            from tkinter import messagebox
+            messagebox.showerror("تحديث فشل", "ملف التحديث Dealzora_update.exe غير موجود!")
+            return
 
         subprocess.Popen(updater_path)
-
         self.root.after(500, self.root.quit())
 
     def destroy(self):
