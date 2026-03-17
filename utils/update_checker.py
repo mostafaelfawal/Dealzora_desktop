@@ -1,6 +1,6 @@
 import requests
 
-VERSION_URL = "https://raw.githubusercontent.com/mostafaelfawal/Dealzora_desktop/main/version.json"
+VERSION_URL = "https://raw.githubusercontent.com/mostafaelfawal/Dealzora_desktop/refs/heads/main/version.json"
 APP_VERSION = "1.2.2"
 
 
