@@ -3,8 +3,9 @@ from tkinter.messagebox import showinfo
 from utils.image import image
 from utils.backup_database import backup_database
 
+
 class BackupButton:
-    def __init__(self, parent):
+    def __init__(self, parent, save_path):
         CTkButton(
             parent,
             text="نسخ احتياطي للبيانات",
@@ -13,8 +14,5 @@ class BackupButton:
             hover_color="#1b92c2",
             font=("Cairo", 20, "bold"),
             image=image("assets/backup_db.png"),
-            command=lambda: (
-                backup_database(),
-                showinfo("تم", "تم عمل نسخة احتياطية\nفي ملف backup/dealzora.db"),
-            ),
+            command=lambda: (backup_database(save_path, True),),
         ).pack(side="left", padx=5)

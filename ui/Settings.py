@@ -8,9 +8,13 @@ from customtkinter import (
     CTkCheckBox,
     StringVar,
     BooleanVar,
+    CTkSwitch,
     set_appearance_mode,
 )
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
+import shutil
+import os
+
 import win32print
 from components.UploadImage import UploadImage
 from components.BackupButton import BackupButton
@@ -59,6 +63,9 @@ class Settings:
         # ======= قسم الطباعة =======
         self.create_print_section()
 
+        # ======= قسم النسخ الاحتياطي =======
+        self.create_backup_section()
+
         # ======= زر حفظ نهائي =======
         CTkButton(
             self.content_frame,
@@ -70,15 +77,6 @@ class Settings:
             height=40,
             corner_radius=10,
         ).pack(pady=(20, 30))
-        backup_frame = CTkFrame(self.content_frame, fg_color="transparent")
-        backup_frame.pack(pady=10)
-        CTkLabel(
-            backup_frame,
-            text="! يتم عمل نسخ احتياطي تلقائي للبيانات",
-            text_color=("#9B9B9B", "#616161"),
-            font=("Cairo", 16, "bold"),
-        ).pack(side="right")
-        BackupButton(backup_frame)
 
     # ---------- أقسام منفصلة ----------
     def create_logo_section(self):
@@ -166,7 +164,7 @@ class Settings:
             border_width=2,
         )
         copies_entry.pack(fill="x")
-        
+
         # ===== الطباعة التلقائية =====
         auto_print_var = BooleanVar(value=self.settings.get("auto_print", True))
         self.vars["auto_print"] = auto_print_var
@@ -215,6 +213,119 @@ class Settings:
             "theme",
         )
 
+    def create_backup_section(self):
+        backup_section = CTkFrame(
+            self.content_frame, fg_color=("gray90", "gray20"), corner_radius=15
+        )
+        backup_section.pack(fill="x", padx=10, pady=(0, 20))
+
+        CTkLabel(
+            backup_section,
+            text="النسخ الاحتياطي",
+            font=("Cairo", 22, "bold"),
+            text_color="#2b7de9",
+        ).pack(pady=(15, 20))
+
+        container = CTkFrame(backup_section, fg_color="transparent")
+        container.pack(fill="x", padx=30, pady=(0, 20))
+
+        # ===== Switch النسخ التلقائي =====
+        auto_backup_var = BooleanVar(value=self.settings.get("auto_backup", False))
+        self.vars["auto_backup"] = auto_backup_var
+
+        CTkSwitch(
+            container,
+            text="تفعيل النسخ الاحتياطي التلقائي",
+            variable=auto_backup_var,
+            font=("Cairo", 16),
+        ).pack(anchor="e", pady=(0, 15))
+
+        # ===== مسار حفظ النسخ الاحتياطي =====
+        CTkLabel(
+            container,
+            text=":مسار حفظ النسخ الاحتياطية",
+            font=("Cairo", 18),
+            anchor="e",
+        ).pack(anchor="e", pady=(0, 5))
+
+        path_container = CTkFrame(container, fg_color="transparent")
+        path_container.pack(fill="x", pady=(0, 15))
+
+        backup_path_var = StringVar(value=self.settings.get("backup_path", "backup"))
+        self.vars["backup_path"] = backup_path_var
+
+        backup_path_entry = CTkEntry(
+            path_container,
+            textvariable=backup_path_var,
+            font=("Cairo", 14),
+            height=40,
+            corner_radius=8,
+            border_width=2,
+        )
+        backup_path_entry.pack(side="right", fill="x", expand=True, padx=(5, 0))
+
+        CTkButton(
+            path_container,
+            text="استعراض",
+            font=("Cairo", 14),
+            width=80,
+            height=40,
+            command=lambda: self.browse_backup_path(backup_path_var),
+        ).pack(side="left")
+
+        # ===== أزرار النسخ والاستعادة =====
+        buttons_container = CTkFrame(container, fg_color="transparent")
+        buttons_container.pack(fill="x", pady=10)
+
+        # ===== زر استعادة البيانات =====
+        CTkButton(
+            buttons_container,
+            text="استعادة البيانات",
+            font=("Cairo", 16, "bold"),
+            fg_color="#f39c12",
+            hover_color="#d68910",
+            command=self.restore_database,
+            image=image("assets/data-recovery.png"),
+            height=40,
+            corner_radius=10,
+        ).pack(side="right", padx=5, pady=10)
+
+        # ===== زر النسخ الاحتياطي اليدوي =====
+        BackupButton(buttons_container, self.settings.get("backup_path", "backup"))
+
+    def browse_backup_path(self, path_var):
+        """فتح نافذة اختيار المجلد"""
+        folder_selected = filedialog.askdirectory(
+            title="اختر مجلد لحفظ النسخ الاحتياطية"
+        )
+        if folder_selected:
+            path_var.set(folder_selected)
+
+    def restore_database(self):
+        file_path = filedialog.askopenfilename(
+            title="اختر ملف قاعدة البيانات",
+            filetypes=[("Database Files", "*.db")],
+        )
+
+        if not file_path:
+            return
+
+        try:
+            db_folder = "db"
+            target_db = os.path.join(db_folder, "dealzora.db")
+
+            if not os.path.exists(db_folder):
+                os.makedirs(db_folder)
+
+            shutil.copy(file_path, target_db)
+
+            messagebox.showinfo(
+                "تم", "تم استعادة البيانات بنجاح\nيرجى إعادة تشغيل البرنامج"
+            )
+
+        except Exception as e:
+            messagebox.showerror("خطأ", f"فشل استعادة البيانات\n{str(e)}")
+
     # ---------- إضافة الحقول ----------
     def add_field(self, parent, label_text, value, var_name):
         frame = CTkFrame(parent, fg_color="transparent")
@@ -258,7 +369,7 @@ class Settings:
             dropdown_font=("Cairo", 14),
         )
         combo.pack(fill="x")
-        
+
     # ------- مساعدة ----------
     def get_printers(self):
         printers = []
@@ -300,6 +411,8 @@ class Settings:
                 self.vars["printer_name"].get(),
                 copies,
                 self.vars["auto_print"].get(),
+                self.vars["auto_backup"].get(),
+                self.vars["backup_path"].get(),  # إضافة مسار النسخ الاحتياطي
             )
 
             # ======= تطبيق الـ Theme فوراً =======

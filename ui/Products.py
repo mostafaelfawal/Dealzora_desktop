@@ -13,7 +13,6 @@ from utils.import_products import import_products
 from utils.export_products import export_products
 from utils.get_stock_tag import get_stock_tag
 from components.TreeView import TreeView
-from components.BackupButton import BackupButton
 from components.ProductModal import ProductModal
 
 

@@ -1,10 +1,12 @@
 {
-    "shop_name": "ماركت الطراوي",
+    "shop_name": "DEALZORA",
     "currency": "ج.م",
     "tax": 0.0,
-    "theme": "dark",
-    "logo_path": "C:/Users/DELL/Pictures/I/7.png",
-    "printer_name": "Microsoft Print to PDF",
+    "theme": "system",
+    "logo_path": "assets/icon.png",
+    "printer_name": "Microsoft XPS Document Writer",
     "invoices_per_print": 1,
-    "auto_print": true
+    "auto_print": true,
+    "auto_backup": false,
+    "backup_path": "D:/my_softweres/desktop/Dealzora Project/Dealzora/backup"
 }

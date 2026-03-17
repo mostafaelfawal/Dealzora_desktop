@@ -3,6 +3,7 @@ from sqlite3 import connect
 from os import makedirs
 from layout import Layout
 from utils.backup_database import backup_database
+from utils.load_font import load_font
 from utils.trial import init_trial
 from ui.Splash_screen import SplashScreen
 
@@ -38,11 +39,15 @@ class Dealzora:
         self.root.iconbitmap("icon.ico")
 
         set_appearance_mode("dark")
+        # Load Fonts
+        load_font("assets/fonts/Cairo-Regular.ttf")
+        load_font("assets/fonts/Cairo-Bold.ttf")
 
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
 
     def on_close(self):
-        backup_database()
+        if self.settings.get_setting("auto_backup"):
+            backup_database(self.settings.get("backup_path", "backup"))
         self.root.destroy()
 
     def init_db(self):
