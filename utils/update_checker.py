@@ -1,7 +1,7 @@
 import requests
 
 VERSION_URL = "https://raw.githubusercontent.com/mostafaelfawal/Dealzora_desktop/main/version.json"
-APP_VERSION = "1.1.1"
+APP_VERSION = "1.1.2"
 
 
 def check_for_update():

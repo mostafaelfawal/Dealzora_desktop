@@ -14,7 +14,7 @@ class UpdateModal:
 
         self.overlay = None
         self.frame = None
-        self.disabled_widgets = []  
+        self.disabled_widgets = []
         self.progress_bar = None
         self.percent_label = None
         self.size_label = None
@@ -27,7 +27,7 @@ class UpdateModal:
         self.overlay = CTkFrame(self.root, fg_color="#000000")
         self.overlay.place(relx=0, rely=0, relwidth=1, relheight=1)
         self.overlay.lift()
-       
+
         # تعطيل كل عناصر self.root ماعدا overlay نفسه
         for widget in self.root.winfo_children():
             if widget != self.overlay:
@@ -39,8 +39,12 @@ class UpdateModal:
 
         # Frame التحديث في المنتصف
         self.frame = CTkFrame(
-            self.overlay, width=450, height=360, corner_radius=15,
-            border_width=2, border_color="#00a0df"
+            self.overlay,
+            width=450,
+            height=360,
+            corner_radius=15,
+            border_width=2,
+            border_color="#00a0df",
         )
         self.frame.place(relx=0.5, rely=0.5, anchor="center")
 
@@ -84,7 +88,9 @@ class UpdateModal:
         self.percent_label.pack(pady=5)
         self.percent_label.pack_forget()
 
-        self.size_label = CTkLabel(progress_frame, text="...جاري معاينة الرابط", font=("Cairo", 14, "bold"))
+        self.size_label = CTkLabel(
+            progress_frame, text="...جاري معاينة الرابط", font=("Cairo", 14, "bold")
+        )
         self.size_label.pack()
         self.size_label.pack_forget()
 
@@ -156,8 +162,17 @@ class UpdateModal:
     def finish_update(self):
         self.percent_label.configure(text="تم التحميل ✓")
         self.size_label.configure(text="")
-        subprocess.Popen("Dealzora_update.exe")
-        self.destroy()
+
+        import os
+        import sys
+        import subprocess
+
+        app_dir = os.path.dirname(sys.executable)
+        updater_path = os.path.join(app_dir, "Dealzora_updater.exe")
+
+        subprocess.Popen(updater_path)
+
+        self.root.after(500, self.root.quit())
 
     def destroy(self):
         # إعادة تفعيل العناصر

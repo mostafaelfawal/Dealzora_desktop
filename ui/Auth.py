@@ -16,6 +16,7 @@ class Auth:
         self.root = root
         self.on_success = on_success
         self.users_db = users_db
+        self.show_password = False
         self.setup_window()
         self.create_widgets()
 
@@ -92,12 +93,21 @@ class Auth:
             height=45,
             font=("Cairo", 14),
             border_width=2,
+            text_color="#ffffff",
             border_color="#3d3d3d",
             fg_color="#262626",
             placeholder_text_color="#808080",
         )
         self.password_entry.pack(side="left", fill="x", expand=True)
-
+        self.show_password_btn = CTkButton(
+            self.password_frame,
+            text="اظهار",
+            width=0,
+            font=("Cairo", 12,"bold"),
+            command=self.toggle_password_visibility
+        )
+        self.show_password_btn.pack(side="right", padx=(10, 0))
+        
         # حقل الدور مع تصميم أنيق
         self.role_frame = CTkFrame(self.glass_frame, fg_color="transparent")
         self.role_frame.pack(pady=20, padx=40, fill="x")
@@ -151,6 +161,16 @@ class Auth:
         # تعيين التركيز على حقل كلمة المرور
         self.password_entry.focus()
 
+    def toggle_password_visibility(self):
+        """تبديل رؤية كلمة المرور"""
+        self.show_password = not self.show_password
+        if self.show_password:
+            self.password_entry.configure(show="")
+            self.show_password_btn.configure(text="إخفاء")
+        else:
+            self.password_entry.configure(show="•")
+            self.show_password_btn.configure(text="إظهار")
+            
     def login(self):
         """وظيفة تسجيل الدخول"""
         if not self.password_entry.winfo_exists():
@@ -196,7 +216,7 @@ class Auth:
 
     def help_click(self):
         """معالج المساعدة"""
-        help_text = """مرحباً بك في نظام Dealzora 1.1.1v
+        help_text = """مرحباً بك في نظام Dealzora 1.1.2v
 
 للاستفسار:
 armostafa982@gmail.com 

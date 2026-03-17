@@ -26,16 +26,18 @@ class Dealzora:
         
         SplashScreen(self.root, self.start_app)
         
-
     def start_app(self):
         from ui.Auth import Auth
         Auth(self.root, lambda uid: self.on_success(uid), self.users_db)
 
     def init_window(self):
         self.root.title("Dealzora | Basic")
-        self.root.geometry("650x500")
+        w = self.root.winfo_screenwidth()
+        h = self.root.winfo_screenheight()
+        self.root.geometry(f"{w}x{h}+0+0")
         self.root.iconbitmap("icon.ico")
-        set_appearance_mode("system")
+
+        set_appearance_mode("dark")
 
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
 
