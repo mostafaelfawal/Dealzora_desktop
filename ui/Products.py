@@ -30,13 +30,35 @@ class Products:
 
         self.reload_products_view()
 
+        header = CTkFrame(self.root, fg_color="transparent")
+        header.pack(padx=10, pady=10)
+
         CTkLabel(
-            self.root,
+            header,
             text="إدارة المنتجات",
             image=image("assets/products.png"),
             font=("Cairo", 40, "bold"),
             compound="left",
-        ).pack(padx=10, pady=10)
+        ).pack(side="right", padx=10, pady=10)
+
+        message = """
+لتحكم اسرع:
+Ctrl+A -> على جدول المنتجات لتحديد كل المنتجات
+Ctrl+Shift+A -> على جدول المنتجات لأزالة تحديد كل المنتجات
+Home -> على جدول المنتجات للوصول لأول منتج 
+End -> على جدول المنتجات للوصل الى اخر منتج
+Insert -> على منتج في جدول المنتجات لأضافة منتج جديد
+(Delete او Ctrl+D) -> على منتج في جدول المنتجات يتم حذف المنتج
+(Enter او ضغطتين ماوس) -> على منتج في جدول المنتجات يتم فتح نافذة تعديل المنتج
+        """
+        CTkButton(
+            header,
+            text="",
+            image=image("assets/information.png"),
+            width=0,
+            corner_radius=50,
+            command=lambda: messagebox.showinfo("معلومات | ادارة المنتجات", message),
+        ).pack(side="right", padx=5, pady=5)
 
         self.init_search_frame()
         self.init_products_table()

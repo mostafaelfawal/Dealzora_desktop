@@ -22,15 +22,37 @@ class Customers:
         self.customer_selected_phone = ""
         self.search_after_id = None
         self.filter_debt = StringVar(value="الكل")
+        
+        header = CTkFrame(self.root, fg_color="transparent")
+        header.pack(padx=10, pady=10)
 
         # عنوان الواجهة
         CTkLabel(
-            self.root,
+            header,
             text="إدارة العملاء",
             image=image("assets/customers.png"),
             font=("Cairo", 40, "bold"),
             compound="left",
-        ).pack(padx=10, pady=10)
+        ).pack(side="right", padx=10, pady=10)
+        
+        message = """
+لتحكم اسرع:
+Ctrl+A -> على جدول العملاء لتحديد كل العملاء
+Ctrl+Shift+A -> على جدول العملاء لأزالة تحديد كل العملاء
+Home -> على جدول العملاء للوصول لأول عميل 
+End -> على جدول العملاء للوصل الى اخر عميل
+Insert -> على عميل في جدول العملاء لأضافة عميل جديد
+(Delete او Ctrl+D) -> على عميل في جدول العملاء يتم حذف العميل
+(Enter او ضغطتين ماوس) -> على عميل في جدول العملاء يتم فتح نافذة تعديل العميل
+        """
+        CTkButton(
+            header,
+            text="",
+            image=image("assets/information.png"),
+            width=0,
+            corner_radius=50,
+            command=lambda: messagebox.showinfo("معلومات | ادارة العملاء", message),
+        ).pack(side="right", padx=5, pady=5)
 
         self.init_search_frame()
         self.init_customers_table()

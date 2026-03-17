@@ -11,7 +11,7 @@ class SettingsModel:
             "shop_name": "DEALZORA",
             "currency": "ج.م",
             "tax": 0,
-            "theme": "system",
+            "theme": "dark",
             "logo_path": "assets/icon.png",
             "printer_name": "",
             "invoices_per_print": 1,

@@ -119,6 +119,32 @@ class Sale:
         )
         self.date_label.pack(side="right", padx=5, pady=5)
 
+        message = """
+على مربع البحث
+تقدر تضيف منتجات عبر قارئ الباركود او البحث بأسم المنتج
+تصفية جدول المنتجات حسب الفئة على مربع الفئات
+لتحكم اسرع:
+Enter -> على جدول المنتجات لأضافة المنتج او ضغطتين على الماوس
+Ctrl+A -> على جدول المنتجات لتحديد كل المنتجات في جدول المنتجات
+Ctrl+Shift+A -> على جدول المنتجات لأزالة تحديد كل المنتجات في جدول المنتجات
+Home -> على جدول المنتجات للوصول لأول منتج من جدول المنتجات
+End -> على جدول المنتجات للوصل الى اخر منتج من جدول المنتجات
+(Delete او Ctrl+D) -> على حقل ادخال كمية المنتج يتم حذف المنتج من السله
+(+ او ↑) -> على حقل ادخال كمية المنتج لزيادة كمية المنتج
+(- او ↓) -> على حقل ادخال كمية المنتج لتقليل كمية المنتج
+---------------------------------------------------------------------------
+يتم اضافة الديون تلقائيا للعملاء الذين لم يدفعوا مبلغ الفاتوره بالكامل
+ان كان العميل دائن و ليس مديون لك سيتم خصم المطلوب منه من رصيده المسجل
+        """
+        CTkButton(
+            toolbar,
+            text="",
+            image=image("assets/information.png"),
+            width=0,
+            corner_radius=50,
+            command=lambda: messagebox.showinfo("معلومات | واجهة البيع", message)
+        ).pack(side="right", padx=5, pady=5)
+
     def build_products_section(self):
         container = CTkFrame(
             self.root, border_width=1, border_color="#dddddd", corner_radius=8
@@ -703,9 +729,7 @@ class Sale:
         self.subtotal_label.configure(
             text=f"الإجمالي الفرعي: {format_currency(subtotal)}"
         )
-        self.total_label.configure(
-            text=f"الإجمالي النهائي: {format_currency(total)}"
-        )
+        self.total_label.configure(text=f"الإجمالي النهائي: {format_currency(total)}")
         return total
 
     # =============================
@@ -879,17 +903,19 @@ class Sale:
             if auto_print:
                 try:
                     sale_data = {
-                        'subtotal': subtotal,
-                        'discount': discount,
-                        'tax': tax,
-                        'total': total,
-                        'paid': float(paid_var.get()),
-                        'remaining': float(paid_var.get()) - total
+                        "subtotal": subtotal,
+                        "discount": discount,
+                        "tax": tax,
+                        "total": total,
+                        "paid": float(paid_var.get()),
+                        "remaining": float(paid_var.get()) - total,
                     }
                     self.print_invoice(sale_data)
                 except Exception as e:
-                    messagebox.showwarning("تحذير", f"تم حفظ الفاتورة لكن فشلت الطباعة: {e}")
-                    
+                    messagebox.showwarning(
+                        "تحذير", f"تم حفظ الفاتورة لكن فشلت الطباعة: {e}"
+                    )
+
         def confirm():
             if not is_number(paid_var.get()) or float(paid_var.get()) < 0:
                 messagebox.showerror("خطأ", "الرجاء إدخال رقم صحيح")
@@ -956,7 +982,7 @@ class Sale:
                 # حفظ عناصر الفاتورة
                 # ======================
                 self.sale_items_db.add_sale_items(sale_id, sale_items_data)
-                
+
                 # ======================
                 # طباعة الفاتورة
                 # ======================
@@ -1182,30 +1208,32 @@ class Sale:
 
             # تجهيز بيانات الفاتورة
             invoice_data = {
-                'invoice_number': self.invoice_number,
-                'date': strftime("%Y-%m-%d"),
-                'time': strftime("%I:%M %p"),
-                'customer_name': self.customer_var.get(),
-                'subtotal': sale_data['subtotal'],
-                'discount': sale_data['discount'],
-                'tax': sale_data['tax'],
-                'total': sale_data['total'],
-                'paid': sale_data['paid'],
-                'remaining': sale_data['remaining']
+                "invoice_number": self.invoice_number,
+                "date": strftime("%Y-%m-%d"),
+                "time": strftime("%I:%M %p"),
+                "customer_name": self.customer_var.get(),
+                "subtotal": sale_data["subtotal"],
+                "discount": sale_data["discount"],
+                "tax": sale_data["tax"],
+                "total": sale_data["total"],
+                "paid": sale_data["paid"],
+                "remaining": sale_data["remaining"],
             }
-            
+
             # تجهيز بيانات المنتجات
             products = []
             for p in self.selected_products:
-                products.append({
-                    'name': p['name'],
-                    'price': p['price'],
-                    'qty': p['qty'],
-                    'total': p['price'] * p['qty']
-                })
-            
+                products.append(
+                    {
+                        "name": p["name"],
+                        "price": p["price"],
+                        "qty": p["qty"],
+                        "total": p["price"] * p["qty"],
+                    }
+                )
+
             # طباعة الفاتورة
             print_shop_invoice(invoice_data, products)
-            
+
         except Exception as e:
             messagebox.showwarning("تحذير", f"حدث خطأ في الطباعة: {e}")

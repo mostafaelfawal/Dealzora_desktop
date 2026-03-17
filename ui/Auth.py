@@ -119,7 +119,7 @@ class Auth:
         user_icon.pack(side="left", padx=(0, 10))
 
         # قائمة الخيارات المنسدلة للدور
-        self.role_var = StringVar(value="اختر الدور")
+        self.role_var = StringVar()
         self.role_menu = CTkOptionMenu(
             self.role_frame,
             variable=self.role_var,
@@ -182,10 +182,6 @@ class Auth:
             self.show_error("❌ خطأ", "الرجاء إدخال كلمة المرور")
             return
 
-        if role == "اختر الدور":
-            self.show_error("❌ خطأ", "الرجاء اختيار المستخدم")
-            return
-
         user_name = role.split(" ~ ")[0]
         user = self.users_db.verify_login(user_name, password)
         if user:
@@ -204,7 +200,9 @@ class Auth:
             if roles_count > 2:
                 roles = f"{', '.join(roles_list[:2])} +اضافية{roles_count-2}"
             users.append(f"{u[1]} ~ {roles}")
+
         self.role_menu.configure(values=users)
+        self.role_var.set(users[0])
 
     def show_error(self, title, message):
         """عرض رسالة خطأ"""

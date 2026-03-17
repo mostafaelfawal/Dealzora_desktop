@@ -1,11 +1,11 @@
 from customtkinter import CTkButton
-from tkinter.messagebox import showinfo
 from utils.image import image
 from utils.backup_database import backup_database
 
 
 class BackupButton:
-    def __init__(self, parent, save_path):
+    def __init__(self, parent, get_save_path_callback):
+        self.get_save_path_callback = get_save_path_callback
         CTkButton(
             parent,
             text="نسخ احتياطي للبيانات",
@@ -14,5 +14,9 @@ class BackupButton:
             hover_color="#1b92c2",
             font=("Cairo", 20, "bold"),
             image=image("assets/backup_db.png"),
-            command=lambda: (backup_database(save_path, True),),
+            command=self.handle_backup,
         ).pack(side="left", padx=5)
+
+    def handle_backup(self):
+        path = self.get_save_path_callback()
+        backup_database(path, True)

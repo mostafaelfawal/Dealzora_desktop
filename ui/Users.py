@@ -11,14 +11,36 @@ class UsersManagement:
     def __init__(self, parent, users_db):
         self.parent = parent
         self.users_db = users_db
+
+        header = CTkFrame(self.parent, fg_color="transparent")
+        header.pack(padx=10, pady=10)
+
         CTkLabel(
-            self.parent,
+            header,
             text="ادارة المستخدمين",
             image=image("assets/users.png", (40, 40)),
             font=("Cairo", 36, "bold"),
             compound="right",
             text_color="#2b7de9",
-        ).pack()
+        ).pack(side="right", padx=5, pady=5)
+        message = """
+لتحكم اسرع:
+Ctrl+A -> على جدول المستخدمين لتحديد كل المستخدمين
+Ctrl+Shift+A -> على جدول المستخدمين لأزالة تحديد كل المستخدمين
+Home -> على جدول المستخدمين للوصول لأول مستخدم 
+End -> على جدول المستخدمين للوصل الى اخر مستخدم 
+Insert -> على مستخدم في جدول المستخدمين لأضافة مستخدم جديد
+Delete -> على مستخدم في جدول المستخدمين يتم حذف المستخدم
+(Enter او ضغطتين ماوس) -> على مستخدم في جدول المستخدمين يتم فتح نافذة تعديل المستخدم
+        """
+        CTkButton(
+            header,
+            text="",
+            image=image("assets/information.png"),
+            width=0,
+            corner_radius=50,
+            command=lambda: messagebox.showinfo("معلومات | ادارة المستخدمين", message),
+        ).pack(side="right", padx=5, pady=5)
 
         # إطارات رئيسية
         self.setup_ui()
@@ -126,7 +148,6 @@ class UsersManagement:
 
     def setup_keyboard_shortcuts(self):
         """إعداد اختصارات لوحة المفاتيح"""
-        key_shortcut(self.tree_view.tree, "<F2>", self.open_edit_user_dialog)
         key_shortcut(self.tree_view.tree, "<Insert>", self.open_add_user_dialog)
 
     def load_users(self):

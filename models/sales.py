@@ -59,3 +59,14 @@ class SalesModel:
             (total, sale_id),
         )
         self.con.commit()
+        
+    def update_sale_full(self, sale_id, total, discount, tax, paid, change):
+        self.cur.execute(
+            """
+            UPDATE sales
+            SET total=?, discount=?, tax=?, paid=?, change=?
+            WHERE id=?
+            """,
+            (total, discount, tax, paid, change, sale_id),
+        )
+        self.con.commit()

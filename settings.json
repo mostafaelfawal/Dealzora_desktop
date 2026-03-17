@@ -2,11 +2,11 @@
     "shop_name": "DEALZORA",
     "currency": "ج.م",
     "tax": 0.0,
-    "theme": "system",
+    "theme": "dark",
     "logo_path": "assets/icon.png",
     "printer_name": "Microsoft XPS Document Writer",
     "invoices_per_print": 1,
-    "auto_print": true,
-    "auto_backup": false,
-    "backup_path": "D:/my_softweres/desktop/Dealzora Project/Dealzora/backup"
+    "auto_print": false,
+    "auto_backup": true,
+    "backup_path": "D:/my_softweres/desktop"
 }

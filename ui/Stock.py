@@ -45,6 +45,7 @@ class Stock:
 
         self.refresh_categories()
         self.refresh_table()
+        self.setup_keyboard_shortcuts()
 
     # ================= HEADER =================
     def build_header(self):
@@ -70,6 +71,28 @@ class Stock:
             compound="left",
             text_color="#2b7de9",
         ).pack(side="right")
+        
+        message = """
+لتحكم اسرع:
+Ctrl+A -> على جدول المنتجات لتحديد كل المنتجات
+Ctrl+Shift+A -> على جدول المنتجات لأزالة تحديد كل المنتجات
+Home -> على جدول المنتجات للوصول لأول منتج 
+End -> على جدول المنتجات للوصل الى اخر منتج 
+(Enter او ضغطتين ماوس) -> على منتج في جدول المنتجات يتم فتح نافذة تعديل المنتج
+L -> على جدول المنتجات لعرض المنتجات المنخفضة فقط
+N -> على جدول المنتجات لفتح نافذة فاتورة شراء جديدة
+S -> على جدول المنتجات لفتح نافذة ادارة الموردين
+T -> على جدول المنتجات لفتح نافذة حركات المخزون
+Insert -> على جدول المنتجات لأضافة منتج جديد
+        """
+        CTkButton(
+            header_frame,
+            text="",
+            image=image("assets/information.png"),
+            width=0,
+            corner_radius=50,
+            command=lambda: messagebox.showinfo("معلومات | ادارة المخزون", message),
+        ).pack(side="right", padx=5, pady=5)
 
     # ================= STATS =================
     def build_stats(self):
@@ -485,3 +508,10 @@ class Stock:
             pid,
             on_success=self.filter_products,
         )
+
+    def setup_keyboard_shortcuts(self):
+        key_shortcut(self.tree.tree, ["<L>", "<l>"], self.show_low_stock)
+        key_shortcut(self.tree.tree, "<Insert>", self.open_product_window)
+        key_shortcut(self.tree.tree, ["<N>", "<n>"], self.open_buy_invoice_window)
+        key_shortcut(self.tree.tree, ["<S>", "<s>"], self.open_supplier_window)
+        key_shortcut(self.tree.tree, ["<T>", "<t>"], self.open_stock_movements)

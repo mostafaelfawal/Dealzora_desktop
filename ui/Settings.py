@@ -49,8 +49,10 @@ class Settings:
         self.settings = self.settings_db.get_settings()
 
         # ======= Scrollable Frame للمحتوى =======
+        h = self.root.winfo_screenheight() - 270
+        w = self.root.winfo_screenwidth() - 300
         self.content_frame = CTkScrollableFrame(
-            self.root, fg_color="transparent", height=600, width=550
+            self.root, fg_color="transparent", height=h, width=w
         )
         self.content_frame.pack(fill="x")
 
@@ -68,7 +70,7 @@ class Settings:
 
         # ======= زر حفظ نهائي =======
         CTkButton(
-            self.content_frame,
+            self.root,
             text="حفظ الإعدادات",
             font=("Cairo", 16, "bold"),
             fg_color="#00be8f",
@@ -291,8 +293,11 @@ class Settings:
         ).pack(side="right", padx=5, pady=10)
 
         # ===== زر النسخ الاحتياطي اليدوي =====
-        BackupButton(buttons_container, self.settings.get("backup_path", "backup"))
+        BackupButton(buttons_container, self.get_save_backup_path)
 
+    def get_save_backup_path(self):
+        return self.vars["backup_path"].get()
+    
     def browse_backup_path(self, path_var):
         """فتح نافذة اختيار المجلد"""
         folder_selected = filedialog.askdirectory(

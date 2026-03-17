@@ -47,7 +47,7 @@ class Dealzora:
 
     def on_close(self):
         if self.settings.get_setting("auto_backup"):
-            backup_database(self.settings.get("backup_path", "backup"))
+            backup_database(self.settings.get_setting("backup_path"))
         self.root.destroy()
 
     def init_db(self):

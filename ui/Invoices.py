@@ -41,15 +41,35 @@ class Invoices:
 
         # البيانات
         self.invoices = self.get_invoices_with_details()
+        
+        header = CTkFrame(self.root, fg_color="transparent")
+        header.pack(padx=10, pady=10)
 
         # العنوان
         CTkLabel(
-            self.root,
-            text="الفواتير",
+            header,
+            text=f"الفواتير ({len(self.invoices)})",
             image=image("assets/invoices.png", (40, 40)),
             font=("Cairo", 40, "bold"),
             compound="left",
-        ).pack(padx=10, pady=10)
+        ).pack(side="right", padx=10, pady=10)
+        
+        message = """
+لتحكم اسرع:
+Ctrl+A -> على جدول الفواتير لتحديد كل الفواتير
+Ctrl+Shift+A -> على جدول الفواتير لأزالة تحديد كل الفواتير
+Home -> على جدول الفواتير للوصول لأول فاتورة 
+End -> على جدول الفواتير للوصل الى اخر فاتورة
+(Enter او ضغطتين ماوس) -> على فاتورة في جدول الفواتير يتم عرض الفاتورة
+        """
+        CTkButton(
+            header,
+            text="",
+            image=image("assets/information.png"),
+            width=0,
+            corner_radius=50,
+            command=lambda: messagebox.showinfo("معلومات | ادارة الفواتير", message),
+        ).pack(side="right", padx=5, pady=5)
 
         self.init_search_bar()
         self.init_invoices_table()
@@ -346,18 +366,173 @@ class Invoices:
         self.payment_status.set("الكل")
         self.refresh_table()
 
-    def show_invoice_details(self, event=None):
+    def editable_row(
+        self,
+        master,
+        parent,
+        label,
+        db_key,
+        value,
+        invoice_id,
+        editable=True,
+        color=("#000000", "#ffffff"),
+    ):
+        """دالة مساعدة لإنشاء صف قابل للتعديل"""
+        row = CTkFrame(parent, fg_color="transparent")
+        row.pack(fill="x", padx=10, pady=3)
+
+        edit_img = image("assets/edit.png", (20, 20))
+        check_img = image("assets/checked.png", (20, 20))
+        cancel_img = image("assets/cancel.png", (20, 20))
+
+        value_var = StringVar(value=str(value))
+
+        # إنشاء إطار للعناصر التي ستتغير (القيمة والمدخل)
+        value_frame = CTkFrame(row, fg_color="transparent")
+        value_frame.pack(side="left")
+
+        # قيمة العرض
+        value_label = CTkLabel(
+            value_frame,
+            text=format_currency(value),
+            font=("Arial", 16, "bold"),
+            text_color=color,
+        )
+        value_label.pack(side="left")
+
+        # حقل الإدخال (مخفي في البداية)
+        entry = CTkEntry(value_frame, textvariable=value_var, width=100)
+        entry.pack_forget()
+
+        # زر التعديل/الحفظ
+        edit_btn = CTkButton(
+            row,
+            text="",
+            image=edit_img,
+            width=40,
+            fg_color="transparent",
+            hover_color="#1471bd",
+        )
+        edit_btn.pack(side="left", padx=5)
+
+        # زر الإلغاء
+        cancel_btn = CTkButton(
+            row,
+            text="",
+            image=cancel_img,
+            fg_color="transparent",
+            hover_color="#dc2626",
+            width=40,
+        )
+        cancel_btn.pack_forget()
+
+        def enable_edit():
+            value_label.pack_forget()
+            entry.pack(side="left")
+
+            edit_btn.pack_forget()
+            cancel_btn.pack(side="left", padx=5)
+
+            edit_btn.configure(
+                image=check_img,
+                hover_color="#50B300",
+                command=save_edit,
+            )
+            edit_btn.pack(side="left", padx=5)
+
+        def cancel_edit():
+            entry.pack_forget()
+            value_label.pack(side="left")
+
+            cancel_btn.pack_forget()
+
+            edit_btn.configure(
+                image=edit_img,
+                hover_color="#1471bd",
+                command=enable_edit,
+            )
+            value_var.set(str(value))
+
+        def save_edit():
+            if not is_number(value_var.get()):
+                return messagebox.showerror("خطأ", "رقم غير صحيح")
+
+            new_val = float(value_var.get())
+
+            sale = self.invoices_db.get_sale(invoice_id)
+            if not sale:
+                return
+
+            items = self.sale_items_db.get_sale_items(invoice_id)
+            original_subtotal = sum([float(item[5]) for item in items])  # item[5] هو total
+
+            # قيم من قاعدة البيانات
+            discount = float(sale[3])
+            tax = float(sale[4])
+            paid = float(sale[5])
+
+            # تحديث القيم حسب اللي عدلت
+            if db_key == "discount":
+                discount = new_val
+            elif db_key == "tax":
+                tax = new_val
+            elif db_key == "paid":
+                paid = new_val
+
+            final_total = (original_subtotal - discount) + tax
+            change = final_total - paid
+
+            # حفظ في قاعدة البيانات
+            self.invoices_db.update_sale_full(
+                invoice_id, final_total, discount, tax, paid, change
+            )
+
+            entry.pack_forget()
+            cancel_btn.pack_forget()
+            value_label.configure(text=format_currency(new_val))
+            value_label.pack(side="left")
+
+            edit_btn.configure(
+                image=edit_img,
+                hover_color="#1471bd",
+                command=enable_edit,
+            )
+
+            # تحديث البيانات
+            self.invoices = self.get_invoices_with_details()
+            # تحديث النافذة الحالية (master هو dialog)
+            master.destroy()
+            self.show_invoice_details(invoice_id=invoice_id)
+            self.refresh_table()
+
+        if editable:
+            edit_btn.configure(command=enable_edit)
+            cancel_btn.configure(command=cancel_edit)
+        else:
+            edit_btn.configure(state="disabled")
+            cancel_btn.configure(state="disabled")
+
+        CTkLabel(row, text=label, font=("Arial", 16)).pack(side="right")
+
+        return row
+
+    def show_invoice_details(
+        self,
+        invoice_id=None,
+        event=None,
+    ):
         """عرض تفاصيل الفاتورة في نافذة منبثقة"""
+        if not invoice_id:
+            selected = self.tree.tree.selection()
+            if not selected:
+                return messagebox.showwarning("تنبيه", "الرجاء اختيار فاتورة")
 
-        selected = self.tree.tree.selection()
-        if not selected:
-            return messagebox.showwarning("تنبيه", "الرجاء اختيار فاتورة")
+            invoice_data = self.tree.tree.item(selected[0])["values"]
 
-        invoice_data = self.tree.tree.item(selected[0])["values"]
-        invoice_id = invoice_data[0]
-        invoice_number = invoice_data[1]
-
+        invoice_id = invoice_id if invoice_id else invoice_data[0]
         sale = self.invoices_db.get_sale(invoice_id)
+        invoice_number = sale[1] if sale else invoice_data[1]
+
         if not sale:
             return messagebox.showerror("خطأ", "الفاتورة غير موجودة")
 
@@ -511,26 +686,32 @@ class Invoices:
         summary = CTkFrame(container, corner_radius=12)
         summary.pack(fill="x", pady=10, padx=5)
 
-        def summary_row(label, value, color=None):
-            row = CTkFrame(summary, fg_color="transparent")
-            row.pack(fill="x", padx=10, pady=3)
-
-            CTkLabel(
-                row,
-                text=value,
-                font=("Arial", 16, "bold"),
-                text_color=color if color else ("black", "white"),
-            ).pack(side="left")
-            CTkLabel(row, text=label, font=("Arial", 16)).pack(side="right")
-
-        summary_row(":الخصم", format_currency(discount))
-        summary_row(":الضريبة", format_currency(tax))
-        summary_row(":المطلوب", format_currency(total))
-        summary_row(":المدفوع", format_currency(paid), "#2563eb")
-        summary_row(
+        self.editable_row(
+            dialog, summary, ":الخصم", "discount", discount, invoice_id, color="#dc6f26"
+        )
+        self.editable_row(
+            dialog, summary, ":الضريبة", "tax", tax, invoice_id, color="#dc2626"
+        )
+        self.editable_row(
+            dialog,
+            summary,
+            ":المطلوب",
+            "total",
+            total,
+            invoice_id,
+            editable=False,
+            color="#056196",
+        )
+        self.editable_row(dialog, summary, ":المدفوع", "paid", paid, invoice_id)
+        self.editable_row(
+            dialog,
+            summary,
             ":الباقي",
-            format_currency(change),
-            "#059669" if change > 0 else "#dc2626",
+            "change",
+            change,
+            invoice_id,
+            editable=False,
+            color="#059669" if change > 0 else "#dc2626",
         )
 
         # اطار الأزرار
@@ -637,9 +818,20 @@ class Invoices:
             sale = self.invoices_db.get_sale(sale_id)
             if sale:
                 old_sale_total = float(sale[2])
+                discount = float(sale[3])
+                tax = float(sale[4])
+                paid = float(sale[5])
+
                 diff = new_total - old_total
                 new_sale_total = old_sale_total + diff
-                self.invoices_db.update_sale_total(sale_id, new_sale_total)
+
+                # إعادة حساب الباقي
+                new_change = new_sale_total - paid
+
+                # تحديث كل القيم
+                self.invoices_db.update_sale_full(
+                    sale_id, new_sale_total, discount, tax, paid, new_change
+                )
 
             # =========================
             # تحديث المخزون
@@ -666,6 +858,8 @@ class Invoices:
 
             # تحديث الجدول
             self.invoices = self.get_invoices_with_details()
+            dialog.destroy()
+            self.show_invoice_details(invoice_id=sale_id)
             self.refresh_table()
 
             messagebox.showinfo("نجاح", "تم تحديث الكمية بنجاح ✅")
@@ -833,7 +1027,6 @@ class Invoices:
         change = float(sale[6])
         customer_id = sale[7]
         date_str = sale[8]
-        
 
         customer_name = "نقدي"
         if customer_id:
@@ -851,12 +1044,9 @@ class Invoices:
             qty = item[3]
             price = float(item[4])
             total_item = float(item[5])
-            products.append({
-                "name": product_name,
-                "qty": qty,
-                "price": price,
-                "total": total_item
-            })
+            products.append(
+                {"name": product_name, "qty": qty, "price": price, "total": total_item}
+            )
 
         # فصل الوقت عن التاريخ
         try:
@@ -870,8 +1060,8 @@ class Invoices:
         # بيانات جاهزة للطباعة
         sale_data = {
             "invoice_number": sale[1],
-            "date": date_part,     # DD-MM-YYYY
-            "time": time_part,     # HH:MM:SS
+            "date": date_part,  # DD-MM-YYYY
+            "time": time_part,  # HH:MM:SS
             "customer_name": customer_name,
             "subtotal": total - discount - tax,
             "discount": discount,
