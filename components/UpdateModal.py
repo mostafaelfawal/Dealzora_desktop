@@ -1,3 +1,5 @@
+from tkinter import messagebox
+
 import requests
 import os
 import sys
@@ -138,9 +140,18 @@ class UpdateModal:
             r = requests.get(self.url, stream=True)
             total_size = int(r.headers.get("content-length", 0))
             downloaded = 0
-            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            temp_update = os.path.join(project_root, "Dealzora_new.exe")
-            print("Temp update path:", temp_update)
+            
+            # تحديد المسار الصحيح للتطبيق
+            if getattr(sys, 'frozen', False):
+                # إذا كان التطبيق مجمد (exe)
+                app_dir = os.path.dirname(sys.executable)
+            else:
+                # إذا كان يعمل من خلال Python مباشرة
+                app_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            
+            temp_update = os.path.join(app_dir, "Dealzora_new.exe")
+            messagebox.showinfo("تحديث", f"مسار التحديث المؤقت: {temp_update}")
+            
             with open(temp_update, "wb") as f:
                 for chunk in r.iter_content(chunk_size=1024 * 64):
                     if chunk:
@@ -168,17 +179,24 @@ class UpdateModal:
         self.size_label.configure(text="")
 
         import subprocess
-        import os
-        # المسار الكامل للملف
-        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        updater_path = os.path.join(project_root, "Dealzora_update.exe")
+        import sys
+        
+        # تحديد المسار الصحيح لأداة التحديث
+        if getattr(sys, 'frozen', False):
+            app_dir = os.path.dirname(sys.executable)
+            updater_path = os.path.join(app_dir, "Dealzora_update.exe")
+        else:
+            project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            updater_path = os.path.join(project_root, "Dealzora_update.exe")
+        
         if not os.path.exists(updater_path):
             from tkinter import messagebox
             messagebox.showerror("تحديث فشل", "ملف التحديث Dealzora_update.exe غير موجود!")
             return
 
-        subprocess.Popen(updater_path)
-        self.root.after(500, self.root.quit())
+        # تشغيل أداة التحديث
+        subprocess.Popen([updater_path])
+        self.root.after(500, self.root.quit)
 
     def destroy(self):
         # إعادة تفعيل العناصر
