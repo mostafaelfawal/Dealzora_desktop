@@ -208,6 +208,8 @@ class Layout:
                 self.discount_type,
                 self.discount_value,
                 self.con,
+                self.uid,
+                self.users_db
             )
 
         elif screen_type == "products":
