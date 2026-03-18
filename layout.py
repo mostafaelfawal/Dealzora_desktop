@@ -96,7 +96,7 @@ class Layout:
             self.main_frame, text="Powered by Mostafa hamdi", font=("Cairo", 15)
         ).pack(side="bottom")
 
-        CTkLabel(self.main_frame, text="v1.2.4", font=("Cairo", 15)).pack(
+        CTkLabel(self.main_frame, text="v1.3.4", font=("Cairo", 15)).pack(
             pady=(50, 0), side="bottom"
         )
 
