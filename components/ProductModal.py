@@ -89,7 +89,7 @@ class ProductModal:
             "*الأسم",
             "الباركود",
             "سعر الشراء",
-            "سعر البيع",
+            "*سعر البيع",
             "الكمية",
             "حد التنبيه",
         ]
@@ -151,7 +151,7 @@ class ProductModal:
         name = self.entries["*الأسم"].get().strip()
         barcode = self.entries["الباركود"].get().strip() or None
         buy = self.entries["سعر الشراء"].get() or 0
-        sell = self.entries["سعر البيع"].get() or 0
+        sell = self.entries["*سعر البيع"].get() or 0
         qty = self.entries["الكمية"].get() or 0
         low = self.entries["حد التنبيه"].get() or 5
         supplier = self.supplier_select.get().strip() or None
@@ -188,7 +188,7 @@ class ProductModal:
                     barcode,
                     float(buy),
                     float(sell),
-                    int(qty),
+                    float(qty),
                     self.upload_widget.get_image(),
                     int(low),
                     category_name=self.category_select.get(),
@@ -201,7 +201,7 @@ class ProductModal:
                     barcode,
                     float(buy),
                     float(sell),
-                    int(qty),
+                    float(qty),
                     self.upload_widget.get_image(),
                     self.product_id,
                     int(low),

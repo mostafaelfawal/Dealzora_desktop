@@ -1,5 +1,6 @@
 from models.supplier import SupplierModel
 from models.stock_movements import StockMovementsModel
+from utils.alter_column_type import alter_column_type
 
 
 class ProductsModel:
@@ -23,7 +24,7 @@ class ProductsModel:
             barcode TEXT UNIQUE,
             buy_price REAL DEFAULT 0,
             sell_price REAL NOT NULL,
-            quantity INTEGER DEFAULT 0,
+            quantity REAL DEFAULT 0,
             category_id INTEGER,
             image_path TEXT,
             low_stock INTEGER DEFAULT 5,
@@ -33,6 +34,8 @@ class ProductsModel:
             FOREIGN KEY(supplier_id) REFERENCES suppliers(id)
             )"""
         )
+        
+        alter_column_type(cur, con, "products", "quantity", "REAL")
 
         self.cur.execute(
             "CREATE INDEX IF NOT EXISTS idx_products_name ON products(name)"
