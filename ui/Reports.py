@@ -311,7 +311,7 @@ class Reports:
 
         # إنشاء جدول
         columns = ("المنتج", "الكمية", "الحد الأدنى", "الحالة")
-        self.low_stock_tree = TreeView(low_stock_frame, columns, (100, 100, 200, 30), False)
+        self.low_stock_tree = TreeView(low_stock_frame, columns, (100, 100, 200, 30))
 
         for col in columns:
             self.low_stock_tree.tree.heading(col, text=col)

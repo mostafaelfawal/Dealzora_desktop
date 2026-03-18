@@ -205,7 +205,6 @@ class Products:
             container,
             ("ID", "الأسم", "الباركود", "الكمية", "سعر البيع"),
             (50, 250, 200, 100, 100),
-            False,
         )
 
         # Key Shortcuts

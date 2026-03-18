@@ -4,7 +4,7 @@ from utils.key_shortcut import key_shortcut
 
 
 class TreeView:
-    def __init__(self, parent, cols: tuple, width: tuple, stretch=True):
+    def __init__(self, parent, cols: tuple, width: tuple):
         self.parent = parent
 
         vsb = ttk.Scrollbar(self.parent, orient="vertical")
@@ -15,10 +15,8 @@ class TreeView:
         style.configure("Treeview", font=("Cairo", 12, "bold"), rowheight=30)
         style.configure("Treeview.Heading", font=("Cairo", 12, "bold"))
 
-        h = self.parent.winfo_screenheight() - 270 if stretch else 10
-
         self.tree = ttk.Treeview(
-            self.parent, columns=cols, height=h, show="headings", yscrollcommand=vsb.set
+            self.parent, columns=cols, show="headings", yscrollcommand=vsb.set
         )
         vsb.config(command=self.tree.yview)
 

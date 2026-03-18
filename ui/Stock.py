@@ -345,9 +345,6 @@ class Stock:
         names = ["الكل"] + [c[1] for c in categories]
         self.category_menu.configure(values=names)
 
-        # تحديث قائمة الموردين أيضاً
-        self.refresh_suppliers()
-
     def refresh_table(self):
         self.search_var.set("")
         self.category_var.set("الكل")
