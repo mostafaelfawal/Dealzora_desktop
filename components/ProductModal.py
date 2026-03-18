@@ -11,7 +11,8 @@ from utils.center_modal import center_modal
 from utils.key_shortcut import key_shortcut
 from utils.is_number import is_number
 from components.UploadImage import UploadImage
-
+import string
+import random
 
 class ProductModal:
     def __init__(
@@ -100,9 +101,26 @@ class ProductModal:
             CTkLabel(self.modal, text=f, font=("Cairo", 18, "bold")).grid(
                 row=i, column=1, sticky="e", padx=10, pady=8
             )
+            if f == "الباركود":
+                frame = CTkFrame(self.modal, fg_color="transparent")
+                frame.grid(row=i, column=0, padx=10, pady=8)
 
-            entry = CTkEntry(self.modal, width=250, font=("Cairo", 16, "bold"))
-            entry.grid(row=i, column=0, padx=10, pady=8)
+                entry = CTkEntry(frame, width=200, font=("Cairo", 16, "bold"))
+                entry.pack(side="left", padx=(0, 5))
+
+                CTkButton(
+                    frame,
+                    text="🎲",
+                    width=0,
+                    font=("Cairo", 16, "bold"),
+                    fg_color="#10b981",
+                    hover_color="#059669",
+                    command=self.generate_barcode
+                ).pack(side="left")
+
+            else:
+                entry = CTkEntry(self.modal, width=250, font=("Cairo", 16, "bold"))
+                entry.grid(row=i, column=0, padx=10, pady=8)
 
             self.entries[f] = entry
 
@@ -124,6 +142,13 @@ class ProductModal:
         ).pack(side="right", padx=10)
 
     # ================= Fill Edit Data =================
+    def generate_barcode(self):
+        chars = string.ascii_uppercase + string.digits
+        code = ''.join(random.choice(chars) for _ in range(15))
+
+        self.entries["الباركود"].delete(0, "end")
+        self.entries["الباركود"].insert(0, code)
+
     def fill_data(self):
         p = self.selected_product
 
