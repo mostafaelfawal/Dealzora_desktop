@@ -177,6 +177,7 @@ class UserDialog(CTkToplevel):
             ("suppliers_management", "إدارة الموردين"),
             ("purchase_invoices", "إنشاء فواتير الشراء"),
             ("stock_movements_view", "رؤية حركة المخزون"),
+            ("edit_price_in_invoice", "تعديل السعر في الفاتورة"),
         ]
 
         for i, (role_key, role_name) in enumerate(roles_list):

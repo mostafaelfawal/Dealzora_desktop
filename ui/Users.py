@@ -203,6 +203,7 @@ class UsersManagement:
             "suppliers_management": "إدارة الموردين",
             "purchase_invoices": "إنشاء فواتير الشراء",
             "stock_movements_view": "رؤية حركة المخزون",
+            "edit_price_in_invoice": "تعديل السعر في الفاتورة",
         }
 
         display_names = [roles_dict.get(r, r) for r in roles if r in roles_dict]

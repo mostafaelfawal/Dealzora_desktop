@@ -43,6 +43,8 @@ class Sale:
         discount_type,
         discount_value,
         con,
+        uid,
+        users_db
     ):
         self.root = root
 
@@ -54,6 +56,8 @@ class Sale:
         self.stock_movements_db = stock_movements_db
         self.settings_db = settings_db
         self.con = con
+        self.uid = uid
+        self.users_db = users_db
 
         self.c = self.settings_db.get_setting("currency")  # get currency
         self.tax_rate = self.settings_db.get_setting("tax")  # get Tax
@@ -857,17 +861,17 @@ class Sale:
                 def edit_price():
                     self.show_price_edit_dialog(prod)
                 return edit_price
-            
-            CTkButton(
-                row,
-                text="تعديل السعر",
-                width=60,
-                height=25,
-                font=("Cairo", 11),
-                fg_color="#4b5563",
-                hover_color="#374151",
-                command=create_price_edit_handler(p)
-            ).pack(side="left", padx=5)
+            if self.users_db.check_permission(self.uid, "edit_price_in_invoice"):
+                CTkButton(
+                    row,
+                    text="تعديل السعر",
+                    width=60,
+                    height=25,
+                    font=("Cairo", 11),
+                    fg_color="#4b5563",
+                    hover_color="#374151",
+                    command=create_price_edit_handler(p)
+                ).pack(side="left", padx=5)
             
             # عرض السعر المعدل (إن وجد)
             modified_price_label = CTkLabel(
