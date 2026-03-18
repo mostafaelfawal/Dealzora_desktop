@@ -7,18 +7,14 @@ from customtkinter import (
 )
 from tkinter import messagebox
 from utils.center_modal import center_modal
+from utils.image import image
 from utils.key_shortcut import key_shortcut
 from components.TreeView import TreeView
 from ui.RejectUI import RejectUI
 
-class SupplierModal:
-    def __init__(
-        self,
-        root,
-        supplier_model,
-        uid,
-        users_db
-    ):
+
+class Suppliers:
+    def __init__(self, root, supplier_model, uid, users_db):
         self.root = root
         self.supplier_model = supplier_model
         self.selected_supplier_id = None
@@ -28,25 +24,23 @@ class SupplierModal:
 
     # ================= BUILD =================
     def build_modal(self):
-        self.modal = CTkToplevel(self.root)
-        self.modal.title("إدارة الموردين | Dealzora")
-        self.modal.geometry("800x600")
-        center_modal(self.modal)
-
-        if not self.users_db.check_permission(self.uid, "suppliers_management" or "all"):
-            RejectUI(self.modal)
+        if not self.users_db.check_permission(
+            self.uid, "suppliers_management" or "all"
+        ):
+            RejectUI(self.root)
             return
 
         # عنوان النافذة
         CTkLabel(
-            self.modal,
-            text="🏭 إدارة الموردين",
-            font=("Cairo", 24, "bold"),
-            text_color="#2b7de9",
-        ).pack(pady=(20, 10))
+            self.root,
+            text="إدارة الموردين",
+            image=image("assets/suppliers.png"),
+            font=("Cairo", 40, "bold"),
+            compound="left",
+        ).pack(padx=10, pady=10)
 
         # إطار رئيسي
-        main_frame = CTkFrame(self.modal, fg_color="transparent")
+        main_frame = CTkFrame(self.root, fg_color="transparent")
         main_frame.pack(padx=20, pady=10, fill="both", expand=True)
 
         # ========== قسم البحث ==========
@@ -68,26 +62,28 @@ class SupplierModal:
         )
         self.search_entry.pack(side="right", padx=(0, 10))
         key_shortcut(self.search_entry, "<KeyRelease>", self.filter_suppliers)
-        key_shortcut(self.modal, "<Escape>", lambda: self.modal.destroy())
-        
+        key_shortcut(self.root, "<Escape>", lambda: self.root.destroy())
+
         # ========== أزرار التحكم في القائمة ==========
         btn_frame = CTkFrame(main_frame, fg_color="transparent")
         btn_frame.pack(fill="x", pady=10)
 
         CTkButton(
             btn_frame,
-            text="✏️ تعديل",
+            text="تعديل",
+            image=image("assets/edit.png"),
             font=("Cairo", 14, "bold"),
             width=120,
             height=35,
-            fg_color="#f59e0b",
-            hover_color="#d97706",
+            fg_color="#0bb3f5",
+            hover_color="#0fa6e2",
             command=self.edit_selected,
         ).pack(side="right", padx=5)
 
         CTkButton(
             btn_frame,
-            text="🗑️ حذف",
+            text="حذف",
+            image=image("assets/delete.png"),
             font=("Cairo", 14, "bold"),
             width=120,
             height=35,
@@ -98,7 +94,8 @@ class SupplierModal:
 
         CTkButton(
             btn_frame,
-            text="➕ إضافة مورد جديد",
+            text="إضافة مورد جديد",
+            image=image("assets/add_customer.png"),
             font=("Cairo", 16, "bold"),
             width=180,
             height=40,
@@ -112,7 +109,7 @@ class SupplierModal:
             text="🔄 تحديث",
             font=("Cairo", 14, "bold"),
             width=120,
-            height=35,
+            height=45,
             fg_color="#6b7280",
             hover_color="#4b5563",
             command=self.load_suppliers,
@@ -137,17 +134,19 @@ class SupplierModal:
     # ========== مودال إضافة مورد جديد ==========
     def open_add_modal(self):
         """فتح نافذة منبثقة لإضافة مورد جديد"""
-        add_modal = CTkToplevel(self.modal)
+        add_modal = CTkToplevel(self.root)
         add_modal.title("إضافة مورد جديد | Dealzora")
         add_modal.geometry("500x400")
-        add_modal.transient(self.modal)  # تجعلها تابعة للنافذة الرئيسية
+        add_modal.transient(self.root)  # تجعلها تابعة للنافذة الرئيسية
         add_modal.grab_set()  # تمنع التفاعل مع النافذة الرئيسية
         center_modal(add_modal)
 
         # عنوان النافذة
         CTkLabel(
             add_modal,
-            text="➕ إضافة مورد جديد",
+            text="إضافة مورد جديد",
+            image=image("assets/add_customer.png"),
+            compound="right",
             font=("Cairo", 20, "bold"),
             text_color="#2563eb",
         ).pack(pady=(20, 10))
@@ -202,7 +201,8 @@ class SupplierModal:
         # زر الحفظ
         CTkButton(
             btn_frame,
-            text="💾 حفظ",
+            text="حفظ",
+            image=image("assets/add.png"),
             font=("Cairo", 16, "bold"),
             width=150,
             height=40,
@@ -273,19 +273,21 @@ class SupplierModal:
             if not supplier:
                 return
 
-            edit_modal = CTkToplevel(self.modal)
+            edit_modal = CTkToplevel(self.root)
             edit_modal.title("تعديل مورد | Dealzora")
             edit_modal.geometry("500x400")
-            edit_modal.transient(self.modal)
+            edit_modal.transient(self.root)
             edit_modal.grab_set()
             center_modal(edit_modal)
 
             # عنوان النافذة
             CTkLabel(
                 edit_modal,
-                text="✏️ تعديل مورد",
+                text="تعديل مورد",
+                image=image("assets/edit.png"),
+                compound="right",
                 font=("Cairo", 20, "bold"),
-                text_color="#f59e0b",
+                text_color="#0bb3f5",
             ).pack(pady=(20, 10))
 
             # إطار المدخلات
@@ -340,12 +342,14 @@ class SupplierModal:
             # زر التحديث
             CTkButton(
                 btn_frame,
-                text="💾 تحديث",
+                text="تحديث",
+                image=image("assets/edit.png"),
+                compound="right",
                 font=("Cairo", 16, "bold"),
                 width=150,
                 height=40,
-                fg_color="#f59e0b",
-                hover_color="#d97706",
+                fg_color="#0bb3f5",
+                hover_color="#0fa6e2",
                 command=lambda: self.update_supplier(
                     supplier_id, name_entry, phone_entry, edit_modal
                 ),

@@ -9,7 +9,6 @@ from customtkinter import (
 from tkinter import messagebox
 from components.TreeView import TreeView
 from components.ProductModal import ProductModal
-from components.SupplierModal import SupplierModal
 from components.BuyInvoiceModal import BuyInvoiceModal
 from utils.image import image
 from utils.get_stock_tag import get_stock_tag
@@ -71,7 +70,7 @@ class Stock:
             compound="left",
             text_color="#2b7de9",
         ).pack(side="right")
-        
+
         message = """
 🔹 تحكم أسرع في جدول المنتجات:
 
@@ -82,7 +81,6 @@ class Stock:
 • Enter أو ضغطة مزدوجة → فتح نافذة تعديل المنتج
 • L → عرض المنتجات المنخفضة فقط
 • N → فتح نافذة فاتورة شراء جديدة
-• S → فتح نافذة إدارة الموردين
 • T → فتح نافذة حركات المخزون
 • Insert → إضافة منتج جديد
 """
@@ -251,12 +249,6 @@ class Stock:
         action_row.grid_columnconfigure(1, weight=1)
         action_btns = [
             {
-                "text": "ادارة الموردين 👨🏻",
-                "fg": "#059669",
-                "hover": "#047857",
-                "cmd": self.open_supplier_window,
-            },
-            {
                 "text": "عرض المنتجات المنخفضة فقط ⚠",
                 "fg": "#b45309",
                 "hover": "#92400e",
@@ -337,16 +329,6 @@ class Stock:
         self.tree.tree.configure(height=15)
 
     # ================= SUPPLIER FUNCTIONS =================
-    def refresh_suppliers(self):
-        """تحديث قائمة الموردين في القائمة المنسدلة"""
-        suppliers = self.supplier_model.get_suppliers()
-        names = ["الكل"] + [s[1] for s in suppliers]
-        self.supplier_menu.configure(values=names)
-
-    def open_supplier_window(self):
-        """فتح نافذة إضافة مورد جديد"""
-        SupplierModal(self.root, self.supplier_model, self.uid, self.users_db)
-
     def open_buy_invoice_window(self):
         """فتح نافذة إضافة مورد جديد"""
         BuyInvoiceModal(
@@ -514,5 +496,4 @@ class Stock:
         key_shortcut(self.tree.tree, ["<L>", "<l>"], self.show_low_stock)
         key_shortcut(self.tree.tree, "<Insert>", self.open_product_window)
         key_shortcut(self.tree.tree, ["<N>", "<n>"], self.open_buy_invoice_window)
-        key_shortcut(self.tree.tree, ["<S>", "<s>"], self.open_supplier_window)
         key_shortcut(self.tree.tree, ["<T>", "<t>"], self.open_stock_movements)

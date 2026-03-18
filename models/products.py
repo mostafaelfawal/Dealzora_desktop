@@ -274,3 +274,4 @@ class ProductsModel:
             )
 
         self.finalize_changes()
+    

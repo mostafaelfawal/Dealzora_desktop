@@ -1,4 +1,11 @@
-from customtkinter import CTkFrame, CTkLabel, CTkButton, StringVar, set_appearance_mode
+from customtkinter import (
+    CTkFrame,
+    CTkLabel,
+    CTkButton,
+    CTkScrollableFrame,
+    StringVar,
+    set_appearance_mode,
+)
 from tkinter.messagebox import askokcancel
 from utils.image import image
 from utils.clear import clear
@@ -15,6 +22,7 @@ from ui.Customers import Customers
 from ui.Invoices import Invoices
 from ui.Settings import Settings
 from ui.RejectUI import RejectUI
+from ui.Suppliers import Suppliers
 
 
 class Layout:
@@ -45,6 +53,9 @@ class Layout:
         self.settings = settings
         self.con = con
         self.cur = cur
+
+        self.sidebar_collapsed = False  # 👈 حالة الـ sidebar
+
         theme = self.settings.get_setting("theme")
         set_appearance_mode(theme)
         self.root.title("Dealzora | Basic")
@@ -52,8 +63,10 @@ class Layout:
         clear(self.root)
         self.init_sale_vars()
         self.init_side_bar()
+
         self.main_frame = CTkFrame(self.root, fg_color="transparent")
-        self.main_frame.pack(expand=True)
+        self.main_frame.pack(expand=True, fill="both")
+
         self.init_ui()
 
     def init_sale_vars(self):
@@ -70,107 +83,131 @@ class Layout:
             image=image("assets/icon.png", size=(100, 100)),
             font=("Cairo", 50, "bold"),
         ).pack(pady=(10, 0))
+
         CTkLabel(
             self.main_frame, text="Dealzora اهلا بك في", font=("Cairo", 50, "bold")
         ).pack(pady=(10, 0))
+
         CTkLabel(
             self.main_frame, text="لإدارة المتاجر بأحترافيه", font=("Cairo", 40)
         ).pack()
+
         CTkLabel(
             self.main_frame, text="Powered by Mostafa hamdi", font=("Cairo", 15)
         ).pack(side="bottom")
+
         CTkLabel(self.main_frame, text="v1.2.4", font=("Cairo", 15)).pack(
             pady=(50, 0), side="bottom"
         )
 
     def init_side_bar(self):
         self.side_buttons = [
+            {"text": "بيع", "icon": "assets/pos.png", "screen": "sale"},
+            {"text": "منتجات", "icon": "assets/products.png", "screen": "products"},
+            {"text": "مستخدم", "icon": "assets/users.png", "screen": "users"},
+            {"text": "مخزون", "icon": "assets/stock.png", "screen": "stock"},
+            {"text": "تقارير", "icon": "assets/reports.png", "screen": "reports"},
+            {"text": "عملاء", "icon": "assets/customers.png", "screen": "customers"},
+            {"text": "فواتير", "icon": "assets/invoices.png", "screen": "invoices"},
             {
-                "text": "بيع",
-                "icon": "assets/pos.png",
-                "com": lambda: self.change_screen("sale"),
-            },
-            {
-                "text": "منتجات",
-                "icon": "assets/products.png",
-                "com": lambda: self.change_screen("products"),
-            },
-            {
-                "text": "مستخدم",
-                "icon": "assets/users.png",
-                "com": lambda: self.change_screen("users"),
-            },
-            {
-                "text": "مخزون",
-                "icon": "assets/stock.png",
-                "com": lambda: self.change_screen("stock"),
-            },
-            {
-                "text": "تقارير",
-                "icon": "assets/reports.png",
-                "com": lambda: self.change_screen("reports"),
-            },
-            {
-                "text": "عملاء",
-                "icon": "assets/customers.png",
-                "com": lambda: self.change_screen("customers"),
-            },
-            {
-                "text": "فواتير",
-                "icon": "assets/invoices.png",
-                "com": lambda: self.change_screen("invoices"),
-            },
-            {
-                "text": "الأعدادات",
-                "icon": "assets/settings.png",
-                "com": lambda: self.change_screen("settings"),
-            },
+                "text": "الموردين",
+                "icon": "assets/suppliers.png",
+                "screen": "suppliers",
+            },  # 👈 جديد
+            {"text": "الأعدادات", "icon": "assets/settings.png", "screen": "settings"},
         ]
 
-        self.side_bar = CTkFrame(self.root, border_width=1)
+        self.side_bar = CTkFrame(self.root, border_width=1, width=250)
         self.side_bar.pack(side="right", fill="y")
+        self.side_bar.pack_propagate(False)
+
+        # زر Collapse
+        CTkButton(
+            self.side_bar,
+            text="☰",
+            width=40,
+            command=self.toggle_sidebar,
+        ).pack(fill="x", pady=5)
+
+        # Scrollable Frame 👇
+        self.scroll_frame = CTkScrollableFrame(self.side_bar)
+        self.scroll_frame.pack(fill="both", expand=True)
 
         if not is_license_valid():
             days = get_remaining_days()
-            CTkLabel(
-                self.side_bar,
+            self.dealzora_title = CTkLabel(
+                self.scroll_frame,
                 text=f"Dealzora | الفترة التجريبيه\nباقي {days} يوم🕐",
                 font=("Cairo", 14),
-                text_color=("#997a00","#facc15"),
-            ).pack()
+                text_color=("#997a00", "#facc15"),
+            )
+            self.dealzora_title.pack()
         else:
-            CTkLabel(
-                self.side_bar,
+            self.dealzora_title = CTkLabel(
+                self.scroll_frame,
                 image=image("assets/icon.png"),
                 compound="right",
                 text="Dealzora",
-                font=("Cairo", 35, "bold"),
+                font=("Cairo", 30, "bold"),
                 text_color="#00b7ff",
-            ).pack(padx=4)
+            )
+            self.dealzora_title.pack(padx=4)
 
-        button_style = {
-            "font": ("Cairo", 30, "bold"),
-            "corner_radius": 20,
-            "fg_color": "#0078da",
-            "hover_color": "#0060af",
-        }
+        self.buttons_refs = []
 
-        for button in self.side_buttons:
-            CTkButton(
-                self.side_bar,
-                text=button["text"],
-                image=image(button["icon"]),
-                command=button["com"],
-                **button_style,
-            ).pack(padx=30, pady=5, fill="x")
+        for btn in self.side_buttons:
+            b = CTkButton(
+                self.scroll_frame,
+                text=btn["text"],
+                image=image(btn["icon"]),
+                command=lambda s=btn["screen"]: self.change_screen(s),
+                font=("Cairo", 20, "bold"),
+                corner_radius=15,
+                fg_color="#0078da",
+                hover_color="#0060af",
+            )
+            b.original_text = btn["text"]
+            b.pack(padx=10, pady=5, fill="x")
+            self.buttons_refs.append(b)
 
-        CTkButton(
-            self.side_bar,
+        # زر خروج
+        self.exit_btn = CTkButton(
+            self.scroll_frame,
             text="خروج",
             image=image("assets/exit.png"),
+            font=("Cairo", 20, "bold"),
             command=self.quit_window,
-            **button_style,
-        ).pack(padx=30, pady=5, fill="x")
+            corner_radius=15,
+            fg_color="#c62828",
+            hover_color="#b71c1c",
+        )
+        self.exit_btn.pack(padx=10, pady=5, fill="x")
+
+    def toggle_sidebar(self):
+        """Collapse / Expand"""
+        if self.sidebar_collapsed:
+            self.side_bar.configure(width=250)
+            if is_license_valid():
+                self.dealzora_title.configure(text="Dealzora")
+            else:
+                self.dealzora_title.configure(
+                    text=f"Dealzora | الفترة التجريبيه\nباقي {get_remaining_days()} يوم🕐"
+                )
+
+            for b in self.buttons_refs:
+                b.configure(text=b.original_text)
+
+            self.exit_btn.configure(text="خروج")
+
+        else:
+            self.side_bar.configure(width=120)
+            self.dealzora_title.configure(text="")
+            for b in self.buttons_refs:
+                b.configure(text="")
+
+            self.exit_btn.configure(text="")
+
+        self.sidebar_collapsed = not self.sidebar_collapsed
 
     def quit_window(self):
         if askokcancel("تأكد", "ستخرج من البرنامج الأن"):
@@ -178,6 +215,7 @@ class Layout:
 
     def change_screen(self, screen_type: str):
         clear(self.main_frame)
+
         roles = {
             "sale": "cashier_interface",
             "products": "products_management",
@@ -187,9 +225,10 @@ class Layout:
             "invoices": "invoices_management",
             "settings": "settings_edit",
             "users": "users_management",
+            "suppliers": "suppliers_management",  # 👈 جديد
         }
 
-        if not self.users_db.check_permission(self.uid, roles[screen_type] or "all"):
+        if not self.users_db.check_permission(self.uid, roles.get(screen_type, "all")):
             RejectUI(self.main_frame)
             return
 
@@ -209,13 +248,15 @@ class Layout:
                 self.discount_value,
                 self.con,
                 self.uid,
-                self.users_db
+                self.users_db,
             )
 
         elif screen_type == "products":
             Products(self.main_frame, self.products_db, self.suppliers_db)
+
         elif screen_type == "users":
             UsersManagement(self.main_frame, self.users_db)
+
         elif screen_type == "stock":
             Stock(
                 self.main_frame,
@@ -226,6 +267,7 @@ class Layout:
                 self.stock_movements_db,
                 self.settings,
             )
+
         elif screen_type == "reports":
             Reports(self.main_frame, self.cur)
 
@@ -243,5 +285,8 @@ class Layout:
                 self.stock_movements_db,
             )
 
-        else:  # settings
+        elif screen_type == "suppliers":
+            Suppliers(self.main_frame, self.suppliers_db, self.uid, self.users_db)
+
+        else:
             Settings(self.main_frame, self.settings)
