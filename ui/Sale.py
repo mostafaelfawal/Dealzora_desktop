@@ -361,10 +361,10 @@ class Sale:
 
         self.tax_var.trace_add("write", lambda *args: on_tax_change())
         # =========================
-        # الإجمالي النهائي
+        # المطلوب
         # =========================
         self.total_label = CTkLabel(
-            frame, text=f"الإجمالي النهائي: 0 {self.c}", font=("Cairo", 24, "bold")
+            frame, text=f"المطلوب: 0 {self.c}", font=("Cairo", 24, "bold")
         )
         self.total_label.pack(anchor="e", pady=5)
 
@@ -736,7 +736,7 @@ class Sale:
         self.subtotal_label.configure(
             text=f"الإجمالي الفرعي: {format_currency(subtotal)}"
         )
-        self.total_label.configure(text=f"الإجمالي النهائي: {format_currency(total)}")
+        self.total_label.configure(text=f"المطلوب: {format_currency(total)}")
         return total
 
     # =============================
@@ -775,7 +775,7 @@ class Sale:
 
         dialog = CTkToplevel(self.root)
         dialog.title("إتمام البيع | Dealzora")
-        dialog.geometry("400x700+200+0")
+        dialog.geometry("500x700+200+0")
         dialog.grab_set()
         dialog.focus_force()
 
@@ -812,22 +812,81 @@ class Sale:
         products_frame = CTkScrollableFrame(dialog, height=200)
         products_frame.pack(fill="both", expand=True, padx=15, pady=10)
 
+        # قاموس لتخزين الأسعار المعدلة
+        self.modified_prices = {}
+        
         for p in self.selected_products:
             row = CTkFrame(products_frame)
             row.pack(fill="x", pady=2)
-
-            line_total = p["price"] * p["qty"]
-
+            
+            # إطار للسعر والمنتج
+            product_info_frame = CTkFrame(row, fg_color="transparent")
+            product_info_frame.pack(side="right", fill="x", expand=True)
+            
+            # اسم المنتج والكمية
             CTkLabel(
-                row,
+                product_info_frame,
                 text=f"{p['name']}  {p['price']} × {p['qty']}",
                 font=("Cairo", 13),
                 anchor="e",
+            ).pack(fill="x")
+            
+            # إطار للسعر المعدل
+            price_frame = CTkFrame(product_info_frame, fg_color="transparent")
+            price_frame.pack(fill="x", pady=(2, 0))
+            
+            # سعر المنتج الحالي
+            CTkLabel(
+                price_frame,
+                text=":السعر الحالي",
+                font=("Cairo", 11),
+                text_color="#666666",
+                anchor="e",
+            ).pack(side="right", padx=(0, 5))
+            
+            CTkLabel(
+                price_frame,
+                text=format_currency(p["price"]),
+                font=("Cairo", 11, "bold"),
+                text_color="#666666",
+                anchor="e",
             ).pack(side="right")
+            
+            # زر تعديل السعر
+            def create_price_edit_handler(prod):
+                def edit_price():
+                    self.show_price_edit_dialog(prod)
+                return edit_price
+            
+            CTkButton(
+                row,
+                text="تعديل السعر",
+                width=60,
+                height=25,
+                font=("Cairo", 11),
+                fg_color="#4b5563",
+                hover_color="#374151",
+                command=create_price_edit_handler(p)
+            ).pack(side="left", padx=5)
+            
+            # عرض السعر المعدل (إن وجد)
+            modified_price_label = CTkLabel(
+                row,
+                text="",
+                font=("Cairo", 11, "bold"),
+                text_color="#16A34A",
+                anchor="w",
+            )
+            modified_price_label.pack(side="left", padx=5)
+            
+            # تخزين مرجع الـ label لتحديثه لاحقاً
+            p["modified_price_label"] = modified_price_label
+            p["modified_price"] = None
 
+            # السعر الإجمالي
             CTkLabel(
                 row,
-                text=format_currency(line_total),
+                text=format_currency(p["price"] * p["qty"]),
                 font=("Cairo", 13, "bold"),
                 anchor="w",
             ).pack(side="left")
@@ -859,7 +918,7 @@ class Sale:
         add_summary(":الإجمالي الفرعي", subtotal)
         add_summary(":الخصم", discount)
         add_summary(":الضريبة", tax)
-        add_summary(":الإجمالي النهائي", total)
+        add_summary(":المطلوب", total)
 
         # =========================
         # المدفوع والباقي
@@ -942,39 +1001,83 @@ class Sale:
 
             try:
                 # ======================
-                # 1️⃣ حفظ الفاتورة
-                # ======================
-                change = paid - total
-
-                sale_id = self.sales_db.add_sale(
-                    self.invoice_number,
-                    total,
-                    discount,
-                    tax,
-                    paid,
-                    change,
-                    self.customer_id,
-                )
-
-                # ======================
-                # 2️⃣ تجهيز المنتجات
+                # 1️⃣ حساب الفروق من الأسعار المعدلة أولاً
                 # ======================
                 sale_items_data = []
+                total_discount_from_price = 0.0  # استخدام float
+                total_increase_from_price = 0.0  # استخدام float
+                
+                # تأكد من أن جميع المنتجات لديها modified_price معرف
+                for p in self.selected_products:
+                    if "modified_price" not in p:
+                        p["modified_price"] = None
 
                 for p in self.selected_products:
                     qty = p["qty"]
-                    price = p["price"]
+                    # استخدام السعر المعدل إن وجد وكانت قيمته ليست None
+                    modified_price = p.get("modified_price")
+                    if modified_price is not None:
+                        price = modified_price
+                    else:
+                        price = p["price"]
+                    original_price = p["price"]
+                                        
+                    # حساب الفرق (مع التأكد من أن price ليست None)
+                    if price is not None and original_price is not None:
+                        if price < original_price:
+                            discount_from_price = (original_price - price) * qty
+                            total_discount_from_price += discount_from_price
+                        elif price > original_price:
+                            increase_from_price = (price - original_price) * qty
+                            total_increase_from_price += increase_from_price
+                                            
                     line_total = price * qty
 
                     sale_items_data.append(
                         (
                             p["id"],  # product_id
                             qty,  # quantity
-                            price,  # price
+                            price,  # price (المعدل أو الأصلي)
                             line_total,  # total
                         )
                     )
 
+                # ======================
+                # 2️⃣ حساب الإجمالي المعدل
+                # ======================
+                modified_total = total
+                
+                # التأكد من أن القيم ليست None
+                if total_discount_from_price is None:
+                    total_discount_from_price = 0
+                if total_increase_from_price is None:
+                    total_increase_from_price = 0
+                
+                if total_discount_from_price > 0:
+                    modified_total -= total_discount_from_price
+                if total_increase_from_price > 0:
+                    modified_total += total_increase_from_price
+                
+                change = paid - modified_total  # استخدام modified_total بدلاً من total
+
+                # ======================
+                # 3️⃣ حفظ الفاتورة
+                # ======================
+                sale_id = self.sales_db.add_sale(
+                    self.invoice_number,
+                    modified_total,  # استخدام الإجمالي المعدل
+                    discount + total_discount_from_price,  # إضافة خصم الأسعار المعدلة
+                    tax + total_increase_from_price,  # إضافة زيادة الأسعار المعدلة كضريبة إضافية
+                    paid,
+                    change,
+                    self.customer_id,
+                )
+
+                # ======================
+                # 4️⃣ تسجيل حركات المخزون
+                # ======================
+                for p in self.selected_products:
+                    qty = p["qty"]
                     self.stock_movements_db.add_movement(
                         product_id=p["id"],
                         quantity=-qty,  # سالب للخصم
@@ -984,12 +1087,12 @@ class Sale:
                     )
 
                 # ======================
-                # حفظ عناصر الفاتورة
+                # 5️⃣ حفظ عناصر الفاتورة
                 # ======================
                 self.sale_items_db.add_sale_items(sale_id, sale_items_data)
 
                 # ======================
-                # طباعة الفاتورة
+                # 6️⃣ طباعة الفاتورة
                 # ======================
                 auto_print = self.settings_db.get_setting("auto_print")
                 if auto_print:
@@ -1008,7 +1111,6 @@ class Sale:
 
             dialog.destroy()
             messagebox.showinfo("نجاح", "تمت عملية البيع")
-
         actions_frame = CTkFrame(dialog, fg_color="transparent")
         actions_frame.pack(fill="x", expand=True, pady=15)
 
@@ -1029,7 +1131,94 @@ class Sale:
             hover_color="#115B7E",
             command=print_util,
         ).pack(side="right", padx=10)
-
+    
+    def show_price_edit_dialog(self, product):
+        """نافذة تعديل سعر المنتج"""
+        dialog = CTkToplevel(self.root)
+        dialog.title("تعديل السعر")
+        dialog.geometry("300x250")
+        center_modal(dialog)
+        dialog.grab_set()
+        
+        CTkLabel(
+            dialog,
+            text=f"تعديل سعر: {product['name']}",
+            font=("Cairo", 14, "bold"),
+        ).pack(pady=10)
+        
+        CTkLabel(
+            dialog,
+            text=f"السعر الأصلي: {format_currency(product['price'])}",
+            font=("Cairo", 12),
+        ).pack()
+        
+        CTkLabel(
+            dialog,
+            text="السعر الجديد:",
+            font=("Cairo", 12),
+        ).pack(pady=(10, 0))
+        
+        price_var = StringVar(value=str(product['price']))
+        price_entry = CTkEntry(
+            dialog,
+            textvariable=price_var,
+            font=("Cairo", 14),
+            justify="center",
+            width=150,
+        )
+        price_entry.pack(pady=5)
+        price_entry.focus()
+        price_entry.select_range(0, 'end')
+        
+        def save_price():
+            if not is_number(price_var.get()):
+                messagebox.showerror("خطأ", "الرجاء إدخال رقم صحيح")
+                return
+            
+            new_price = float(price_var.get())
+            if new_price <= 0:
+                messagebox.showerror("خطأ", "يجب أن يكون السعر أكبر من 0")
+                return
+            
+            # حفظ السعر المعدل (تحويل إلى float)
+            product['modified_price'] = float(new_price)
+            
+            # تحديث العرض
+            if new_price < product['price']:
+                diff_text = f"↓ خصم: {format_currency(product['price'] - new_price)}"
+                product['modified_price_label'].configure(
+                    text=diff_text,
+                    text_color="#16A34A"
+                )
+            elif new_price > product['price']:
+                diff_text = f"↑ زيادة: {format_currency(new_price - product['price'])}"
+                product['modified_price_label'].configure(
+                    text=diff_text,
+                    text_color="#b91c1c"
+                )
+            else:
+                product['modified_price_label'].configure(text="")
+            
+            dialog.destroy()
+        
+        CTkButton(
+            dialog,
+            text="حفظ",
+            font=("Cairo", 12, "bold"),
+            fg_color="#16A34A",
+            hover_color="#15803D",
+            command=save_price,
+        ).pack(pady=10)
+        
+        CTkButton(
+            dialog,
+            text="إلغاء",
+            font=("Cairo", 12),
+            fg_color="#6b7280",
+            hover_color="#4b5563",
+            command=dialog.destroy,
+        ).pack()
+    
     # =============================
     # Customer / Discount / Tax Dialogs
     # =============================
