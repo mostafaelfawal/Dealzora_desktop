@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from customtkinter import (
     CTkFrame,
     CTkScrollableFrame,
@@ -307,29 +309,140 @@ class Settings:
             path_var.set(folder_selected)
 
     def restore_database(self):
+        """استعادة البيانات مع الدمج"""
         file_path = filedialog.askopenfilename(
             title="اختر ملف قاعدة البيانات",
             filetypes=[("Database Files", "*.db")],
         )
-
+        
         if not file_path:
             return
-
-        try:
-            db_folder = "db"
-            target_db = os.path.join(db_folder, "dealzora.db")
-
-            if not os.path.exists(db_folder):
-                os.makedirs(db_folder)
-
-            shutil.copy(file_path, target_db)
-
-            messagebox.showinfo(
-                "تم", "تم استعادة البيانات بنجاح\nيرجى إعادة تشغيل البرنامج"
+        
+        # إنشاء نافذة التقدم
+        progress_window = self.create_progress_window()
+        
+        # إنشاء نسخة احتياطية قبل الدمج
+        db_folder = "db"
+        target_db = os.path.join(db_folder, "dealzora.db")
+        
+        if os.path.exists(target_db):
+            backup_path = os.path.join(
+                db_folder, 
+                f"backup_before_merge_{datetime.now().strftime('%Y%m%d_%H%M%S')}.db"
             )
+            shutil.copy2(target_db, backup_path)
+            progress_window.backup_path = backup_path
+        
+        # بدء عملية الدمج في Thread منفصل
+        from utils.database_merger import merge_databases_with_thread
+        
+        def progress_callback(message, percent):
+            """تحديث واجهة التقدم"""
+            if percent is not None:
+                progress_window.after(0, lambda: progress_window.status_label.configure(
+                    text=f"{message} ({percent:.0f}%)"
+                ))
+                progress_window.after(0, lambda: progress_window.progress_bar.set(percent / 100))
+            else:
+                progress_window.after(0, lambda: progress_window.status_label.configure(text=message))
+        
+        def complete_callback(success, message, stats):
+            """اكتمال العملية"""
+            if success:
+                # عرض الإحصائيات
+                stats_text = (
+                    f"✅ تمت العملية بنجاح!\n\n"
+                    f"📊 إحصائيات الدمج:\n"
+                    f"• الجداول المعالجة: {stats['tables_processed']}\n"
+                    f"• السجلات المضافة: {stats['rows_inserted']}\n"
+                    f"• السجلات المدمجة: {stats['rows_merged']}\n"
+                    f"• السجلات المكررة: {stats['rows_skipped']}\n"
+                )
+                
+                if stats['errors']:
+                    stats_text += f"\n⚠️ تحذيرات: {len(stats['errors'])}"
+                
+                progress_window.after(2000, progress_window.destroy)
+                progress_window.after(
+                    2100,
+                    lambda: messagebox.showinfo(
+                        "تم الاستعادة",
+                        f"{stats_text}\n\nيرجى إعادة تشغيل البرنامج لتحديث البيانات"
+                    )
+                )
+            else:
+                # في حالة الفشل، عرض الخطأ
+                progress_window.after(2000, progress_window.destroy)
+                progress_window.after(
+                    2100,
+                    lambda: messagebox.showerror(
+                        "خطأ في الاستعادة",
+                        f"{message}\n\nتم الاحتفاظ بالنسخة الاحتياطية القديمة"
+                    )
+                )
+        
+        # بدء الدمج
+        merge_databases_with_thread(
+            file_path, 
+            target_db,
+            progress_callback=progress_callback,
+            complete_callback=complete_callback
+        )
 
-        except Exception as e:
-            messagebox.showerror("خطأ", f"فشل استعادة البيانات\n{str(e)}")
+    def create_progress_window(self):
+        """إنشاء نافذة تقدم العملية"""
+        import customtkinter as ctk
+        
+        progress_window = ctk.CTkToplevel(self.root)
+        progress_window.title("جاري استعادة البيانات")
+        progress_window.geometry("450x250")
+        progress_window.resizable(False, False)
+        
+        # جعل النافذة في المقدمة
+        progress_window.lift()
+        progress_window.focus_force()
+        progress_window.grab_set()
+        
+        # منع إغلاق النافذة أثناء العملية
+        progress_window.protocol("WM_DELETE_WINDOW", lambda: None)
+        
+        # عنوان
+        ctk.CTkLabel(
+            progress_window,
+            text="استعادة ودمج البيانات",
+            font=("Cairo", 22, "bold"),
+            text_color="#2b7de9"
+        ).pack(pady=(20, 15))
+        
+        # حالة التقدم
+        status_label = ctk.CTkLabel(
+            progress_window,
+            text="جاري تحضير البيانات...",
+            font=("Cairo", 16),
+            wraplength=400
+        )
+        status_label.pack(pady=(10, 15))
+        
+        # شريط التقدم
+        progress_bar = ctk.CTkProgressBar(progress_window, width=350, height=15)
+        progress_bar.pack(pady=(10, 15))
+        progress_bar.set(0)
+        
+        # نص إضافي
+        info_label = ctk.CTkLabel(
+            progress_window,
+            text="سيتم الاحتفاظ بالبيانات الجديدة وإضافة القديمة",
+            font=("Cairo", 12),
+            text_color="gray"
+        )
+        info_label.pack(pady=(5, 0))
+        
+        # تخزين المراجع
+        progress_window.status_label = status_label
+        progress_window.progress_bar = progress_bar
+        progress_window.info_label = info_label
+        
+        return progress_window
 
     # ---------- إضافة الحقول ----------
     def add_field(self, parent, label_text, value, var_name):
