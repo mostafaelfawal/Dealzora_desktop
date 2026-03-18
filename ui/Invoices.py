@@ -1074,7 +1074,8 @@ End -> على جدول الفواتير للوصل الى اخر فاتورة
         from utils.print_thermal import print_shop_invoice
 
         try:
-            print_shop_invoice(sale_data, products)
+            if not print_shop_invoice(sale_data, products):
+                return
             messagebox.showinfo("نجاح", "تم إرسال الفاتورة للطابعة ✅")
         except Exception as e:
             messagebox.showwarning("تحذير", f"حدث خطأ في الطباعة: {e}")

@@ -49,8 +49,7 @@ def generate_invoice(sale_data, products_data, width=440):
 
     f_shop = ImageFont.truetype(FONT_BOLD, 28)
     f_title = ImageFont.truetype(FONT_BOLD, 18)
-    f_bold = ImageFont.truetype(FONT_BOLD, 15)
-    f_reg = ImageFont.truetype(FONT_BOLD, 13)
+    f_bold = ImageFont.truetype(FONT_BOLD, 16)
 
     img = Image.new("1", (width, 2000), "white")
     draw = ImageDraw.Draw(img)
@@ -74,15 +73,15 @@ def generate_invoice(sale_data, products_data, width=440):
         width - 20,
         y,
         f"رقم الفاتورة: {sale_data['invoice_number']}",
-        f_reg,
+        f_bold,
         "right",
     )
-    draw_ar(draw, 20, y, f"التاريخ: {sale_data['date']}", f_reg, "left")
+    draw_ar(draw, 20, y, f"التاريخ: {sale_data['date']}", f_bold, "left")
     y += 25
 
-    draw_ar(draw, width - 20, y, f"الوقت: {sale_data['time']}", f_reg, "right")
+    draw_ar(draw, width - 20, y, f"الوقت: {sale_data['time']}", f_bold, "right")
 
-    draw_ar(draw, 20, y, f"العميل: {sale_data['customer_name']}", f_reg, "left")
+    draw_ar(draw, 20, y, f"العميل: {sale_data['customer_name']}", f_bold, "left")
     y += 25
 
     draw.line((20, y, width - 20, y), fill="black", width=1)
@@ -120,9 +119,9 @@ def generate_invoice(sale_data, products_data, width=440):
 
         name = p["name"][:18]
 
-        draw_cell(draw, x, y, col_name, row_h, name, f_reg, "right")
+        draw_cell(draw, x, y, col_name, row_h, name, f_bold, "right")
 
-        draw_cell(draw, x + col_name, y, col_qty, row_h, f'{p["qty"]}', f_reg)
+        draw_cell(draw, x + col_name, y, col_qty, row_h, f'{p["qty"]}', f_bold)
 
         draw_cell(
             draw,
@@ -131,7 +130,7 @@ def generate_invoice(sale_data, products_data, width=440):
             col_price,
             row_h,
             f'{p["price"]}',
-            f_reg,
+            f_bold,
         )
 
         draw_cell(
@@ -141,7 +140,7 @@ def generate_invoice(sale_data, products_data, width=440):
             col_total,
             row_h,
             f'{p["total"]}',
-            f_reg,
+            f_bold,
         )
 
         y += row_h
@@ -155,8 +154,8 @@ def generate_invoice(sale_data, products_data, width=440):
 
     def summary(label, value):
         nonlocal y
-        draw_ar(draw, width - 20, y, label, f_reg, "right")
-        draw_ar(draw, 20, y, format_currency(value), f_reg, "left")
+        draw_ar(draw, width - 20, y, label, f_bold, "right")
+        draw_ar(draw, 20, y, format_currency(value), f_bold, "left")
         y += 25
 
     summary("الإجمالي الفرعي", sale_data["subtotal"])
@@ -221,8 +220,10 @@ def print_shop_invoice(sale_data, products_data):
             img = generate_invoice(sale_data, products_data)
 
             print_image_to_printer(img, printer_name)
-
+        return True
     except Exception as e:
         if "StartDoc failed" in str(e):
-            return showerror("خطأ في الطباعة", "فشل في بدء عملية الطباعة")
+            showerror("خطأ في الطباعة", "فشل في بدء عملية الطباعة")
+            return False
         showerror("خطأ في الطباعة", str(e))
+        return False

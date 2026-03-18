@@ -1,12 +1,12 @@
 import requests
 
-VERSION_URL = "https://raw.githubusercontent.com/mostafaelfawal/Dealzora_desktop/refs/heads/main/version.json"
+VERSION_URL = f"https://raw.githubusercontent.com/mostafaelfawal/Dealzora_desktop/refs/heads/main/version.json"
 APP_VERSION = "1.2.2"
 
 
 def check_for_update():
     try:
-        r = requests.get(VERSION_URL, timeout=5)
+        r = requests.get(VERSION_URL, timeout=5, headers={"Cache-Control": "no-cache"})
         data = r.json()
 
         latest_version = data["version"]
