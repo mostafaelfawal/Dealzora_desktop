@@ -6,6 +6,7 @@ from customtkinter import (
     CTkOptionMenu,
 )
 from tkinter import messagebox
+from components.BarcodePrinter import BarcodePrinter
 from utils.image import image
 from utils.key_shortcut import key_shortcut
 from utils.is_number import is_number
@@ -199,10 +200,12 @@ class Products:
         )
         self.category_filter.set("الكل")
         self.category_filter.pack(side="left", padx=5)
+
         self.tree = TreeView(
             container,
             ("ID", "الأسم", "الباركود", "الكمية", "سعر البيع"),
             (50, 250, 200, 100, 100),
+            False,
         )
 
         # Key Shortcuts
@@ -326,14 +329,15 @@ class Products:
             ),
         ).pack(side="left", padx=5, pady=10)
 
-        # CTkButton(
-        #     frame,
-        #     text="انشاء باركود",
-        #     fg_color="#008caf",
-        #     hover_color="#00728f",
-        #     image=image("assets/barcode.png"),
-        #     font=("Cairo", 20, "bold"),
-        #     command=lambda: messagebox.showinfo(
-        #         "قريبا", "سيتم اضافة هذه الميزه قريبا تابع التحديثات"
-        #     ),
-        # ).pack(side="left", padx=5, pady=10)
+        CTkButton(
+            frame,
+            text="انشاء باركود",
+            fg_color="#008caf",
+            hover_color="#00728f",
+            image=image("assets/barcode.png"),
+            font=("Cairo", 20, "bold"),
+            command=self.print_barcode,
+        ).pack(side="left", padx=5, pady=10)
+
+    def print_barcode(self):
+        BarcodePrinter(self.root, self.products)

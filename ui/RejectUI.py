@@ -1,4 +1,4 @@
-from customtkinter import *
+from customtkinter import CTkLabel
 from utils.image import image
 
 
