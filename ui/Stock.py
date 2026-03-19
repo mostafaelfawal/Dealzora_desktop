@@ -316,9 +316,9 @@ class Stock:
             "الفئة",
         )
 
-        width = (50, 120, 100, 80, 80, 80, 80, 110)
+        width = (30, 125, 130, 80, 80, 80, 80, 100)
 
-        self.tree = TreeView(table_frame, cols, width)
+        self.tree = TreeView(table_frame, cols, width, 10)
         key_shortcut(
             self.tree.tree,
             ["<Double-1>", "<Return>"],

@@ -41,7 +41,7 @@ class Invoices:
 
         # البيانات
         self.invoices = self.get_invoices_with_details()
-        
+
         header = CTkFrame(self.root, fg_color="transparent")
         header.pack(padx=10, pady=10)
 
@@ -53,7 +53,7 @@ class Invoices:
             font=("Cairo", 40, "bold"),
             compound="left",
         ).pack(side="right", padx=10, pady=10)
-        
+
         message = """
 🔹 تحكم أسرع في جدول الفواتير:
 
@@ -102,9 +102,11 @@ class Invoices:
                     if customer:
                         customer_name = customer[1]  # اسم العميل
 
-                if paid >= total:
+                if paid > total:
+                    status = "مدفوعة (بزيادة)"
+                elif paid == total:
                     status = "مدفوعة"
-                elif 0 < paid < total:
+                elif paid > 0:
                     status = "مدفوعة جزئياً"
                 else:
                     status = "آجل"
@@ -234,7 +236,7 @@ class Invoices:
         # ------------------------
         self.payment_status = CTkSegmentedButton(
             search_card,
-            values=["الكل", "مدفوعة", "مدفوعة جزئياً", "آجل"],
+            values=["الكل", "مدفوعة", "مدفوعة (بزيادة)", "مدفوعة جزئياً", "آجل"],
             font=("Cairo", 16, "bold"),
             height=45,
             corner_radius=15,
@@ -291,7 +293,8 @@ class Invoices:
                 "المدفوع",
                 "الباقي",
             ),
-            (30, 120, 120, 100, 70, 100, 100, 100),
+            (30, 130, 125, 100, 90, 90, 90, 90),
+            10,
         )
 
         # ربط double-click لعرض التفاصيل
@@ -301,7 +304,7 @@ class Invoices:
 
     def get_state_tag(self, status):
         """تحديد لون الحالة"""
-        if status == "مدفوعة":
+        if status in ["مدفوعة", "مدفوعة (بزيادة)"]:
             return "success"
         elif status == "مدفوعة جزئياً":
             return "warning"
@@ -465,7 +468,9 @@ class Invoices:
                 return
 
             items = self.sale_items_db.get_sale_items(invoice_id)
-            original_subtotal = sum([float(item[5]) for item in items])  # item[5] هو total
+            original_subtotal = sum(
+                [float(item[5]) for item in items]
+            )  # item[5] هو total
 
             # قيم من قاعدة البيانات
             discount = float(sale[3])

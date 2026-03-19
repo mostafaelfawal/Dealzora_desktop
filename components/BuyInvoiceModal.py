@@ -195,11 +195,8 @@ class BuyInvoiceModal:
         self.items_count_label.pack(side="left", padx=5, pady=10)
 
         # ========== أزرار الحفظ والإلغاء ==========
-        buttons_frame = CTkFrame(self.main_frame, fg_color="transparent")
-        buttons_frame.pack(pady=20)
-
         CTkButton(
-            buttons_frame,
+            totals_frame,
             text="💾 حفظ الفاتورة",
             font=("Cairo", 18, "bold"),
             width=200,
@@ -210,7 +207,7 @@ class BuyInvoiceModal:
         ).pack(side="left", padx=10)
 
         CTkButton(
-            buttons_frame,
+            totals_frame,
             text="❌ إلغاء",
             font=("Cairo", 18, "bold"),
             width=150,
