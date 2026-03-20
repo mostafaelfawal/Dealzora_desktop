@@ -49,20 +49,28 @@ class Sale:
         discount_value,
         con,
         uid,
-        users_db
+        users_db,
     ):
         # Store root window reference
         self.root = root
 
         # Database connections
         self._init_databases(
-            products_db, customers_db, sales_db, sale_items_db,
-            stock_movements_db, settings_db, con, uid, users_db
+            products_db,
+            customers_db,
+            sales_db,
+            sale_items_db,
+            stock_movements_db,
+            settings_db,
+            con,
+            uid,
+            users_db,
         )
 
         # Initialize settings and data
-        self._init_settings_and_data(selected_products, customer_var, customer_id,
-                                      discount_type, discount_value)
+        self._init_settings_and_data(
+            selected_products, customer_var, customer_id, discount_type, discount_value
+        )
 
         # Build user interface
         self.build_ui()
@@ -75,8 +83,18 @@ class Sale:
     # Initialization Methods
     # =========================================================================
 
-    def _init_databases(self, products_db, customers_db, sales_db, sale_items_db,
-                        stock_movements_db, settings_db, con, uid, users_db):
+    def _init_databases(
+        self,
+        products_db,
+        customers_db,
+        sales_db,
+        sale_items_db,
+        stock_movements_db,
+        settings_db,
+        con,
+        uid,
+        users_db,
+    ):
         """Initialize all database connections."""
         self.products_db = products_db
         self.customers_db = customers_db
@@ -88,8 +106,14 @@ class Sale:
         self.uid = uid
         self.users_db = users_db
 
-    def _init_settings_and_data(self, selected_products, customer_var, customer_id,
-                                discount_type, discount_value):
+    def _init_settings_and_data(
+        self,
+        selected_products,
+        customer_var,
+        customer_id,
+        discount_type,
+        discount_value,
+    ):
         """Load settings and initialize data structures."""
         self.currency = self.settings_db.get_setting("currency")
         self.tax_rate = self.settings_db.get_setting("tax")
@@ -176,7 +200,7 @@ class Sale:
             image=image("assets/information.png"),
             width=0,
             corner_radius=50,
-            command=lambda: messagebox.showinfo("معلومات | واجهة البيع", help_message)
+            command=lambda: messagebox.showinfo("معلومات | واجهة البيع", help_message),
         ).pack(side="right", padx=5, pady=5)
 
     def _get_help_message(self):
@@ -271,7 +295,7 @@ class Sale:
             parent,
             ("ID", "المنتج", "السعر", "المخزون", "الباركود"),
             (50, 200, 80, 80, 120),
-            11
+            11,
         )
         key_shortcut(
             self.tree.tree, ["<Double-1>", "<Return>"], self._handle_add_product
@@ -387,7 +411,9 @@ class Sale:
             command=self._on_discount_change,
         ).pack(side="right", padx=5)
 
-        self.discount_value_var.trace_add("write", lambda *args: self._on_discount_change())
+        self.discount_value_var.trace_add(
+            "write", lambda *args: self._on_discount_change()
+        )
 
     def _build_tax_controls(self, parent):
         """Build tax input controls."""
@@ -637,7 +663,7 @@ class Sale:
             self.cart_scrollable,
             corner_radius=8,
             border_width=1,
-            border_color="#e5e5e5"
+            border_color="#e5e5e5",
         )
         container.pack(side="bottom", fill="x", pady=3, padx=3)
 
@@ -835,21 +861,24 @@ class Sale:
     # =========================================================================
 
     def _calculate_total(self):
-        """Calculate subtotal, discount, tax, and total."""
         subtotal = self._calculate_subtotal()
 
-        # Calculate discount
+        # 🧠 حساب فروقات تعديل السعر
+        modified = self._calculate_modified_totals()
+
+        # الخصم الأساسي + خصم من تعديل السعر
         discount = self._calculate_discount(subtotal)
+        discount += modified["discount_from_price"]
         discount = min(discount, subtotal)
 
         after_discount = subtotal - discount
 
-        # Calculate tax
+        # الضريبة الأساسية + زيادة من تعديل السعر
         tax = self._calculate_tax(after_discount)
+        tax += modified["increase_from_price"]
 
         total = after_discount + tax
 
-        # Update displays
         self._update_total_displays(subtotal, total)
         return total
 
@@ -1002,7 +1031,7 @@ class Sale:
                 font=("Cairo", 11),
                 fg_color="#4b5563",
                 hover_color="#374151",
-                command=lambda p=product: self._show_price_edit_dialog(p)
+                command=lambda p=product: self._show_price_edit_dialog(p),
             ).pack(side="left", padx=5)
 
         # Modified price label
@@ -1028,13 +1057,42 @@ class Sale:
         """Build the financial summary section."""
         summary_frame = CTkFrame(dialog)
         summary_frame.pack(fill="x", padx=15, pady=10)
+        self.summary_labels = {
+            "subtotal": None,
+            "discount": None,
+            "tax": None,
+            "total": None,
+        }
 
-        self._add_summary_row(summary_frame, ":الإجمالي الفرعي", subtotal)
-        self._add_summary_row(summary_frame, ":الخصم", discount)
-        self._add_summary_row(summary_frame, ":الضريبة", tax)
-        self._add_summary_row(summary_frame, ":المطلوب", total)
+        self._add_summary_row(summary_frame, "subtotal", ":الإجمالي الفرعي", subtotal)
+        self._add_summary_row(summary_frame, "discount", ":الخصم", discount)
+        self._add_summary_row(summary_frame, "tax", ":الضريبة", tax)
+        self._add_summary_row(summary_frame, "total", ":المطلوب", total)
 
-    def _add_summary_row(self, parent, label, value):
+    def _refresh_payment_modal(self):
+        if not hasattr(self, "summary_labels"):
+            return
+
+        subtotal = self._calculate_subtotal()
+
+        modified = self._calculate_modified_totals()
+
+        discount = self._calculate_discount(subtotal)
+        discount += modified["discount_from_price"]
+
+        after_discount = subtotal - discount
+
+        tax = self._calculate_tax(after_discount)
+        tax += modified["increase_from_price"]
+
+        total = after_discount + tax
+
+        self.summary_labels["subtotal"].configure(text=format_currency(subtotal))
+        self.summary_labels["discount"].configure(text=format_currency(discount))
+        self.summary_labels["tax"].configure(text=format_currency(tax))
+        self.summary_labels["total"].configure(text=format_currency(total))
+
+    def _add_summary_row(self, parent, key, label, value):
         """Add a row to the summary frame."""
         row = CTkFrame(parent, fg_color="transparent")
         row.pack(fill="x", pady=2)
@@ -1046,12 +1104,14 @@ class Sale:
             anchor="e",
         ).pack(side="right")
 
-        CTkLabel(
+        val_label = CTkLabel(
             row,
             text=format_currency(value),
             font=("Cairo", 14, "bold"),
             anchor="w",
-        ).pack(side="left")
+        )
+        val_label.pack(side="left")
+        self.summary_labels[key] = val_label
 
     def _build_payment_dialog_payment(self, dialog, total):
         """Build the payment input section."""
@@ -1082,17 +1142,20 @@ class Sale:
         )
         self.remaining_label.pack(anchor="e")
 
-        self.paid_var.trace_add("write", lambda *args: self._update_remaining(total))
-        self._update_remaining(total)
+        self.paid_var.trace_add("write", lambda *args: self._update_remaining())
+        self._update_remaining()
 
-    def _update_remaining(self, total):
+    def _update_remaining(self):
         """Update remaining amount based on paid value."""
         if not is_number(self.paid_var.get()):
             self.remaining_label.configure(text="الباقي: -")
             return
         paid = float(self.paid_var.get())
-        remaining = paid - total
-        self.remaining_label.configure(text=f"الباقي: {format_currency(remaining)}")
+        remaining = paid - self._calculate_total()
+        self.remaining_label.configure(
+            text=f"الباقي: {format_currency(remaining)}",
+            text_color="#16A34A" if remaining >= 0 else "#b91c1c",
+        )
 
     def _build_payment_dialog_actions(self, dialog, subtotal, discount, tax, total):
         """Build the action buttons for payment dialog."""
@@ -1114,7 +1177,9 @@ class Sale:
             font=("Cairo", 15, "bold"),
             fg_color="#1676A3",
             hover_color="#115B7E",
-            command=lambda: self._print_invoice_with_data(subtotal, discount, tax, total),
+            command=lambda: self._print_invoice_with_data(
+                subtotal, discount, tax, total
+            ),
         ).pack(side="right", padx=10)
 
     def _show_price_edit_dialog(self, product):
@@ -1143,7 +1208,7 @@ class Sale:
             font=("Cairo", 12),
         ).pack(pady=(10, 0))
 
-        price_var = StringVar(value=str(product['price']))
+        price_var = StringVar(value=str(product["price"]))
         price_entry = CTkEntry(
             dialog,
             textvariable=price_var,
@@ -1153,7 +1218,7 @@ class Sale:
         )
         price_entry.pack(pady=5)
         price_entry.focus()
-        price_entry.select_range(0, 'end')
+        price_entry.select_range(0, "end")
 
         CTkButton(
             dialog,
@@ -1185,25 +1250,26 @@ class Sale:
             return
 
         # Save modified price
-        product['modified_price'] = float(new_price)
+        product["modified_price"] = float(new_price)
 
         # Update display
-        if new_price < product['price']:
+        if new_price < product["price"]:
             diff_text = f"↓ خصم: {format_currency(product['price'] - new_price)}"
-            product['modified_price_label'].configure(
-                text=diff_text,
-                text_color="#16A34A"
+            product["modified_price_label"].configure(
+                text=diff_text, text_color="#16A34A"
             )
-        elif new_price > product['price']:
+        elif new_price > product["price"]:
             diff_text = f"↑ زيادة: {format_currency(new_price - product['price'])}"
-            product['modified_price_label'].configure(
-                text=diff_text,
-                text_color="#b91c1c"
+            product["modified_price_label"].configure(
+                text=diff_text, text_color="#b91c1c"
             )
         else:
-            product['modified_price_label'].configure(text="")
+            product["modified_price_label"].configure(text="")
 
         dialog.destroy()
+        self._calculate_total()
+        self._refresh_payment_modal()
+        self._update_remaining()
 
     def _confirm_sale(self, dialog, subtotal, discount, tax, total):
         """Confirm and process the sale."""
@@ -1224,7 +1290,9 @@ class Sale:
             # Print invoice if auto-print is enabled
             auto_print = self.settings_db.get_setting("auto_print")
             if auto_print:
-                sale_data = self._prepare_sale_data(subtotal, discount, tax, total, paid)
+                sale_data = self._prepare_sale_data(
+                    subtotal, discount, tax, total, paid
+                )
                 self._print_invoice(sale_data)
 
         except Exception as e:
@@ -1312,9 +1380,9 @@ class Sale:
             sale_items_data.append(
                 (
                     product["id"],  # product_id
-                    qty,            # quantity
-                    price,          # price (modified or original)
-                    line_total,     # total
+                    qty,  # quantity
+                    price,  # price (modified or original)
+                    line_total,  # total
                 )
             )
 
@@ -1354,13 +1422,12 @@ class Sale:
     def _print_invoice_with_data(self, subtotal, discount, tax, total):
         """Print invoice with current sale data."""
         try:
-            sale_data = self._prepare_sale_data(subtotal, discount, tax, total,
-                                                float(self.paid_var.get()))
+            sale_data = self._prepare_sale_data(
+                subtotal, discount, tax, total, float(self.paid_var.get())
+            )
             self._print_invoice(sale_data)
         except Exception as e:
-            messagebox.showwarning(
-                "تحذير", f"تم حفظ الفاتورة لكن فشلت الطباعة: {e}"
-            )
+            messagebox.showwarning("تحذير", f"تم حفظ الفاتورة لكن فشلت الطباعة: {e}")
 
     # =========================================================================
     # Customer Selection Methods
@@ -1389,9 +1456,12 @@ class Sale:
         results_frame.pack(fill="both", expand=True, padx=10, pady=5)
 
         # Bind search
-        search_var.trace_add("write", lambda *args: self._refresh_customer_results(
-            results_frame, search_var, search_type_var
-        ))
+        search_var.trace_add(
+            "write",
+            lambda *args: self._refresh_customer_results(
+                results_frame, search_var, search_type_var
+            ),
+        )
 
         # Initial load
         self._refresh_customer_results(results_frame, search_var, search_type_var)
@@ -1626,6 +1696,7 @@ class Sale:
 
     def _print_invoice(self, sale_data):
         """Print invoice in a separate thread."""
+
         def run_print():
             try:
                 from utils.print_thermal import print_shop_invoice
@@ -1647,12 +1718,12 @@ class Sale:
             "date": strftime("%Y-%m-%d"),
             "time": strftime("%I:%M %p"),
             "customer_name": self.customer_var.get(),
-            "subtotal": sale_data["subtotal"],
-            "discount": sale_data["discount"],
-            "tax": sale_data["tax"],
-            "total": sale_data["total"],
-            "paid": sale_data["paid"],
-            "remaining": sale_data["remaining"],
+            "subtotal": round(sale_data["subtotal"], 2),
+            "discount": round(sale_data["discount"], 2),
+            "tax": round(sale_data["tax"], 2),
+            "total": round(sale_data["total"], 2),
+            "paid": round(sale_data["paid"], 2),
+            "remaining": round(sale_data["remaining"], 2),
         }
 
     def _prepare_products_for_printing(self):
@@ -1662,10 +1733,12 @@ class Sale:
             modified_price = product.get("modified_price")
             price = modified_price if modified_price is not None else product["price"]
 
-            products.append({
-                "name": product["name"],
-                "price": price,
-                "qty": product["qty"],
-                "total": price * product["qty"],
-            })
+            products.append(
+                {
+                    "name": product["name"],
+                    "price": price,
+                    "qty": product["qty"],
+                    "total": price * product["qty"],
+                }
+            )
         return products

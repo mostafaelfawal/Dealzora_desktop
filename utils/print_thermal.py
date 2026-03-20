@@ -1,16 +1,99 @@
 import win32print
 import win32ui
 from PIL import Image, ImageDraw, ImageFont, ImageWin
-from utils.ar_support import ar
 from models.settings import SettingsModel
 from utils.format_currency import format_currency
 from tkinter.messagebox import showerror
+import arabic_reshaper
+from bidi.algorithm import get_display
 
 FONT_BOLD = "assets/fonts/NotoNaskhArabic-Bold.ttf"
 
 
+# تعديل دالة تحويل الأرقام إلى كلمات (إزالة كلمة "جنيه")
+def number_to_words_ar(number):
+    """Convert number to Arabic words without currency"""
+    units = [
+        "",
+        "واحد",
+        "اثنان",
+        "ثلاثة",
+        "أربعة",
+        "خمسة",
+        "ستة",
+        "سبعة",
+        "ثمانية",
+        "تسعة",
+    ]
+    tens = [
+        "",
+        "عشرة",
+        "عشرون",
+        "ثلاثون",
+        "أربعون",
+        "خمسون",
+        "ستون",
+        "سبعون",
+        "ثمانون",
+        "تسعون",
+    ]
+    teens = [
+        "عشرة",
+        "أحد عشر",
+        "اثنا عشر",
+        "ثلاثة عشر",
+        "أربعة عشر",
+        "خمسة عشر",
+        "ستة عشر",
+        "سبعة عشر",
+        "ثمانية عشر",
+        "تسعة عشر",
+    ]
+
+    if number == 0:
+        return "صفر"
+
+    def convert_two_digits(num):
+        if num < 10:
+            return units[num]
+        elif 10 <= num < 20:
+            return teens[num - 10]
+        else:
+            tens_digit = num // 10
+            units_digit = num % 10
+            if units_digit == 0:
+                return tens[tens_digit]
+            else:
+                return f"{units[units_digit]} و{tens[tens_digit]}"
+
+    if number < 100:
+        return convert_two_digits(number)
+    elif number < 1000:
+        hundreds = number // 100
+        remainder = number % 100
+        if remainder == 0:
+            return f"{units[hundreds]} مئة"
+        else:
+            return f"{units[hundreds]} مئة و{convert_two_digits(remainder)}"
+    elif number < 1000000:
+        thousands = number // 1000
+        remainder = number % 1000
+        if remainder == 0:
+            return f"{convert_two_digits(thousands)} ألف"
+        else:
+            return (
+                f"{convert_two_digits(thousands)} ألف و{number_to_words_ar(remainder)}"
+            )
+    else:
+        return str(number)
+
+
 def draw_ar(draw, x, y, text, font, align="center"):
-    bbox = draw.textbbox((0, 0), ar(text), font=font)
+    # Reshape and reorder Arabic text
+    reshaped_text = arabic_reshaper.reshape(text)
+    bidi_text = get_display(reshaped_text)
+
+    bbox = draw.textbbox((0, 0), bidi_text, font=font)
     w = bbox[2] - bbox[0]
     h = bbox[3] - bbox[1]
 
@@ -19,15 +102,35 @@ def draw_ar(draw, x, y, text, font, align="center"):
     elif align == "center":
         x = x - w / 2
 
-    draw.text((x, y - h / 2), ar(text), font=font, fill="black")
+    draw.text((x, y - h / 2), bidi_text, font=font, fill="black")
 
 
-def draw_cell(draw, x, y, w, h, text, font, align="center"):
+def draw_cell(draw, x, y, w, h, text, font, align="center", is_header=False):
+    # Draw cell border
     draw.rectangle((x, y, x + w, y + h), outline="black", width=1)
 
-    bbox = draw.textbbox((0, 0), ar(text), font=font)
+    # ONLY header cells get background (removed product row coloring)
+    if is_header:
+        draw.rectangle((x + 1, y + 1, x + w - 1, y + h - 1), fill="lightgray")
+
+    # Reshape and reorder Arabic text
+    reshaped_text = arabic_reshaper.reshape(text)
+    bidi_text = get_display(reshaped_text)
+
+    bbox = draw.textbbox((0, 0), bidi_text, font=font)
     tw = bbox[2] - bbox[0]
     th = bbox[3] - bbox[1]
+
+    # التأكد من أن النص لا يتعدى حدود الخلية
+    if tw > w - 10:
+        # تصغير الخط مؤقتاً للنصوص الطويلة
+        temp_font = ImageFont.truetype(FONT_BOLD, font.size - 2)
+        bbox = draw.textbbox((0, 0), bidi_text, font=temp_font)
+        tw = bbox[2] - bbox[0]
+        th = bbox[3] - bbox[1]
+        font_to_use = temp_font
+    else:
+        font_to_use = font
 
     if align == "right":
         tx = x + w - tw - 5
@@ -38,18 +141,19 @@ def draw_cell(draw, x, y, w, h, text, font, align="center"):
 
     ty = y + (h - th) / 2
 
-    draw.text((tx, ty), ar(text), font=font, fill="black")
+    draw.text((tx, ty), bidi_text, font=font_to_use, fill="black")
 
 
-def generate_invoice(sale_data, products_data, width=440):
-
+def generate_invoice(sale_data, products_data, width=400):  # تصغير العرض شوية
     settings = SettingsModel()
-
     shop = settings.get_setting("shop_name")
 
-    f_shop = ImageFont.truetype(FONT_BOLD, 28)
-    f_title = ImageFont.truetype(FONT_BOLD, 18)
-    f_bold = ImageFont.truetype(FONT_BOLD, 16)
+    # تعديل حجم الخطوط لتكون مناسبة
+    f_shop = ImageFont.truetype(FONT_BOLD, 32)
+    f_title = ImageFont.truetype(FONT_BOLD, 24)
+    f_bold = ImageFont.truetype(FONT_BOLD, 18)
+    f_small = ImageFont.truetype(FONT_BOLD, 16)
+    f_amount_words = ImageFont.truetype(FONT_BOLD, 16)
 
     img = Image.new("1", (width, 2000), "white")
     draw = ImageDraw.Draw(img)
@@ -59,46 +163,56 @@ def generate_invoice(sale_data, products_data, width=440):
 
     # ===== Header =====
 
+    # اسم المحل
     draw_ar(draw, center, y, shop, f_shop)
-    y += 40
+    y += 45
 
+    # عنوان الفاتورة
     draw_ar(draw, center, y, "فاتورة بيع", f_title)
-    y += 30
+    y += 35
 
-    draw.line((20, y, width - 20, y), fill="black", width=2)
-    y += 20
+    # خط فاصل
+    draw.line((10, y, width - 10, y), fill="black", width=2)
+    y += 15
 
-    draw_ar(
-        draw,
-        width - 20,
-        y,
-        f"رقم الفاتورة: {sale_data['invoice_number']}",
-        f_bold,
-        "right",
-    )
-    draw_ar(draw, 20, y, f"التاريخ: {sale_data['date']}", f_bold, "left")
-    y += 25
+    # تفاصيل الفاتورة - تعديل التنسيق عشان ما يلتصقوش
+    # السطر الأول
+    draw_ar(draw, width - 10, y, f"رقم: {sale_data['invoice_number']}", f_bold, "right")
+    draw_ar(draw, 10, y, f"تاريخ: {sale_data['date']}", f_bold, "left")
+    y += 28
 
-    draw_ar(draw, width - 20, y, f"الوقت: {sale_data['time']}", f_bold, "right")
+    # السطر الثاني
+    draw_ar(draw, width - 10, y, f"وقت: {sale_data['time']}", f_bold, "right")
 
-    draw_ar(draw, 20, y, f"العميل: {sale_data['customer_name']}", f_bold, "left")
-    y += 25
+    # تقليل اسم العميل إذا كان طويل
+    customer = sale_data["customer_name"]
+    if len(customer) > 12:
+        customer = customer[:12] + ".."
+    draw_ar(draw, 10, y, f"عميل: {customer}", f_bold, "left")
+    y += 28
 
-    draw.line((20, y, width - 20, y), fill="black", width=1)
+    # خط فاصل
+    draw.line((10, y, width - 10, y), fill="black", width=1)
     y += 15
 
     # ===== Table =====
 
-    col_name = 180
-    col_qty = 60
-    col_price = 100
-    col_total = 60
-    row_h = 28
+    # تعديل عرض الأعمدة لتناسب الطابعة الحرارية
+    col_name = 150
+    col_qty = 55
+    col_price = 85
+    col_total = 70
+    row_h = 32
 
-    x = 20
+    x = 10
 
-    # Header row
-    
+    # التحقق من أن مجموع الأعمدة لا يتعدى عرض الفاتورة
+    total_width = col_name + col_qty + col_price + col_total
+    if total_width > width - 20:
+        # تعديل تلقائي إذا كان العرض كبير
+        col_name = width - 20 - (col_qty + col_price + col_total)
+
+    # صف العناوين (فقط هذه الخلايا لها خلفية)
     draw_cell(
         draw,
         x + col_name + col_qty + col_price,
@@ -107,39 +221,49 @@ def generate_invoice(sale_data, products_data, width=440):
         row_h,
         "الإجمالي",
         f_bold,
+        is_header=True,
     )
-    draw_cell(draw, x + col_name + col_qty, y, col_price, row_h, "السعر", f_bold)
-    draw_cell(draw, x + col_name, y, col_qty, row_h, "الكمية", f_bold)
-    draw_cell(draw, x, y, col_name, row_h, "المنتج", f_bold)
+    draw_cell(
+        draw,
+        x + col_name + col_qty,
+        y,
+        col_price,
+        row_h,
+        "السعر",
+        f_bold,
+        is_header=True,
+    )
+    draw_cell(draw, x + col_name, y, col_qty, row_h, "الكمية", f_bold, is_header=True)
+    draw_cell(draw, x, y, col_name, row_h, "المنتج", f_bold, is_header=True)
 
     y += row_h
 
-    # Products
+    # المنتجات (بدون تلوين alternating rows)
     for p in products_data:
-
-        name = p["name"][:18]
+        # تقليل اسم المنتج ليناسب العرض
+        name = p["name"]
+        if len(name) > 14:
+            name = name[:14] + "."
 
         draw_cell(draw, x, y, col_name, row_h, name, f_bold, "right")
-
         draw_cell(draw, x + col_name, y, col_qty, row_h, f'{p["qty"]}', f_bold)
 
-        draw_cell(
-            draw,
-            x + col_name + col_qty,
-            y,
-            col_price,
-            row_h,
-            f'{p["price"]}',
-            f_bold,
+        # تنسيق السعر بدون كسور عشرية إذا كانت .00
+        price = (
+            f'{int(p["price"])}' if p["price"] == int(p["price"]) else f'{p["price"]}'
         )
+        draw_cell(draw, x + col_name + col_qty, y, col_price, row_h, price, f_bold)
 
+        total = (
+            f'{int(p["total"])}' if p["total"] == int(p["total"]) else f'{p["total"]}'
+        )
         draw_cell(
             draw,
             x + col_name + col_qty + col_price,
             y,
             col_total,
             row_h,
-            f'{p["total"]}',
+            total,
             f_bold,
         )
 
@@ -147,17 +271,22 @@ def generate_invoice(sale_data, products_data, width=440):
 
     y += 10
 
-    draw.line((20, y, width - 20, y), fill="black", width=2)
-    y += 20
+    # خط فاصل بعد المنتجات
+    draw.line((10, y, width - 10, y), fill="black", width=2)
+    y += 15
 
-    # ===== Summary =====
+    # ===== Summary Section =====
 
-    def summary(label, value):
+    def summary(label, value, is_bold=False):
         nonlocal y
-        draw_ar(draw, width - 20, y, label, f_bold, "right")
-        draw_ar(draw, 20, y, format_currency(value), f_bold, "left")
+        font_to_use = f_bold if is_bold else f_small
+        draw_ar(draw, width - 10, y, label, font_to_use, "right")
+        # تنسيق القيمة
+        formatted_value = f"{int(value)}" if value == int(value) else f"{value}"
+        draw_ar(draw, 10, y, formatted_value, font_to_use, "left")
         y += 25
 
+    # الملخص
     summary("الإجمالي الفرعي", sale_data["subtotal"])
 
     if sale_data["discount"] > 0:
@@ -166,27 +295,56 @@ def generate_invoice(sale_data, products_data, width=440):
     if sale_data["tax"] > 0:
         summary("الضريبة", sale_data["tax"])
 
-    draw.line((20, y, width - 20, y), fill="black", width=1)
-    y += 15
+    # خط فاصل خفيف
+    draw.line((10, y, width - 10, y), fill="black", width=1)
+    y += 12
 
-    summary("الإجمالي", sale_data["total"])
-    summary("المدفوع", sale_data["paid"])
-    summary("الباقي", sale_data["remaining"])
+    # المجاميع النهائية
+    summary("الإجمالي", sale_data["total"], True)
+    summary("المدفوع", sale_data["paid"], True)
+    summary("الباقي", sale_data["remaining"], True)
 
-    draw.line((20, y, width - 20, y), fill="black", width=2)
+    # المبلغ بالكلمات (بدون كلمة "جنيه")
+    y += 5
+    total_in_words = number_to_words_ar(int(sale_data["total"]))
+
+    # تقسيم النص إذا كان طويلاً
+    words_text = f"فقط {total_in_words} لا غير"
+    if len(total_in_words) > 30:
+        # للأسف النص طويل جداً، هنكتبه في سطرين
+        parts = total_in_words.split(" و")
+        if len(parts) > 1:
+            middle = len(parts) // 2
+            part1 = " و".join(parts[:middle])
+            part2 = " و".join(parts[middle:])
+            draw_ar(draw, center, y, f"فقط {part1}", f_amount_words)
+            y += 20
+            draw_ar(draw, center, y, f"{part2} لا غير", f_amount_words)
+        else:
+            draw_ar(draw, center, y, words_text, f_amount_words)
+    else:
+        draw_ar(draw, center, y, words_text, f_amount_words)
     y += 25
 
-    draw_ar(draw, center, y, "شكراً لزيارتكم", f_bold)
-    y += 30
-    draw_ar(draw, center, y, "Powred By Dealzora", f_bold)
+    # خط فاصل
+    draw.line((10, y, width - 10, y), fill="black", width=2)
+    y += 20
 
-    img = img.crop((0, 0, width, y + 40))
+    # ===== Footer =====
+
+    draw_ar(draw, center, y, "شكراً لزيارتكم", f_bold)
+    y += 25
+
+    draw_ar(draw, center, y, "Powered By Dealzora", f_small)
+    y += 20
+
+    # قص الصورة
+    img = img.crop((0, 0, width, y + 30))
 
     return img
 
 
 def print_image_to_printer(img, printer_name):
-
     hprinter = win32print.OpenPrinter(printer_name)
     hdc = win32ui.CreateDC()
     hdc.CreatePrinterDC(printer_name)
@@ -207,18 +365,14 @@ def print_image_to_printer(img, printer_name):
 
 
 def print_shop_invoice(sale_data, products_data):
-
     settings = SettingsModel()
 
     printer_name = settings.get_setting("printer_name")
     copies = int(settings.get_setting("invoices_per_print") or 1)
 
     try:
-
         for _ in range(copies):
-
             img = generate_invoice(sale_data, products_data)
-
             print_image_to_printer(img, printer_name)
         return True
     except Exception as e:
