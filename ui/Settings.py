@@ -146,6 +146,28 @@ class Settings:
             dropdown_font=("Cairo", 14),
         )
         printer_menu.pack(fill="x", pady=(0, 15))
+        
+        # ===== نوع الطابعة =====
+        CTkLabel(
+            container,
+            text=":نوع الطابعة",
+            font=("Cairo", 18),
+            anchor="e",
+        ).pack(anchor="e", pady=(10, 5))
+
+        printer_type_var = StringVar(value=self.settings.get("printer_type", "A4"))
+        self.vars["printer_type"] = printer_type_var
+
+        printer_type_menu = CTkOptionMenu(
+            container,
+            values=["A4", "حرارية"],
+            variable=printer_type_var,
+            font=("Cairo", 16, "bold"),
+            dropdown_font=("Cairo", 16),
+            height=45,
+            corner_radius=8,
+        )
+        printer_type_menu.pack(fill="x", pady=(0, 15))
 
         # ===== عدد الفواتير =====
         CTkLabel(
@@ -168,6 +190,28 @@ class Settings:
             border_width=2,
         )
         copies_entry.pack(fill="x")
+
+        CTkLabel(
+            container,
+            text=":اسم العملة (للطباعة على الفاتورة)",
+            font=("Cairo", 18),
+            anchor="e",
+        ).pack(anchor="e", pady=(0, 5))
+
+        currency_name_var = StringVar(value=self.settings.get("currency_name", "جنيهاً"))
+        self.vars["currency_name"] = currency_name_var
+
+        currency_name_entry = CTkEntry(
+            container,
+            textvariable=currency_name_var,
+            justify="center",
+            font=("Cairo", 16),
+            height=45,
+            corner_radius=8,
+            border_width=2,
+        )
+        currency_name_entry.pack(fill="x")
+        self.vars["currency_name"] = currency_name_var
 
         # ===== الطباعة التلقائية =====
         auto_print_var = BooleanVar(value=self.settings.get("auto_print", True))
@@ -199,6 +243,12 @@ class Settings:
         # ======= الحقول =======
         self.add_field(
             fields_container, ":اسم المحل", self.settings["shop_name"], "shop_name"
+        )
+        self.add_field(
+            fields_container, ":هاتف المحل", self.settings.get("shop_phone", ""), "shop_phone"
+        )
+        self.add_field(
+            fields_container, ":عنوان المحل", self.settings.get("shop_address", ""), "shop_address"
         )
         self.add_field(
             fields_container, ":العملة", self.settings["currency"], "currency"
@@ -530,7 +580,11 @@ class Settings:
                 copies,
                 self.vars["auto_print"].get(),
                 self.vars["auto_backup"].get(),
-                self.vars["backup_path"].get(),  # إضافة مسار النسخ الاحتياطي
+                self.vars["backup_path"].get(),
+                self.vars["printer_type"].get(),
+                self.vars["shop_phone"].get(),
+                self.vars["shop_address"].get(),
+                self.vars["currency_name"].get()
             )
 
             # ======= تطبيق الـ Theme فوراً =======

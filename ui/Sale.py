@@ -1696,19 +1696,27 @@ class Sale:
 
     def _print_invoice(self, sale_data):
         """Print invoice in a separate thread."""
-
+        
         def run_print():
             try:
                 from utils.print_thermal import print_shop_invoice
-
+                from utils.print_A4 import print_A4
+                
                 invoice_data = self._prepare_invoice_data(sale_data)
                 products_data = self._prepare_products_for_printing()
-
-                print_shop_invoice(invoice_data, products_data)
-
+                
+                # التحقق من نوع الطباعة المطلوب
+                printer_type = self.settings_db.get_setting("printer_type") or "thermal"
+                
+                if printer_type == "a4":
+                    print_A4(invoice_data, products_data)
+                else:
+                    print_shop_invoice(invoice_data, products_data)
+                    
             except Exception as e:
-                self.root.after(0, lambda: messagebox.showwarning("تحذير", str(e)))
-
+                error_message = f"تم حفظ الفاتورة لكن فشلت الطباعة: {e}"
+                self.root.after(0, lambda: messagebox.showwarning("تحذير", error_message))
+        
         threading.Thread(target=run_print, daemon=True).start()
 
     def _prepare_invoice_data(self, sale_data):

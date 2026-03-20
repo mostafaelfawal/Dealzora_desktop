@@ -1,12 +1,15 @@
 {
-    "shop_name": "DEALZORA",
+    "shop_name": "Dealzora - ماركت",
     "currency": "ج.م",
     "tax": 0.0,
     "theme": "dark",
-    "logo_path": "assets/icon.png",
-    "printer_name": "",
+    "logo_path": "D:/my_softweres/desktop/Dealzora Project/Dealzora/assets/icon.png",
+    "printer_name": "Microsoft Print to PDF",
     "invoices_per_print": 1,
-    "auto_print": true,
+    "auto_print": false,
     "auto_backup": false,
-    "backup_path": "backup"
+    "backup_path": "D:/my_softweres/desktop",
+    "printer_type": "a4",
+    "shop_address": "123 شارع النيل، القاهرة",
+    "shop_phone": "01151083509"
 }

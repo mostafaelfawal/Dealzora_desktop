@@ -5,3 +5,4 @@
 /_internal
 */__pycache__
 *.log
+*.env

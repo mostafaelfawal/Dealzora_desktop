@@ -17,7 +17,11 @@ class SettingsModel:
             "invoices_per_print": 1,
             "auto_print": True,
             "auto_backup": False,
-            "backup_path": "backup",  # المسار الافتراضي للنسخ الاحتياطي
+            "backup_path": "backup",
+            "printer_type": "a4",
+            "shop_phone": "",
+            "shop_address": "",
+            "currency_name": "جنيهاً"
         }
 
         # لو الملف مش موجود
@@ -61,7 +65,12 @@ class SettingsModel:
         copies=None,
         auto_print=None,
         auto_backup=None,
-        backup_path=None,  # إضافة المسار الجديد
+        backup_path=None,
+        printer_type=None,
+        shop_phone=None,
+        shop_address=None,
+        currency_name=None
+
     ):
         data = self.get_settings()
 
@@ -101,9 +110,24 @@ class SettingsModel:
         if auto_backup is not None:
             data["auto_backup"] = bool(auto_backup)
 
-        if backup_path is not None:  # إضافة تحديث المسار
+        if backup_path is not None:
             data["backup_path"] = backup_path
+            
+        if printer_type is not None:
+            if printer_type in ["a4", "thermal"]:
+                data["printer_type"] = printer_type
+            else:
+                data["printer_type"] = "a4"
 
+        if shop_phone is not None:
+            data["shop_phone"] = shop_phone
+        
+        if shop_address is not None:
+            data["shop_address"] = shop_address
+        
+        if currency_name is not None:
+            data["currency_name"] = currency_name
+        
         self.save_settings(data)
 
     # حفظ الملف
