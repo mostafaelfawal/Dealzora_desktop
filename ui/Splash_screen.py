@@ -5,7 +5,7 @@ from utils.image import image
 from utils.license import is_license_valid
 from utils.update_checker import check_for_update
 
-APP_VERSION = "1.3.5"
+APP_VERSION = "1.4.5"
 
 class SplashScreen:
     def __init__(self, root, on_finish):
@@ -74,7 +74,7 @@ class SplashScreen:
     def finish_splash(self):
         if self.frame and self.frame.winfo_exists():
             self.frame.destroy()
-
+        self.root.state("zoomed")
         if is_license_valid():
             self.on_finish()
         else:

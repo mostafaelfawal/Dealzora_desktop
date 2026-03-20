@@ -9,7 +9,8 @@
     "auto_print": false,
     "auto_backup": false,
     "backup_path": "D:/my_softweres/desktop",
-    "printer_type": "a4",
+    "printer_type": "A4",
     "shop_address": "123 شارع النيل، القاهرة",
-    "shop_phone": "01151083509"
+    "shop_phone": "01151083509",
+    "currency_name": "جنيهاً"
 }

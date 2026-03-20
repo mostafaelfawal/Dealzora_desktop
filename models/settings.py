@@ -18,7 +18,7 @@ class SettingsModel:
             "auto_print": True,
             "auto_backup": False,
             "backup_path": "backup",
-            "printer_type": "a4",
+            "printer_type": "حرارية",
             "shop_phone": "",
             "shop_address": "",
             "currency_name": "جنيهاً"
@@ -114,10 +114,10 @@ class SettingsModel:
             data["backup_path"] = backup_path
             
         if printer_type is not None:
-            if printer_type in ["a4", "thermal"]:
+            if printer_type in ["A4", "حرارية"]:
                 data["printer_type"] = printer_type
             else:
-                data["printer_type"] = "a4"
+                data["printer_type"] = "A4"
 
         if shop_phone is not None:
             data["shop_phone"] = shop_phone

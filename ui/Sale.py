@@ -1706,9 +1706,9 @@ class Sale:
                 products_data = self._prepare_products_for_printing()
                 
                 # التحقق من نوع الطباعة المطلوب
-                printer_type = self.settings_db.get_setting("printer_type") or "thermal"
+                printer_type = self.settings_db.get_setting("printer_type") or "حرارية"
                 
-                if printer_type == "a4":
+                if printer_type == "A4":
                     print_A4(invoice_data, products_data)
                 else:
                     print_shop_invoice(invoice_data, products_data)
