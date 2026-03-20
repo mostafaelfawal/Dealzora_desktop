@@ -2,7 +2,7 @@ import requests
 import time
 
 BASE_URL = "https://raw.githubusercontent.com/mostafaelfawal/Dealzora_desktop/refs/heads/main/version.json"
-APP_VERSION = "1.3.4"
+APP_VERSION = "1.3.5"
 
 
 def check_for_update():
