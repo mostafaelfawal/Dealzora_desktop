@@ -1,34 +1,47 @@
 import requests
-import time
+import json
+import base64
+import os
+from dotenv import load_dotenv
+from packaging import version
 
-BASE_URL = "https://raw.githubusercontent.com/mostafaelfawal/Dealzora_desktop/refs/heads/main/version.json"
+# تحميل .env
+load_dotenv()
+
+OWNER = "mostafaelfawal"
+REPO = "Dealzora_desktop"
+FILE_PATH = "version.json"
+
 APP_VERSION = "1.3.5"
 
 
 def check_for_update():
     try:
-        # كسر الكاش بإضافة timestamp
-        url = f"{BASE_URL}?t={int(time.time())}"
+        url = f"https://api.github.com/repos/{OWNER}/{REPO}/contents/{FILE_PATH}"
 
-        r = requests.get(
-            url,
-            timeout=5,
-            headers={
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Pragma": "no-cache",
-                "Expires": "0",
-            },
-        )
+        token = os.getenv("GITHUB_TOKEN")
 
-        r.raise_for_status()  # لو في error في الطلب
+        headers = {
+            "Accept": "application/vnd.github.v3+json",
+            "User-Agent": "Dealzora-App"
+        }
+
+        # ضيف التوكن لو موجود
+        if token:
+            headers["Authorization"] = f"token {token}"
+
+        r = requests.get(url, timeout=5, headers=headers)
+        r.raise_for_status()
 
         data = r.json()
 
-        latest_version = data.get("version")
-        download_url = data.get("url")
+        content = base64.b64decode(data["content"]).decode("utf-8")
+        json_data = json.loads(content)
 
-        # مقارنة أفضل للـ versions
-        if latest_version and latest_version != APP_VERSION:
+        latest_version = json_data.get("version")
+        download_url = json_data.get("url")
+
+        if latest_version and version.parse(latest_version) > version.parse(APP_VERSION):
             return latest_version, download_url
 
         return None, None
