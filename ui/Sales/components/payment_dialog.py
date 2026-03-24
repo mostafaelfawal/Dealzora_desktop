@@ -1,5 +1,3 @@
-import threading
-
 from customtkinter import (
     CTkFrame,
     CTkLabel,
@@ -20,7 +18,7 @@ from utils.image import image
 # =============================
 
 class InvoiceItem(CTkFrame):
-    def __init__(self, parent, product, sale_state, on_price_edit):
+    def __init__(self, parent, product, sale_state, on_price_edit, data_service):
         super().__init__(
             parent,
             fg_color=("gray90", "gray25"),
@@ -32,6 +30,7 @@ class InvoiceItem(CTkFrame):
         self.product = product
         self.sale_state = sale_state
         self.on_price_edit = on_price_edit
+        self.data_service = data_service
 
         # تخزين مراجع للعناصر التي سيتم تحديثها
         self.price_label = None
@@ -91,19 +90,21 @@ class InvoiceItem(CTkFrame):
             text_color=("green", "#00ff00"),
         )
         self.total_label.pack(side="right", padx=5, pady=2)
-
-        # زر التعديل
-        CTkButton(
-            self,
-            text="",
-            image=image("assets/edit.png", (20, 20)),
-            width=30,
-            height=28,
-            corner_radius=6,
-            fg_color=("gray75", "gray30"),
-            hover_color=("gray65", "gray40"),
-            command=self._edit_price,
-        ).pack(side="left", padx=5, pady=2)
+        
+        price_edit_permission = self.data_service.price_edit_permission
+        if price_edit_permission:
+            # زر التعديل
+            CTkButton(
+                self,
+                text="",
+                image=image("assets/edit.png", (20, 20)),
+                width=30,
+                height=28,
+                corner_radius=6,
+                fg_color=("gray75", "gray30"),
+                hover_color=("gray65", "gray40"),
+                command=self._edit_price,
+            ).pack(side="left", padx=5, pady=2)
 
     def _edit_price(self):
         self.on_price_edit(self.product)
@@ -121,7 +122,7 @@ class InvoiceItem(CTkFrame):
 # =============================
 
 class InvoiceItemsList(CTkScrollableFrame):
-    def __init__(self, parent, sale_state, on_price_edit):
+    def __init__(self, parent, sale_state, on_price_edit, data_service):
         super().__init__(
             parent,
             fg_color=("gray95", "gray20"),
@@ -132,6 +133,7 @@ class InvoiceItemsList(CTkScrollableFrame):
 
         self.sale_state = sale_state
         self.on_price_edit = on_price_edit
+        self.data_service = data_service
         self.items = {}  # تخزين مراجع العناصر {product_id: InvoiceItem}
 
         # تسجيل هذا العنصر كمراقب للتغييرات في السلة
@@ -221,7 +223,7 @@ class InvoiceItemsList(CTkScrollableFrame):
 
         # عرض المنتجات
         for product in self.sale_state.selected_products:
-            item = InvoiceItem(self, product, self.sale_state, self.on_price_edit)
+            item = InvoiceItem(self, product, self.sale_state, self.on_price_edit, self.data_service)
             item.pack(fill="x", pady=1, padx=10)
             self.items[product["id"]] = item
 
@@ -547,11 +549,12 @@ class InvoiceHeader(CTkFrame):
 # =============================
 
 class InvoiceView(CTkToplevel):
-    def __init__(self, parent, sale_state, on_finish_callback):
+    def __init__(self, parent, sale_state, on_finish_callback, data_service):
         super().__init__(parent)
 
         self.sale_state = sale_state
         self.on_finish_callback = on_finish_callback
+        self.data_service = data_service
 
         # تكوين النافذة
         self._config_dialog()
@@ -570,7 +573,7 @@ class InvoiceView(CTkToplevel):
         self.header.pack(fill="x", pady=(0, 4))
 
         # Items List
-        self.items = InvoiceItemsList(main_frame, self.sale_state, self._on_price_edit)
+        self.items = InvoiceItemsList(main_frame, self.sale_state, self._on_price_edit, self.data_service)
         self.items.pack(fill="both", expand=True, pady=(0, 4))
 
         # Totals

@@ -32,7 +32,7 @@ class Sale:
         self.product_section.grid(row=0, column=0, sticky="nsew")
 
         self.totals_panel = TotalsPanel(
-            center_container, self.currency, self.tax_rate, self.sale_state
+            center_container, self.currency, self.tax_rate, self.sale_state, self.data_service
         )
         self.totals_panel.grid(row=1, column=0, columnspan=2, sticky="ew")
 

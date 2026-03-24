@@ -63,7 +63,8 @@ class Layout:
             self.stock_movements_db,
             self.sales_db,
             self.sale_itmes_db,
-            self.settings
+            self.settings,
+            self.get_edit_price_permission()
         )
         
         self.sale_state = SaleState(tax_rate, self.data_service)
@@ -218,6 +219,9 @@ class Layout:
     def quit_window(self):
         if askokcancel("تأكد", "ستخرج من البرنامج الأن"):
             self.root.quit()
+            
+    def get_edit_price_permission(self):
+        return self.users_db.check_permission(self.uid, "edit_price_in_invoice")
 
     def change_screen(self, screen_type: str):
         clear(self.main_frame)

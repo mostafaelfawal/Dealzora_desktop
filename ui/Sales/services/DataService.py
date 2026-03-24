@@ -1,16 +1,30 @@
 class DataService:
-    def __init__(self, products_db, customers_db, stock_movements_db, sales_db, sale_itmes_db, settings_db):
+    def __init__(
+        self,
+        products_db,
+        customers_db,
+        stock_movements_db,
+        sales_db,
+        sale_itmes_db,
+        settings_db,
+        price_edit_permission,
+    ):
         self.products_db = products_db
         self.customers_db = customers_db
         self.stock_movements_db = stock_movements_db
         self.sales_db = sales_db
         self.sale_itmes_db = sale_itmes_db
         self.settings_db = settings_db
+        self._price_edit_permission = price_edit_permission
+
+    @property
+    def price_edit_permission(self):
+        return self._price_edit_permission
 
     # ======== Settings ========
     def get_setting(self, key: str):
         return self.settings_db.get_setting(key)
-    
+
     # ========= Products =========
     def get_products(self):
         return self.products_db.get_products()
@@ -68,6 +82,6 @@ class DataService:
         return self.sales_db.add_sale(
             number, total, discount, tax, paid, change, customer_id
         )
-    
+
     def record_invoice_item(self, sale_id, products):
         self.sale_itmes_db.add_sale_items(sale_id, products)

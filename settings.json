@@ -1,6 +1,6 @@
 {
     "shop_name": "Dealzora - ماركت",
-    "currency": "ج.م",
+    "currency": "$",
     "tax": 10.0,
     "theme": "dark",
     "logo_path": "D:/my_softweres/desktop/Dealzora Project/Dealzora/assets/icon.png",
@@ -10,6 +10,7 @@
     "auto_backup": false,
     "backup_path": "D:/my_softweres/desktop",
     "printer_type": "حرارية",
+    "paper_size": "58",
     "shop_phone": "01151083509",
     "shop_address": "123 شارع النيل، القاهرة",
     "currency_name": "دولاراً",

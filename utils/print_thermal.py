@@ -1,152 +1,513 @@
-from escpos.printer import Win32Raw
+import win32print
+import win32ui
+from PIL import Image, ImageDraw, ImageFont, ImageWin
 from utils.ar_support import ar
 from models.settings import SettingsModel
 from utils.format_currency import format_currency
 from tkinter.messagebox import showerror
 from utils.number_to_arabic_words import number_to_arabic_words
 
-
-# ================= BUILDER =================
-class InvoiceBuilder:
-    def __init__(self, width=32):
-        self.width = width
-        self.lines = []
-
-    def add(self, text=""):
-        self.lines.append(ar(str(text)))
-    
-    def line(self, char="-"):
-        self.lines.append(char * self.width)
-
-    def center(self, text):
-        text = ar(str(text))
-        self.lines.append(text.center(self.width))
-
-    def build(self):
-        return "\n".join(self.lines)
+FONT_BOLD = "assets/fonts/NotoNaskhArabic-Bold.ttf"
 
 
-# ================= ESC/POS PRINTER =================
-class EscposInvoicePrinter:
-    def __init__(self, printer_name):
-        self.printer = Win32Raw(printer_name)
-
-    def print_text(self, text):
-        try:
-            self.printer._raw((text + "\n").encode("cp864"))
-            self.printer.cut()
-        except:
-            self.printer._raw((text + "\n").encode("utf-8"))
-            self.printer.cut()
+# ================= PAPER SIZE CONFIGURATION =================
+def mm_to_pixels(mm, dpi=203):
+    """تحويل الملم إلى بكسل بناءً على DPI (نقطة لكل بوصة) للطابعة الحرارية"""
+    inches = mm / 25.4
+    pixels = int(inches * dpi)
+    return pixels
 
 
-# ================= MAIN =================
-def build_invoice_text(sale_data, products_data):
+def get_paper_config(paper_size_mm):
+    """الحصول على إعدادات الورق حسب الحجم"""
+    if paper_size_mm == 58:
+        return {
+            "width_mm": 58,
+            "width_px": mm_to_pixels(58),
+            "font_shop": 24,
+            "font_title": 18,
+            "font_bold": 14,
+            "font_small": 12,
+            "row_height": 40,
+            "padding": 15,
+            "inner_padding": 8,
+            "summary_spacing": 22,
+            "col_ratio": {"name": 0.35, "qty": 0.20, "price": 0.22, "total": 0.23},
+        }
+    else:  # 80mm (افتراضي)
+        return {
+            "width_mm": 80,
+            "width_px": mm_to_pixels(80),
+            "font_shop": 30,
+            "font_title": 20,
+            "font_bold": 16,
+            "font_small": 14,
+            "row_height": 45,
+            "padding": 20,
+            "inner_padding": 12,
+            "summary_spacing": 28,
+            "col_ratio": {"name": 0.38, "qty": 0.20, "price": 0.21, "total": 0.21},
+        }
+
+
+# ================= RTL TEXT =================
+def draw_ar(draw, x, y, text, font, align="center", fill="black"):
+    text = ar(str(text))
+    bbox = draw.textbbox((0, 0), text, font=font)
+    w = bbox[2] - bbox[0]
+    h = bbox[3] - bbox[1]
+
+    if align == "right":
+        x = x - w
+    elif align == "center":
+        x = x - w / 2
+
+    draw.text((x, y), text, font=font, fill=fill)
+    return h
+
+
+def wrap_text(draw, text, font, max_width):
+    """تقسيم النص إلى أسطر متعددة حسب العرض المتاح"""
+    words = text.split()
+    lines = []
+    current_line = []
+
+    for word in words:
+        test_line = " ".join(current_line + [word])
+        bbox = draw.textbbox((0, 0), test_line, font=font)
+        w = bbox[2] - bbox[0]
+
+        if w <= max_width:
+            current_line.append(word)
+        else:
+            if current_line:
+                lines.append(" ".join(current_line))
+            current_line = [word]
+
+    if current_line:
+        lines.append(" ".join(current_line))
+
+    return lines
+
+
+def draw_cell(
+    draw, x, y, w, h, text, font, align="center", fill=None, draw_border=True
+):
+    """رسم خلية مع دعم النصوص الطويلة وتقسيمها لأسطر متعددة"""
+
+    # رسم الخلفية إذا وجدت
+    if fill:
+        draw.rectangle((x, y, x + w, y + h), fill=fill)
+
+    # رسم الحدود
+    if draw_border:
+        draw.rectangle((x, y, x + w, y + h), outline="black", width=1)
+
+    # تقسيم النص إلى أسطر
+    max_text_width = w - 10
+    lines = wrap_text(draw, str(text), font, max_text_width)
+
+    if not lines:
+        lines = [""]
+
+    # حساب ارتفاع كل سطر
+    line_heights = []
+    for line in lines:
+        bbox = draw.textbbox((0, 0), line, font=font)
+        line_heights.append(bbox[3] - bbox[1])
+
+    total_height = sum(line_heights)
+
+    # بداية الرسم العمودي (توسيط عمودي)
+    start_y = y + (h - total_height) / 2
+
+    # رسم كل سطر
+    current_y = start_y
+    for i, line in enumerate(lines):
+        bbox = draw.textbbox((0, 0), line, font=font)
+        tw = bbox[2] - bbox[0]
+
+        # تحديد المحاذاة الأفقية
+        if align == "right":
+            tx = x + w - tw - 5
+        elif align == "left":
+            tx = x + 5
+        else:  # center
+            tx = x + (w - tw) / 2
+
+        # رسم النص
+        draw.text((tx, current_y), ar(line), font=font, fill="black")
+        current_y += line_heights[i]
+
+    return max(h, total_height + 10)
+
+
+# ================= MAIN GENERATOR =================
+def generate_invoice(sale_data, products_data, width=None):
     settings = SettingsModel()
-
-    paper_size = settings.get_setting("paper_size")
-    width = 32 if paper_size == "58" else 48
-
-    b = InvoiceBuilder(width)
-
     shop = settings.get_setting("shop_name") or "متجرنا"
     phone = settings.get_setting("shop_phone") or ""
     address = settings.get_setting("shop_address") or ""
     currency = settings.get_setting("currency_name")
     sub_currency = settings.get_setting("sub_currency_name")
+    paper_size = settings.get_setting("paper_size") or "80"
+
+    # تحويل إلى int إذا كانت string
+    if isinstance(paper_size, str):
+        paper_size = int(paper_size) if paper_size.isdigit() else 80
+
+    # الحصول على إعدادات الورق
+    paper_config = get_paper_config(paper_size)
+
+    # تحديد العرض
+    if width is None:
+        width = paper_config["width_px"]
+
+    # تحميل الخطوط
+    f_shop = ImageFont.truetype(FONT_BOLD, paper_config["font_shop"])
+    f_title = ImageFont.truetype(FONT_BOLD, paper_config["font_title"])
+    f_bold = ImageFont.truetype(FONT_BOLD, paper_config["font_bold"])
+    f_small = ImageFont.truetype(FONT_BOLD, paper_config["font_small"])
+
+    margin = paper_config["padding"]
+    inner_padding = paper_config["inner_padding"]
+    content_width = width - (margin * 2)
+
+    img = Image.new("1", (width, 3000), "white")
+    draw = ImageDraw.Draw(img)
+
+    y = margin
+    center = width // 2
 
     # ===== HEADER =====
-    b.center(shop)
-    if address:
-        b.center(address)
-    if phone:
-        b.center(phone)
+    draw_ar(draw, center, y, shop, f_shop, "center")
+    y += paper_config["font_shop"] + 10
 
-    b.line()
-    b.center("فاتورة بيع")
-    b.line()
+    if address:
+        draw_ar(draw, center, y, address, f_small, "center")
+        y += paper_config["font_small"] + 5
+    if phone:
+        draw_ar(draw, center, y, phone, f_small, "center")
+        y += paper_config["font_small"] + 10
+
+    # عنوان الفاتورة - إصلاح مشكلة الرؤية
+    # حساب عرض النص أولاً لمعرفة المساحة المطلوبة
+    temp_text = "فاتورة بيع"
+    temp_bbox = draw.textbbox((0, 0), ar(temp_text), font=f_title)
+    text_width = temp_bbox[2] - temp_bbox[0]
+    text_height = temp_bbox[3] - temp_bbox[1]
+    
+    # حساب ارتفاع الخلفية (إضافة مسافة أعلى وأسفل النص)
+    title_padding = 12
+    title_height = text_height + (title_padding * 2)
+    title_y = y
+    
+    # رسم الخلفية السوداء
+    draw.rectangle(
+        (margin, title_y, width - margin, title_y + title_height), fill="black"
+    )
+    
+    # رسم النص في المنتصف تماماً
+    text_x = center
+    text_y = title_y + title_height // 2
+    
+    # رسم النص مع إزاحة بسيطة لضمان ظهوره كاملاً
+    draw_ar(draw, text_x, text_y, "فاتورة بيع", f_title, "center", "white")
+
+    y += title_height + 15
 
     # ===== INFO =====
-    b.add(f"رقم الفاتورة: {sale_data['invoice_number']}")
-    b.add(f"التاريخ: {sale_data['date']}")
-    b.add(f"الوقت: {sale_data['time']}")
-    b.add(f"العميل: {sale_data['customer_name']}")
+    info_spacing = paper_config["font_bold"] + 5
+    draw_ar(
+        draw,
+        width - margin,
+        y,
+        f"رقم الفاتورة: {sale_data['invoice_number']}",
+        f_bold,
+        "right",
+    )
+    draw_ar(draw, margin, y, f"التاريخ: {sale_data['date']}", f_bold, "left")
+    y += info_spacing
+    draw_ar(draw, width - margin, y, f"الوقت: {sale_data['time']}", f_bold, "right")
+    draw_ar(draw, margin, y, f"العميل: {sale_data['customer_name']}", f_bold, "left")
+    y += info_spacing + 5
 
-    b.line()
+    # ===== TABLE =====
+    total_width = content_width
 
-    # ===== PRODUCTS =====
+    # حساب عرض الأعمدة - تصحيح ترتيب الأعمدة ليكون المنتج أولاً
+    col_ratio = paper_config["col_ratio"]
+    col_name = int(total_width * col_ratio["name"])
+    col_qty = int(total_width * col_ratio["qty"])
+    col_price = int(total_width * col_ratio["price"])
+    col_total = total_width - (col_name + col_qty + col_price)
+
+    # التأكد من الحد الأدنى
+    min_width = 40 if paper_size == 58 else 50
+    if col_name < min_width:
+        col_name = min_width
+        remaining = total_width - col_name
+        col_qty = int(remaining * 0.3)
+        col_price = int(remaining * 0.35)
+        col_total = remaining - (col_qty + col_price)
+
+    x = margin
+    row_h = paper_config["row_height"]
+
+    # رأس الجدول - ترتيب صحيح: المنتج | الكمية | السعر | الإجمالي
+    header_y = y
+    draw.rectangle((x, header_y, width - margin, header_y + row_h), fill="black")
+
+    draw_cell(
+        draw, x, header_y, col_name, row_h, "المنتج", f_bold, "center", "white", True
+    )
+    draw_cell(
+        draw,
+        x + col_name,
+        header_y,
+        col_qty,
+        row_h,
+        "الكمية",
+        f_bold,
+        "center",
+        "white",
+        True,
+    )
+    draw_cell(
+        draw,
+        x + col_name + col_qty,
+        header_y,
+        col_price,
+        row_h,
+        "السعر",
+        f_bold,
+        "center",
+        "white",
+        True,
+    )
+    draw_cell(
+        draw,
+        x + col_name + col_qty + col_price,
+        header_y,
+        col_total,
+        row_h,
+        "الإجمالي",
+        f_bold,
+        "center",
+        "white",
+        True,
+    )
+
+    y += row_h
+
+    # المنتجات
     for p in products_data:
-        b.add(p["name"])
-        b.add(f"{p['qty']} × {format_currency(p['price'])}")
-        b.add(f"= {format_currency(p['total'])}")
-        b.line()
+        temp_draw = ImageDraw.Draw(Image.new("1", (width, 100), "white"))
+        max_text_width = col_name - 10
+        lines = wrap_text(temp_draw, p["name"], f_bold, max_text_width)
 
-    # ===== SUMMARY =====
-    b.add(f"الإجمالي: {format_currency(sale_data['subtotal'])}")
+        if lines:
+            total_height = 0
+            for line in lines:
+                bbox = temp_draw.textbbox((0, 0), line, font=f_bold)
+                total_height += bbox[3] - bbox[1]
+            required_height = max(row_h, total_height + 10)
+        else:
+            required_height = row_h
 
-    if sale_data["discount"] > 0:
-        b.add(f"الخصم: {format_currency(sale_data['discount'])}")
+        draw_cell(
+            draw,
+            x,
+            y,
+            col_name,
+            required_height,
+            p["name"],
+            f_bold,
+            "right",
+            None,
+            True,
+        )
+        draw_cell(
+            draw,
+            x + col_name,
+            y,
+            col_qty,
+            required_height,
+            str(p["qty"]),
+            f_bold,
+            "center",
+            None,
+            True,
+        )
+        draw_cell(
+            draw,
+            x + col_name + col_qty,
+            y,
+            col_price,
+            required_height,
+            format_currency(p["price"]),
+            f_bold,
+            "center",
+            None,
+            True,
+        )
+        draw_cell(
+            draw,
+            x + col_name + col_qty + col_price,
+            y,
+            col_total,
+            required_height,
+            format_currency(p["total"]),
+            f_bold,
+            "center",
+            None,
+            True,
+        )
 
-    if sale_data["tax"] > 0:
-        b.add(f"الضريبة: {format_currency(sale_data['tax'])}")
+        y += required_height
 
-    b.line()
+    y += 10
 
-    b.add(f"المطلوب: {format_currency(sale_data['total'])}")
-    b.add(f"المدفوع: {format_currency(sale_data['paid'])}")
-    b.add(f"الباقي: {format_currency(sale_data['remaining'])}")
+    # ===== SUMMARY BOX =====
+    box_x = margin
+    box_w = content_width
+
+    # حساب عدد العناصر في الملخص
+    summary_items = 1  # العنوان
+    summary_items += 1  # الإجمالي
+    if sale_data.get("discount", 0) > 0:
+        summary_items += 1
+    if sale_data.get("tax", 0) > 0:
+        summary_items += 1
+    summary_items += 1  # الخط الفاصل
+    summary_items += 3  # المطلوب، المدفوع، الباقي
+
+    # حساب ارتفاع الصندوق
+    header_height = 35
+    content_height = summary_items * paper_config["summary_spacing"]
+    box_height = header_height + content_height + 15
+
+    # رسم الصندوق الخارجي
+    draw.rectangle((box_x, y, box_x + box_w, y + box_height), outline="black", width=2)
+
+    # رسم رأس الصندوق
+    draw.rectangle((box_x, y, box_x + box_w, y + header_height), fill="black")
+    draw_ar(
+        draw,
+        box_x + box_w / 2,
+        y + header_height // 2,
+        "ملخص الفاتورة",
+        f_bold,
+        "center",
+        "white",
+    )
+
+    # بداية المحتوى مع مسافات داخلية
+    y += header_height + inner_padding
+
+    def draw_summary_row(label, value, is_bold=False, is_total=False):
+        nonlocal y
+        font_used = f_bold if is_bold else f_bold
+
+        # الرسم الأيمن (التسمية) مع مسافة من اليمين
+        right_x = width - margin - inner_padding
+        draw_ar(draw, right_x, y, label, font_used, "right")
+
+        # الرسم الأيسر (القيمة) مع مسافة من اليسار
+        left_x = margin + inner_padding
+        value_text = format_currency(value)
+        draw_ar(draw, left_x, y, value_text, font_used, "left")
+
+        # خط سميك تحت المجموع النهائي
+        if is_total:
+            line_y = y + paper_config["summary_spacing"] - 5
+            draw.line(
+                (
+                    margin + inner_padding,
+                    line_y,
+                    width - margin - inner_padding,
+                    line_y,
+                ),
+                fill="black",
+                width=2,
+            )
+
+        y += paper_config["summary_spacing"]
+
+    # عرض البيانات
+    draw_summary_row("الإجمالي", sale_data["subtotal"])
+
+    if sale_data.get("discount", 0) > 0:
+        draw_summary_row("الخصم", sale_data["discount"])
+    if sale_data.get("tax", 0) > 0:
+        draw_summary_row("الضريبة", sale_data["tax"])
+
+    # خط فاصل
+    y += 5
+    draw.line(
+        (margin + inner_padding, y, width - margin - inner_padding, y),
+        fill="black",
+        width=1,
+    )
+    y += paper_config["summary_spacing"] - 10
+
+    # المجموع النهائي
+    draw_summary_row("المطلوب", sale_data["total"], is_bold=True, is_total=True)
+    draw_summary_row("المدفوع", sale_data["paid"])
+    draw_summary_row("الباقي", sale_data["remaining"])
+
+    y += inner_padding
 
     # ===== AMOUNT IN WORDS =====
     try:
-        words = number_to_arabic_words(
-            sale_data["total"], currency, sub_currency
-        )
-        b.line()
-        b.center(words)
-    except:
+        words = number_to_arabic_words(sale_data["total"], currency, sub_currency)
+        # تقسيم النص الطويل
+        max_word_width = content_width - (inner_padding * 2)
+        word_lines = wrap_text(draw, words, f_small, max_word_width)
+
+        y += 10
+        for line in word_lines:
+            draw_ar(draw, center, y, line, f_small, "center")
+            y += paper_config["font_small"] + 5
+        y += 10
+    except Exception as e:
+        print(f"Error in number to words: {e}")
         pass
 
     # ===== FOOTER =====
-    b.line()
-    b.center("شكراً لزيارتكم")
-    b.center("Powered By Dealzora")
+    y += 5
+    draw_ar(draw, center, y, "شكراً لزيارتكم", f_bold, "center")
+    y += 25 if paper_size == 80 else 20
+    draw_ar(draw, center, y, "Powered By Dealzora", f_small, "center")
 
-    return b.build()
+    # اقتصاص الصورة
+    img = img.crop((0, 0, width, y + margin))
+    return img
 
-# ================= CASH DRAWER =================
-def open_cash_drawer(printer_name):
-    from escpos.printer import Win32Raw
-
-    p = Win32Raw(printer_name)
-
-    try:
-        # أمر فتح الدرج
-        p._raw(b'\x1b\x70\x00\x19\xfa')
-    except Exception as e:
-        print("Drawer Error:", e)
 
 # ================= PRINT =================
-def print_shop_invoice(sale_data, products_data, preview=False):
+def print_image_to_printer(img, printer_name):
+    hprinter = win32print.OpenPrinter(printer_name)
+    hdc = win32ui.CreateDC()
+    hdc.CreatePrinterDC(printer_name)
+    hdc.StartDoc("Thermal Invoice")
+    hdc.StartPage()
+    if img.mode != "1":
+        img = img.convert("1")
+    dib = ImageWin.Dib(img)
+    dib.draw(hdc.GetHandleOutput(), (0, 0, img.width, img.height))
+    hdc.EndPage()
+    hdc.EndDoc()
+    win32print.ClosePrinter(hprinter)
+
+
+def print_shop_invoice(sale_data, products_data):
     settings = SettingsModel()
     printer_name = settings.get_setting("printer_name")
-
     try:
-        invoice_text = build_invoice_text(sale_data, products_data)
-
-        # 👀 Preview
-        if preview:
-            print("\n" + "="*40)
-            print(invoice_text)
-            print("="*40 + "\n")
-            return True
-
-        # 🖨️ Print
-        printer = EscposInvoicePrinter(printer_name)
-        printer.print_text(invoice_text)
-        open_cash_drawer(printer_name)
-
+        img = generate_invoice(sale_data, products_data)
+        print_image_to_printer(img, printer_name)
         return True
-
     except Exception as e:
         showerror("خطأ في الطباعة", str(e))
         return False

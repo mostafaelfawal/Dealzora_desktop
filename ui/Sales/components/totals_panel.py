@@ -6,11 +6,13 @@ from utils.format_currency import format_currency
 from .payment_dialog import InvoiceView
 
 class TotalsPanel(CTkFrame):
-    def __init__(self, parent, currency, tax_rate, sale_state):
+    def __init__(self, parent, currency, tax_rate, sale_state, data_service):
         super().__init__(parent)
 
         self.currency = currency
         self.tax_rate = tax_rate
+        self.data_service = data_service
+
         self.sale_state = sale_state
         # تسجيل كمراقب للتغييرات في حالة البيع
         self.sale_state.add_observer(self)
@@ -223,7 +225,7 @@ class TotalsPanel(CTkFrame):
         if not self.sale_state.selected_products:
             messagebox.showwarning("تحذير", "لا يوجد منتجات لإتمام البيع")
             return
-        InvoiceView(self, self.sale_state, self.reset_inputs)
+        InvoiceView(self, self.sale_state, self.reset_inputs, self.data_service)
 
     def on_cancel_sale(self):
         in_cart = len(self.sale_state.selected_products)
