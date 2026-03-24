@@ -42,7 +42,7 @@ class Stock:
         self.build_controls()
         self.build_table()
 
-        self.refresh_categories()
+        self.refresh_categorys()
         self.refresh_table()
         self.setup_keyboard_shortcuts()
 
@@ -340,9 +340,9 @@ class Stock:
             on_success=self.refresh_table,
         )
 
-    def refresh_categories(self):
-        categories = self.products_model.get_categorys()
-        names = ["الكل"] + [c[1] for c in categories]
+    def refresh_categorys(self):
+        categorys = self.products_model.get_categorys()
+        names = ["الكل"] + [c[1] for c in categorys]
         self.category_menu.configure(values=names)
 
     def refresh_table(self):

@@ -14,6 +14,7 @@ from reportlab.lib.enums import TA_CENTER, TA_RIGHT
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from utils.format_currency import format_currency
+from utils.number_to_arabic_words import number_to_arabic_words
 from utils.ar_support import ar
 from models.settings import SettingsModel
 import subprocess
@@ -21,7 +22,6 @@ import os
 import tempfile
 import threading
 from tkinter import messagebox
-from num2words import num2words
 
 
 # ================== Fonts ==================
@@ -287,90 +287,149 @@ class A4InvoiceGenerator:
         summary_data = []
 
         # ===== Header =====
-        summary_data.append([
-            self.A("ملخص الفاتورة", ParagraphStyle(
-                name="summary_header",
-                fontName="ArabicBold",
-                fontSize=14,
-                alignment=TA_CENTER,
-                textColor=colors.white
-            )),
-            ""
-        ])
+        summary_data.append(
+            [
+                self.A(
+                    "ملخص الفاتورة",
+                    ParagraphStyle(
+                        name="summary_header",
+                        fontName="ArabicBold",
+                        fontSize=14,
+                        alignment=TA_CENTER,
+                        textColor=colors.white,
+                    ),
+                ),
+                "",
+            ]
+        )
 
         # ===== الإجمالي =====
-        summary_data.append([
-            self.A(format_currency(subtotal), self.value_style),
-            self.A("الإجمالي", self.bold_style)
-        ])
+        summary_data.append(
+            [
+                self.A(format_currency(subtotal), self.value_style),
+                self.A("الإجمالي", self.bold_style),
+            ]
+        )
 
         # ===== الخصم =====
         if discount != 0:
-            summary_data.append([
-                self.A(f"- {format_currency(discount)}", self.value_style),
-                self.A("الخصم", self.bold_style)
-            ])
+            summary_data.append(
+                [
+                    self.A(f"- {format_currency(discount)}", self.value_style),
+                    self.A("الخصم", self.bold_style),
+                ]
+            )
 
         # ===== الضريبة =====
         if tax != 0:
-            summary_data.append([
-                self.A(format_currency(tax), self.value_style),
-                self.A("الضريبة", self.bold_style)
-            ])
+            summary_data.append(
+                [
+                    self.A(format_currency(tax), self.value_style),
+                    self.A("الضريبة", self.bold_style),
+                ]
+            )
 
         # ===== المطلوب =====
-        summary_data.append([
-            self.A(format_currency(total), self.value_style),
-            self.A("المطلوب", self.bold_style)
-        ])
+        summary_data.append(
+            [
+                self.A(format_currency(total), self.value_style),
+                self.A("المطلوب", self.bold_style),
+            ]
+        )
 
         # ===== المدفوع =====
-        summary_data.append([
-            self.A(format_currency(paid), self.value_style),
-            self.A("المدفوع", self.bold_style)
-        ])
+        summary_data.append(
+            [
+                self.A(format_currency(paid), self.value_style),
+                self.A("المدفوع", self.bold_style),
+            ]
+        )
 
         # ===== الباقي =====
         if remaining != 0:
-            summary_data.append([
-                self.A(format_currency(remaining), self.value_style),
-                self.A("الباقي", self.bold_style)
-            ])
+            summary_data.append(
+                [
+                    self.A(format_currency(remaining), self.value_style),
+                    self.A("الباقي", self.bold_style),
+                ]
+            )
 
         # ===== Table =====
         row_heights = [28] + [24] * (len(summary_data) - 1)
 
         summary_table = Table(
-            summary_data,
-            colWidths=[65 * mm, 65 * mm],
-            rowHeights=row_heights
+            summary_data, colWidths=[65 * mm, 65 * mm], rowHeights=row_heights
         )
 
         summary_table.setStyle(
-            TableStyle([
-                ("SPAN", (0, 0), (-1, 0)),
-                ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#1a237e")),
-                ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-                ("FONTNAME", (0, 0), (-1, 0), "ArabicBold"),
-                ("FONTSIZE", (0, 0), (-1, 0), 14),
-
-                ("ALIGN", (0, 0), (-1, -1), "RIGHT"),
-                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-
-                ("GRID", (0, 1), (-1, -1), 0.25, colors.HexColor("#bdbdbd")),
-                ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#fafafa")]),
-
-                # Highlight "المطلوب" (ثابت دايمًا في نفس المكان بعد الترتيب ده)
-                ("BACKGROUND", (0, 3 if discount==0 and tax==0 else 4 if (discount!=0 and tax!=0) else 3), (-1, 3 if discount==0 and tax==0 else 4 if (discount!=0 and tax!=0) else 3), colors.HexColor("#fff3e0")),
-                ("TEXTCOLOR", (0, 3 if discount==0 and tax==0 else 4 if (discount!=0 and tax!=0) else 3), (-1, 3 if discount==0 and tax==0 else 4 if (discount!=0 and tax!=0) else 3), colors.HexColor("#d32f2f")),
-            ])
+            TableStyle(
+                [
+                    ("SPAN", (0, 0), (-1, 0)),
+                    ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#1a237e")),
+                    ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+                    ("FONTNAME", (0, 0), (-1, 0), "ArabicBold"),
+                    ("FONTSIZE", (0, 0), (-1, 0), 14),
+                    ("ALIGN", (0, 0), (-1, -1), "RIGHT"),
+                    ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                    ("GRID", (0, 1), (-1, -1), 0.25, colors.HexColor("#bdbdbd")),
+                    (
+                        "ROWBACKGROUNDS",
+                        (0, 1),
+                        (-1, -1),
+                        [colors.white, colors.HexColor("#fafafa")],
+                    ),
+                    # Highlight "المطلوب" (ثابت دايمًا في نفس المكان بعد الترتيب ده)
+                    (
+                        "BACKGROUND",
+                        (
+                            0,
+                            (
+                                3
+                                if discount == 0 and tax == 0
+                                else 4 if (discount != 0 and tax != 0) else 3
+                            ),
+                        ),
+                        (
+                            -1,
+                            (
+                                3
+                                if discount == 0 and tax == 0
+                                else 4 if (discount != 0 and tax != 0) else 3
+                            ),
+                        ),
+                        colors.HexColor("#fff3e0"),
+                    ),
+                    (
+                        "TEXTCOLOR",
+                        (
+                            0,
+                            (
+                                3
+                                if discount == 0 and tax == 0
+                                else 4 if (discount != 0 and tax != 0) else 3
+                            ),
+                        ),
+                        (
+                            -1,
+                            (
+                                3
+                                if discount == 0 and tax == 0
+                                else 4 if (discount != 0 and tax != 0) else 3
+                            ),
+                        ),
+                        colors.HexColor("#d32f2f"),
+                    ),
+                ]
+            )
         )
 
         story.append(summary_table)
         story.append(Spacer(1, 20))
-        
+
         # ===== Amount in Words =====
-        amount_words = self.number_to_arabic_words(int(total))
+        currency_name = self.settings.get_setting("currency_name")
+        sub_currency_name = self.settings.get_setting("sub_currency_name")
+        amount_words = number_to_arabic_words(total, currency_name, sub_currency_name)
 
         amount_style = ParagraphStyle(
             name="amount_words",
@@ -385,7 +444,7 @@ class A4InvoiceGenerator:
 
         story.append(self.A(amount_words, amount_style))
         story.append(Spacer(1, 5))
-        
+
         # ===== Professional Footer =====
         footer_lines = [
             ("شكرا لزيارتكم", "#1a237e", 14, "ArabicBold"),
@@ -399,7 +458,7 @@ class A4InvoiceGenerator:
                 fontSize=size,
                 alignment=TA_CENTER,
                 textColor=colors.HexColor(color),
-                leading=size+2,
+                leading=size + 2,
                 spaceAfter=3,
             )
             story.append(self.A(text, style))
@@ -407,14 +466,6 @@ class A4InvoiceGenerator:
         story.append(Spacer(1, 10))
 
         doc.build(story)
-
-    def number_to_arabic_words(self, number):
-        try:
-            words = num2words(number, lang='ar')
-            c = self.settings.get_setting("currency_name") or "جنيهاً"
-            return f"مطلوب {words} {c} لا غير"
-        except:
-            return ""
 
 
 # ================== Printer ==================
@@ -453,6 +504,10 @@ class A4Printer:
 def print_A4(sale_data, products_data):
 
     def run():
-        A4Printer().print(sale_data, products_data)
+        try:
+            A4Printer().print(sale_data, products_data)
+            return True
+        except:
+            return False
 
     threading.Thread(target=run, daemon=True).start()

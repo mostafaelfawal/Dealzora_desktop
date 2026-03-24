@@ -44,7 +44,7 @@ class SplashScreen:
         self.version_label = CTkLabel(self.frame, text=f"vالإصدار الحالي: {APP_VERSION}", font=("Cairo", 14, "bold"))
         self.version_label.pack(pady=5)
         
-        CTkLabel(self.frame, text="Powred By Mostafa Hamdi", font=("Cairo", 12, "bold")).pack(pady=(0, 10))
+        CTkLabel(self.frame, text="Powred By Softvanta", font=("Cairo", 12, "bold")).pack(pady=(0, 10))
 
         # بدء فحص التحديث في Thread منفصل
         self.check_thread = threading.Thread(target=self.check_update, daemon=True)

@@ -28,6 +28,7 @@ class Invoices:
         customers_db,
         products_db,
         stock_movements_db,
+        settings_db
     ):
         self.root = root
         self.con = con
@@ -38,6 +39,7 @@ class Invoices:
         self.customers_db = customers_db
         self.products_db = products_db
         self.stock_movements_db = stock_movements_db
+        self.settings = settings_db
 
         # البيانات
         self.invoices = self.get_invoices_with_details()
@@ -1076,12 +1078,21 @@ class Invoices:
             "paid": paid,
             "remaining": change,
         }
-
-        from utils.print_thermal import print_shop_invoice
-
         try:
-            if not print_shop_invoice(sale_data, products):
-                return
-            messagebox.showinfo("نجاح", "تم إرسال الفاتورة للطابعة ✅")
+            printer_type = self.settings.get_setting("printer_type")
+            success_message = lambda: messagebox.showinfo("نجاح", "تم إرسال الفاتورة للطابعة ✅")
+
+            if printer_type == "A4":
+                from utils.print_A4 import print_A4
+                if not print_A4(sale_data, products):
+                    return
+                success_message()
+            else:
+                from utils.print_thermal import print_shop_invoice
+                if not print_shop_invoice(sale_data, products):
+                    return
+                success_message()
+
         except Exception as e:
             messagebox.showwarning("تحذير", f"حدث خطأ في الطباعة: {e}")
+

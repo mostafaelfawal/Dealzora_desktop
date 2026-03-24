@@ -1,0 +1,4178 @@
+[
+    {
+        "label": "customtkinter",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkToplevel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkScrollableFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkToplevel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkComboBox",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkInputDialog",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkScrollableFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkToplevel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkToplevel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkComboBox",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkToplevel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "StringVar",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkOptionMenu",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkProgressBar",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkToplevel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "BooleanVar",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkCheckBox",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkScrollableFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkToplevel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkRadioButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkOptionMenu",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "StringVar",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkOptionMenu",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "StringVar",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkOptionMenu",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkSegmentedButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkSegmentedButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkToplevel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "StringVar",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkScrollableFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkOptionMenu",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkScrollableFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkTabview",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "StringVar",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkOptionMenu",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkScrollableFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkRadioButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkToplevel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkScrollableFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkOptionMenu",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkCheckBox",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "StringVar",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "BooleanVar",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkSwitch",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "set_appearance_mode",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkProgressBar",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "StringVar",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkOptionMenu",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkToplevel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkEntry",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkImage",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkLabel",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkButton",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTkScrollableFrame",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "StringVar",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "set_appearance_mode",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "set_appearance_mode",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "CTk",
+        "importPath": "customtkinter",
+        "description": "customtkinter",
+        "isExtraImport": true,
+        "detail": "customtkinter",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "isExtraImport": true,
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "backup_database",
+        "importPath": "utils.backup_database",
+        "description": "utils.backup_database",
+        "isExtraImport": true,
+        "detail": "utils.backup_database",
+        "documentation": {}
+    },
+    {
+        "label": "backup_database",
+        "importPath": "utils.backup_database",
+        "description": "utils.backup_database",
+        "isExtraImport": true,
+        "detail": "utils.backup_database",
+        "documentation": {}
+    },
+    {
+        "label": "tkinter",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "ttk",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "filedialog",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "StringVar",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "filedialog",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "filedialog",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "messagebox",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "Tk",
+        "importPath": "tkinter",
+        "description": "tkinter",
+        "isExtraImport": true,
+        "detail": "tkinter",
+        "documentation": {}
+    },
+    {
+        "label": "barcode",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "barcode",
+        "description": "barcode",
+        "detail": "barcode",
+        "documentation": {}
+    },
+    {
+        "label": "ImageWriter",
+        "importPath": "barcode.writer",
+        "description": "barcode.writer",
+        "isExtraImport": true,
+        "detail": "barcode.writer",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ImageDraw",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ImageFont",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ImageWin",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ImageWin",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ImageDraw",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ImageFont",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "ImageWin",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "tempfile",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tempfile",
+        "description": "tempfile",
+        "detail": "tempfile",
+        "documentation": {}
+    },
+    {
+        "label": "SettingsModel",
+        "importPath": "models.settings",
+        "description": "models.settings",
+        "isExtraImport": true,
+        "detail": "models.settings",
+        "documentation": {}
+    },
+    {
+        "label": "SettingsModel",
+        "importPath": "models.settings",
+        "description": "models.settings",
+        "isExtraImport": true,
+        "detail": "models.settings",
+        "documentation": {}
+    },
+    {
+        "label": "SettingsModel",
+        "importPath": "models.settings",
+        "description": "models.settings",
+        "isExtraImport": true,
+        "detail": "models.settings",
+        "documentation": {}
+    },
+    {
+        "label": "SettingsModel",
+        "importPath": "models.settings",
+        "description": "models.settings",
+        "isExtraImport": true,
+        "detail": "models.settings",
+        "documentation": {}
+    },
+    {
+        "label": "SettingsModel",
+        "importPath": "models.settings",
+        "description": "models.settings",
+        "isExtraImport": true,
+        "detail": "models.settings",
+        "documentation": {}
+    },
+    {
+        "label": "SettingsModel",
+        "importPath": "models.settings",
+        "description": "models.settings",
+        "isExtraImport": true,
+        "detail": "models.settings",
+        "documentation": {}
+    },
+    {
+        "label": "SettingsModel",
+        "importPath": "models.settings",
+        "description": "models.settings",
+        "isExtraImport": true,
+        "detail": "models.settings",
+        "documentation": {}
+    },
+    {
+        "label": "format_currency",
+        "importPath": "utils.format_currency",
+        "description": "utils.format_currency",
+        "isExtraImport": true,
+        "detail": "utils.format_currency",
+        "documentation": {}
+    },
+    {
+        "label": "format_currency",
+        "importPath": "utils.format_currency",
+        "description": "utils.format_currency",
+        "isExtraImport": true,
+        "detail": "utils.format_currency",
+        "documentation": {}
+    },
+    {
+        "label": "format_currency",
+        "importPath": "utils.format_currency",
+        "description": "utils.format_currency",
+        "isExtraImport": true,
+        "detail": "utils.format_currency",
+        "documentation": {}
+    },
+    {
+        "label": "format_currency",
+        "importPath": "utils.format_currency",
+        "description": "utils.format_currency",
+        "isExtraImport": true,
+        "detail": "utils.format_currency",
+        "documentation": {}
+    },
+    {
+        "label": "format_currency",
+        "importPath": "utils.format_currency",
+        "description": "utils.format_currency",
+        "isExtraImport": true,
+        "detail": "utils.format_currency",
+        "documentation": {}
+    },
+    {
+        "label": "format_currency",
+        "importPath": "utils.format_currency",
+        "description": "utils.format_currency",
+        "isExtraImport": true,
+        "detail": "utils.format_currency",
+        "documentation": {}
+    },
+    {
+        "label": "format_currency",
+        "importPath": "utils.format_currency",
+        "description": "utils.format_currency",
+        "isExtraImport": true,
+        "detail": "utils.format_currency",
+        "documentation": {}
+    },
+    {
+        "label": "is_number",
+        "importPath": "utils.is_number",
+        "description": "utils.is_number",
+        "isExtraImport": true,
+        "detail": "utils.is_number",
+        "documentation": {}
+    },
+    {
+        "label": "is_number",
+        "importPath": "utils.is_number",
+        "description": "utils.is_number",
+        "isExtraImport": true,
+        "detail": "utils.is_number",
+        "documentation": {}
+    },
+    {
+        "label": "is_number",
+        "importPath": "utils.is_number",
+        "description": "utils.is_number",
+        "isExtraImport": true,
+        "detail": "utils.is_number",
+        "documentation": {}
+    },
+    {
+        "label": "is_number",
+        "importPath": "utils.is_number",
+        "description": "utils.is_number",
+        "isExtraImport": true,
+        "detail": "utils.is_number",
+        "documentation": {}
+    },
+    {
+        "label": "is_number",
+        "importPath": "utils.is_number",
+        "description": "utils.is_number",
+        "isExtraImport": true,
+        "detail": "utils.is_number",
+        "documentation": {}
+    },
+    {
+        "label": "is_number",
+        "importPath": "utils.is_number",
+        "description": "utils.is_number",
+        "isExtraImport": true,
+        "detail": "utils.is_number",
+        "documentation": {}
+    },
+    {
+        "label": "is_number",
+        "importPath": "utils.is_number",
+        "description": "utils.is_number",
+        "isExtraImport": true,
+        "detail": "utils.is_number",
+        "documentation": {}
+    },
+    {
+        "label": "ar",
+        "importPath": "utils.ar_support",
+        "description": "utils.ar_support",
+        "isExtraImport": true,
+        "detail": "utils.ar_support",
+        "documentation": {}
+    },
+    {
+        "label": "ar",
+        "importPath": "utils.ar_support",
+        "description": "utils.ar_support",
+        "isExtraImport": true,
+        "detail": "utils.ar_support",
+        "documentation": {}
+    },
+    {
+        "label": "ar",
+        "importPath": "utils.ar_support",
+        "description": "utils.ar_support",
+        "isExtraImport": true,
+        "detail": "utils.ar_support",
+        "documentation": {}
+    },
+    {
+        "label": "ar",
+        "importPath": "utils.ar_support",
+        "description": "utils.ar_support",
+        "isExtraImport": true,
+        "detail": "utils.ar_support",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "isExtraImport": true,
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "win32print",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "win32print",
+        "description": "win32print",
+        "detail": "win32print",
+        "documentation": {}
+    },
+    {
+        "label": "win32ui",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "win32ui",
+        "description": "win32ui",
+        "detail": "win32ui",
+        "documentation": {}
+    },
+    {
+        "label": "string",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "string",
+        "description": "string",
+        "detail": "string",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "DateEntry",
+        "importPath": "tkcalendar",
+        "description": "tkcalendar",
+        "isExtraImport": true,
+        "detail": "tkcalendar",
+        "documentation": {}
+    },
+    {
+        "label": "DateEntry",
+        "importPath": "tkcalendar",
+        "description": "tkcalendar",
+        "isExtraImport": true,
+        "detail": "tkcalendar",
+        "documentation": {}
+    },
+    {
+        "label": "center_modal",
+        "importPath": "utils.center_modal",
+        "description": "utils.center_modal",
+        "isExtraImport": true,
+        "detail": "utils.center_modal",
+        "documentation": {}
+    },
+    {
+        "label": "center_modal",
+        "importPath": "utils.center_modal",
+        "description": "utils.center_modal",
+        "isExtraImport": true,
+        "detail": "utils.center_modal",
+        "documentation": {}
+    },
+    {
+        "label": "center_modal",
+        "importPath": "utils.center_modal",
+        "description": "utils.center_modal",
+        "isExtraImport": true,
+        "detail": "utils.center_modal",
+        "documentation": {}
+    },
+    {
+        "label": "center_modal",
+        "importPath": "utils.center_modal",
+        "description": "utils.center_modal",
+        "isExtraImport": true,
+        "detail": "utils.center_modal",
+        "documentation": {}
+    },
+    {
+        "label": "center_modal",
+        "importPath": "utils.center_modal",
+        "description": "utils.center_modal",
+        "isExtraImport": true,
+        "detail": "utils.center_modal",
+        "documentation": {}
+    },
+    {
+        "label": "ProductModal",
+        "importPath": "components.ProductModal",
+        "description": "components.ProductModal",
+        "isExtraImport": true,
+        "detail": "components.ProductModal",
+        "documentation": {}
+    },
+    {
+        "label": "ProductModal",
+        "importPath": "components.ProductModal",
+        "description": "components.ProductModal",
+        "isExtraImport": true,
+        "detail": "components.ProductModal",
+        "documentation": {}
+    },
+    {
+        "label": "ProductModal",
+        "importPath": "components.ProductModal",
+        "description": "components.ProductModal",
+        "isExtraImport": true,
+        "detail": "components.ProductModal",
+        "documentation": {}
+    },
+    {
+        "label": "TreeView",
+        "importPath": "components.TreeView",
+        "description": "components.TreeView",
+        "isExtraImport": true,
+        "detail": "components.TreeView",
+        "documentation": {}
+    },
+    {
+        "label": "TreeView",
+        "importPath": "components.TreeView",
+        "description": "components.TreeView",
+        "isExtraImport": true,
+        "detail": "components.TreeView",
+        "documentation": {}
+    },
+    {
+        "label": "TreeView",
+        "importPath": "components.TreeView",
+        "description": "components.TreeView",
+        "isExtraImport": true,
+        "detail": "components.TreeView",
+        "documentation": {}
+    },
+    {
+        "label": "TreeView",
+        "importPath": "components.TreeView",
+        "description": "components.TreeView",
+        "isExtraImport": true,
+        "detail": "components.TreeView",
+        "documentation": {}
+    },
+    {
+        "label": "TreeView",
+        "importPath": "components.TreeView",
+        "description": "components.TreeView",
+        "isExtraImport": true,
+        "detail": "components.TreeView",
+        "documentation": {}
+    },
+    {
+        "label": "TreeView",
+        "importPath": "components.TreeView",
+        "description": "components.TreeView",
+        "isExtraImport": true,
+        "detail": "components.TreeView",
+        "documentation": {}
+    },
+    {
+        "label": "TreeView",
+        "importPath": "components.TreeView",
+        "description": "components.TreeView",
+        "isExtraImport": true,
+        "detail": "components.TreeView",
+        "documentation": {}
+    },
+    {
+        "label": "TreeView",
+        "importPath": "components.TreeView",
+        "description": "components.TreeView",
+        "isExtraImport": true,
+        "detail": "components.TreeView",
+        "documentation": {}
+    },
+    {
+        "label": "TreeView",
+        "importPath": "components.TreeView",
+        "description": "components.TreeView",
+        "isExtraImport": true,
+        "detail": "components.TreeView",
+        "documentation": {}
+    },
+    {
+        "label": "TreeView",
+        "importPath": "components.TreeView",
+        "description": "components.TreeView",
+        "isExtraImport": true,
+        "detail": "components.TreeView",
+        "documentation": {}
+    },
+    {
+        "label": "TreeView",
+        "importPath": "components.TreeView",
+        "description": "components.TreeView",
+        "isExtraImport": true,
+        "detail": "components.TreeView",
+        "documentation": {}
+    },
+    {
+        "label": "RejectUI",
+        "importPath": "ui.RejectUI",
+        "description": "ui.RejectUI",
+        "isExtraImport": true,
+        "detail": "ui.RejectUI",
+        "documentation": {}
+    },
+    {
+        "label": "RejectUI",
+        "importPath": "ui.RejectUI",
+        "description": "ui.RejectUI",
+        "isExtraImport": true,
+        "detail": "ui.RejectUI",
+        "documentation": {}
+    },
+    {
+        "label": "RejectUI",
+        "importPath": "ui.RejectUI",
+        "description": "ui.RejectUI",
+        "isExtraImport": true,
+        "detail": "ui.RejectUI",
+        "documentation": {}
+    },
+    {
+        "label": "RejectUI",
+        "importPath": "ui.RejectUI",
+        "description": "ui.RejectUI",
+        "isExtraImport": true,
+        "detail": "ui.RejectUI",
+        "documentation": {}
+    },
+    {
+        "label": "UploadImage",
+        "importPath": "components.UploadImage",
+        "description": "components.UploadImage",
+        "isExtraImport": true,
+        "detail": "components.UploadImage",
+        "documentation": {}
+    },
+    {
+        "label": "UploadImage",
+        "importPath": "components.UploadImage",
+        "description": "components.UploadImage",
+        "isExtraImport": true,
+        "detail": "components.UploadImage",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "date",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "makedirs",
+        "importPath": "os",
+        "description": "os",
+        "isExtraImport": true,
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "threading",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "threading",
+        "description": "threading",
+        "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "SupplierModel",
+        "importPath": "models.supplier",
+        "description": "models.supplier",
+        "isExtraImport": true,
+        "detail": "models.supplier",
+        "documentation": {}
+    },
+    {
+        "label": "SupplierModel",
+        "importPath": "models.supplier",
+        "description": "models.supplier",
+        "isExtraImport": true,
+        "detail": "models.supplier",
+        "documentation": {}
+    },
+    {
+        "label": "StockMovementsModel",
+        "importPath": "models.stock_movements",
+        "description": "models.stock_movements",
+        "isExtraImport": true,
+        "detail": "models.stock_movements",
+        "documentation": {}
+    },
+    {
+        "label": "StockMovementsModel",
+        "importPath": "models.stock_movements",
+        "description": "models.stock_movements",
+        "isExtraImport": true,
+        "detail": "models.stock_movements",
+        "documentation": {}
+    },
+    {
+        "label": "alter_column_type",
+        "importPath": "utils.alter_column_type",
+        "description": "utils.alter_column_type",
+        "isExtraImport": true,
+        "detail": "utils.alter_column_type",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "sqlite3",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sqlite3",
+        "description": "sqlite3",
+        "detail": "sqlite3",
+        "documentation": {}
+    },
+    {
+        "label": "connect",
+        "importPath": "sqlite3",
+        "description": "sqlite3",
+        "isExtraImport": true,
+        "detail": "sqlite3",
+        "documentation": {}
+    },
+    {
+        "label": "connect",
+        "importPath": "sqlite3",
+        "description": "sqlite3",
+        "isExtraImport": true,
+        "detail": "sqlite3",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Dict",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Tuple",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Callable",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "hashlib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "hashlib",
+        "description": "hashlib",
+        "detail": "hashlib",
+        "documentation": {}
+    },
+    {
+        "label": "CustomerModal",
+        "importPath": "components.CustomerModal",
+        "description": "components.CustomerModal",
+        "isExtraImport": true,
+        "detail": "components.CustomerModal",
+        "documentation": {}
+    },
+    {
+        "label": "CustomerModal",
+        "importPath": "components.CustomerModal",
+        "description": "components.CustomerModal",
+        "isExtraImport": true,
+        "detail": "components.CustomerModal",
+        "documentation": {}
+    },
+    {
+        "label": "CustomerModal",
+        "importPath": "components.CustomerModal",
+        "description": "components.CustomerModal",
+        "isExtraImport": true,
+        "detail": "components.CustomerModal",
+        "documentation": {}
+    },
+    {
+        "label": "get_stock_tag",
+        "importPath": "utils.get_stock_tag",
+        "description": "utils.get_stock_tag",
+        "isExtraImport": true,
+        "detail": "utils.get_stock_tag",
+        "documentation": {}
+    },
+    {
+        "label": "get_stock_tag",
+        "importPath": "utils.get_stock_tag",
+        "description": "utils.get_stock_tag",
+        "isExtraImport": true,
+        "detail": "utils.get_stock_tag",
+        "documentation": {}
+    },
+    {
+        "label": "get_stock_tag",
+        "importPath": "utils.get_stock_tag",
+        "description": "utils.get_stock_tag",
+        "isExtraImport": true,
+        "detail": "utils.get_stock_tag",
+        "documentation": {}
+    },
+    {
+        "label": "get_stock_tag",
+        "importPath": "utils.get_stock_tag",
+        "description": "utils.get_stock_tag",
+        "isExtraImport": true,
+        "detail": "utils.get_stock_tag",
+        "documentation": {}
+    },
+    {
+        "label": "showinfo",
+        "importPath": "tkinter.messagebox",
+        "description": "tkinter.messagebox",
+        "isExtraImport": true,
+        "detail": "tkinter.messagebox",
+        "documentation": {}
+    },
+    {
+        "label": "showinfo",
+        "importPath": "tkinter.messagebox",
+        "description": "tkinter.messagebox",
+        "isExtraImport": true,
+        "detail": "tkinter.messagebox",
+        "documentation": {}
+    },
+    {
+        "label": "showinfo",
+        "importPath": "tkinter.messagebox",
+        "description": "tkinter.messagebox",
+        "isExtraImport": true,
+        "detail": "tkinter.messagebox",
+        "documentation": {}
+    },
+    {
+        "label": "showerror",
+        "importPath": "tkinter.messagebox",
+        "description": "tkinter.messagebox",
+        "isExtraImport": true,
+        "detail": "tkinter.messagebox",
+        "documentation": {}
+    },
+    {
+        "label": "askokcancel",
+        "importPath": "tkinter.messagebox",
+        "description": "tkinter.messagebox",
+        "isExtraImport": true,
+        "detail": "tkinter.messagebox",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "strftime",
+        "importPath": "time",
+        "description": "time",
+        "isExtraImport": true,
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "strftime",
+        "importPath": "time",
+        "description": "time",
+        "isExtraImport": true,
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "strftime",
+        "importPath": "time",
+        "description": "time",
+        "isExtraImport": true,
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "get_machine_guid",
+        "importPath": "utils.license",
+        "description": "utils.license",
+        "isExtraImport": true,
+        "detail": "utils.license",
+        "documentation": {}
+    },
+    {
+        "label": "generate_expected_license",
+        "importPath": "utils.license",
+        "description": "utils.license",
+        "isExtraImport": true,
+        "detail": "utils.license",
+        "documentation": {}
+    },
+    {
+        "label": "save_license",
+        "importPath": "utils.license",
+        "description": "utils.license",
+        "isExtraImport": true,
+        "detail": "utils.license",
+        "documentation": {}
+    },
+    {
+        "label": "is_license_valid",
+        "importPath": "utils.license",
+        "description": "utils.license",
+        "isExtraImport": true,
+        "detail": "utils.license",
+        "documentation": {}
+    },
+    {
+        "label": "get_machine_guid",
+        "importPath": "utils.license",
+        "description": "utils.license",
+        "isExtraImport": true,
+        "detail": "utils.license",
+        "documentation": {}
+    },
+    {
+        "label": "is_license_valid",
+        "importPath": "utils.license",
+        "description": "utils.license",
+        "isExtraImport": true,
+        "detail": "utils.license",
+        "documentation": {}
+    },
+    {
+        "label": "get_remaining_days",
+        "importPath": "utils.trial",
+        "description": "utils.trial",
+        "isExtraImport": true,
+        "detail": "utils.trial",
+        "documentation": {}
+    },
+    {
+        "label": "is_trial_valid",
+        "importPath": "utils.trial",
+        "description": "utils.trial",
+        "isExtraImport": true,
+        "detail": "utils.trial",
+        "documentation": {}
+    },
+    {
+        "label": "get_remaining_days",
+        "importPath": "utils.trial",
+        "description": "utils.trial",
+        "isExtraImport": true,
+        "detail": "utils.trial",
+        "documentation": {}
+    },
+    {
+        "label": "init_trial",
+        "importPath": "utils.trial",
+        "description": "utils.trial",
+        "isExtraImport": true,
+        "detail": "utils.trial",
+        "documentation": {}
+    },
+    {
+        "label": "BarcodePrinter",
+        "importPath": "components.BarcodePrinter",
+        "description": "components.BarcodePrinter",
+        "isExtraImport": true,
+        "detail": "components.BarcodePrinter",
+        "documentation": {}
+    },
+    {
+        "label": "import_products",
+        "importPath": "utils.import_products",
+        "description": "utils.import_products",
+        "isExtraImport": true,
+        "detail": "utils.import_products",
+        "documentation": {}
+    },
+    {
+        "label": "export_products",
+        "importPath": "utils.export_products",
+        "description": "utils.export_products",
+        "isExtraImport": true,
+        "detail": "utils.export_products",
+        "documentation": {}
+    },
+    {
+        "label": "matplotlib.pyplot",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
+        "documentation": {}
+    },
+    {
+        "label": "FigureCanvasTkAgg",
+        "importPath": "matplotlib.backends.backend_tkagg",
+        "description": "matplotlib.backends.backend_tkagg",
+        "isExtraImport": true,
+        "detail": "matplotlib.backends.backend_tkagg",
+        "documentation": {}
+    },
+    {
+        "label": "Figure",
+        "importPath": "matplotlib.figure",
+        "description": "matplotlib.figure",
+        "isExtraImport": true,
+        "detail": "matplotlib.figure",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "clear",
+        "importPath": "utils.clear",
+        "description": "utils.clear",
+        "isExtraImport": true,
+        "detail": "utils.clear",
+        "documentation": {}
+    },
+    {
+        "label": "clear",
+        "importPath": "utils.clear",
+        "description": "utils.clear",
+        "isExtraImport": true,
+        "detail": "utils.clear",
+        "documentation": {}
+    },
+    {
+        "label": "shutil",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "shutil",
+        "description": "shutil",
+        "detail": "shutil",
+        "documentation": {}
+    },
+    {
+        "label": "BackupButton",
+        "importPath": "components.BackupButton",
+        "description": "components.BackupButton",
+        "isExtraImport": true,
+        "detail": "components.BackupButton",
+        "documentation": {}
+    },
+    {
+        "label": "UpdateModal",
+        "importPath": "components.UpdateModal",
+        "description": "components.UpdateModal",
+        "isExtraImport": true,
+        "detail": "components.UpdateModal",
+        "documentation": {}
+    },
+    {
+        "label": "check_for_update",
+        "importPath": "utils.update_checker",
+        "description": "utils.update_checker",
+        "isExtraImport": true,
+        "detail": "utils.update_checker",
+        "documentation": {}
+    },
+    {
+        "label": "BuyInvoiceModal",
+        "importPath": "components.BuyInvoiceModal",
+        "description": "components.BuyInvoiceModal",
+        "isExtraImport": true,
+        "detail": "components.BuyInvoiceModal",
+        "documentation": {}
+    },
+    {
+        "label": "UserDialog",
+        "importPath": "components.UserDialog",
+        "description": "components.UserDialog",
+        "isExtraImport": true,
+        "detail": "components.UserDialog",
+        "documentation": {}
+    },
+    {
+        "label": "arabic_reshaper",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "arabic_reshaper",
+        "description": "arabic_reshaper",
+        "detail": "arabic_reshaper",
+        "documentation": {}
+    },
+    {
+        "label": "get_display",
+        "importPath": "bidi.algorithm",
+        "description": "bidi.algorithm",
+        "isExtraImport": true,
+        "detail": "bidi.algorithm",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "ProductsModel",
+        "importPath": "models.products",
+        "description": "models.products",
+        "isExtraImport": true,
+        "detail": "models.products",
+        "documentation": {}
+    },
+    {
+        "label": "ProductsModel",
+        "importPath": "models.products",
+        "description": "models.products",
+        "isExtraImport": true,
+        "detail": "models.products",
+        "documentation": {}
+    },
+    {
+        "label": "winreg",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "winreg",
+        "description": "winreg",
+        "detail": "winreg",
+        "documentation": {}
+    },
+    {
+        "label": "socket",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "socket",
+        "description": "socket",
+        "detail": "socket",
+        "documentation": {}
+    },
+    {
+        "label": "ctypes",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "ctypes",
+        "description": "ctypes",
+        "detail": "ctypes",
+        "documentation": {}
+    },
+    {
+        "label": "num2words",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "num2words",
+        "description": "num2words",
+        "detail": "num2words",
+        "documentation": {}
+    },
+    {
+        "label": "colors",
+        "importPath": "reportlab.lib",
+        "description": "reportlab.lib",
+        "isExtraImport": true,
+        "detail": "reportlab.lib",
+        "documentation": {}
+    },
+    {
+        "label": "A4",
+        "importPath": "reportlab.lib.pagesizes",
+        "description": "reportlab.lib.pagesizes",
+        "isExtraImport": true,
+        "detail": "reportlab.lib.pagesizes",
+        "documentation": {}
+    },
+    {
+        "label": "SimpleDocTemplate",
+        "importPath": "reportlab.platypus",
+        "description": "reportlab.platypus",
+        "isExtraImport": true,
+        "detail": "reportlab.platypus",
+        "documentation": {}
+    },
+    {
+        "label": "Table",
+        "importPath": "reportlab.platypus",
+        "description": "reportlab.platypus",
+        "isExtraImport": true,
+        "detail": "reportlab.platypus",
+        "documentation": {}
+    },
+    {
+        "label": "TableStyle",
+        "importPath": "reportlab.platypus",
+        "description": "reportlab.platypus",
+        "isExtraImport": true,
+        "detail": "reportlab.platypus",
+        "documentation": {}
+    },
+    {
+        "label": "Spacer",
+        "importPath": "reportlab.platypus",
+        "description": "reportlab.platypus",
+        "isExtraImport": true,
+        "detail": "reportlab.platypus",
+        "documentation": {}
+    },
+    {
+        "label": "Paragraph",
+        "importPath": "reportlab.platypus",
+        "description": "reportlab.platypus",
+        "isExtraImport": true,
+        "detail": "reportlab.platypus",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "reportlab.platypus",
+        "description": "reportlab.platypus",
+        "isExtraImport": true,
+        "detail": "reportlab.platypus",
+        "documentation": {}
+    },
+    {
+        "label": "ParagraphStyle",
+        "importPath": "reportlab.lib.styles",
+        "description": "reportlab.lib.styles",
+        "isExtraImport": true,
+        "detail": "reportlab.lib.styles",
+        "documentation": {}
+    },
+    {
+        "label": "mm",
+        "importPath": "reportlab.lib.units",
+        "description": "reportlab.lib.units",
+        "isExtraImport": true,
+        "detail": "reportlab.lib.units",
+        "documentation": {}
+    },
+    {
+        "label": "TA_CENTER",
+        "importPath": "reportlab.lib.enums",
+        "description": "reportlab.lib.enums",
+        "isExtraImport": true,
+        "detail": "reportlab.lib.enums",
+        "documentation": {}
+    },
+    {
+        "label": "TA_RIGHT",
+        "importPath": "reportlab.lib.enums",
+        "description": "reportlab.lib.enums",
+        "isExtraImport": true,
+        "detail": "reportlab.lib.enums",
+        "documentation": {}
+    },
+    {
+        "label": "pdfmetrics",
+        "importPath": "reportlab.pdfbase",
+        "description": "reportlab.pdfbase",
+        "isExtraImport": true,
+        "detail": "reportlab.pdfbase",
+        "documentation": {}
+    },
+    {
+        "label": "TTFont",
+        "importPath": "reportlab.pdfbase.ttfonts",
+        "description": "reportlab.pdfbase.ttfonts",
+        "isExtraImport": true,
+        "detail": "reportlab.pdfbase.ttfonts",
+        "documentation": {}
+    },
+    {
+        "label": "number_to_arabic_words",
+        "importPath": "utils.number_to_arabic_words",
+        "description": "utils.number_to_arabic_words",
+        "isExtraImport": true,
+        "detail": "utils.number_to_arabic_words",
+        "documentation": {}
+    },
+    {
+        "label": "number_to_arabic_words",
+        "importPath": "utils.number_to_arabic_words",
+        "description": "utils.number_to_arabic_words",
+        "isExtraImport": true,
+        "detail": "utils.number_to_arabic_words",
+        "documentation": {}
+    },
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "base64",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "base64",
+        "description": "base64",
+        "detail": "base64",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "version",
+        "importPath": "packaging",
+        "description": "packaging",
+        "isExtraImport": true,
+        "detail": "packaging",
+        "documentation": {}
+    },
+    {
+        "label": "Sale",
+        "importPath": "ui.Sales.sale_screen",
+        "description": "ui.Sales.sale_screen",
+        "isExtraImport": true,
+        "detail": "ui.Sales.sale_screen",
+        "documentation": {}
+    },
+    {
+        "label": "Products",
+        "importPath": "ui.Products",
+        "description": "ui.Products",
+        "isExtraImport": true,
+        "detail": "ui.Products",
+        "documentation": {}
+    },
+    {
+        "label": "UsersManagement",
+        "importPath": "ui.Users",
+        "description": "ui.Users",
+        "isExtraImport": true,
+        "detail": "ui.Users",
+        "documentation": {}
+    },
+    {
+        "label": "Stock",
+        "importPath": "ui.Stock",
+        "description": "ui.Stock",
+        "isExtraImport": true,
+        "detail": "ui.Stock",
+        "documentation": {}
+    },
+    {
+        "label": "Reports",
+        "importPath": "ui.Reports",
+        "description": "ui.Reports",
+        "isExtraImport": true,
+        "detail": "ui.Reports",
+        "documentation": {}
+    },
+    {
+        "label": "Customers",
+        "importPath": "ui.Customers",
+        "description": "ui.Customers",
+        "isExtraImport": true,
+        "detail": "ui.Customers",
+        "documentation": {}
+    },
+    {
+        "label": "Invoices",
+        "importPath": "ui.Invoices",
+        "description": "ui.Invoices",
+        "isExtraImport": true,
+        "detail": "ui.Invoices",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "ui.Settings",
+        "description": "ui.Settings",
+        "isExtraImport": true,
+        "detail": "ui.Settings",
+        "documentation": {}
+    },
+    {
+        "label": "Suppliers",
+        "importPath": "ui.Suppliers",
+        "description": "ui.Suppliers",
+        "isExtraImport": true,
+        "detail": "ui.Suppliers",
+        "documentation": {}
+    },
+    {
+        "label": "Layout",
+        "importPath": "layout",
+        "description": "layout",
+        "isExtraImport": true,
+        "detail": "layout",
+        "documentation": {}
+    },
+    {
+        "label": "load_font",
+        "importPath": "utils.load_font",
+        "description": "utils.load_font",
+        "isExtraImport": true,
+        "detail": "utils.load_font",
+        "documentation": {}
+    },
+    {
+        "label": "SplashScreen",
+        "importPath": "ui.Splash_screen",
+        "description": "ui.Splash_screen",
+        "isExtraImport": true,
+        "detail": "ui.Splash_screen",
+        "documentation": {}
+    },
+    {
+        "label": "CustomersModel",
+        "importPath": "models.customers",
+        "description": "models.customers",
+        "isExtraImport": true,
+        "detail": "models.customers",
+        "documentation": {}
+    },
+    {
+        "label": "UsersModel",
+        "importPath": "models.users",
+        "description": "models.users",
+        "isExtraImport": true,
+        "detail": "models.users",
+        "documentation": {}
+    },
+    {
+        "label": "SaleItmesModel",
+        "importPath": "models.sale_items",
+        "description": "models.sale_items",
+        "isExtraImport": true,
+        "detail": "models.sale_items",
+        "documentation": {}
+    },
+    {
+        "label": "SalesModel",
+        "importPath": "models.sales",
+        "description": "models.sales",
+        "isExtraImport": true,
+        "detail": "models.sales",
+        "documentation": {}
+    },
+    {
+        "label": "psutil",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "psutil",
+        "description": "psutil",
+        "detail": "psutil",
+        "documentation": {}
+    },
+    {
+        "label": "BackupButton",
+        "kind": 6,
+        "importPath": "components.BackupButton",
+        "description": "components.BackupButton",
+        "peekOfCode": "class BackupButton:\n    def __init__(self, parent, get_save_path_callback):\n        self.get_save_path_callback = get_save_path_callback\n        CTkButton(\n            parent,\n            text=\"نسخ احتياطي للبيانات\",\n            width=120,\n            fg_color=\"#25b3eb\",\n            hover_color=\"#1b92c2\",\n            font=(\"Cairo\", 20, \"bold\"),",
+        "detail": "components.BackupButton",
+        "documentation": {}
+    },
+    {
+        "label": "BarcodePrinter",
+        "kind": 6,
+        "importPath": "components.BarcodePrinter",
+        "description": "components.BarcodePrinter",
+        "peekOfCode": "class BarcodePrinter:\n    def __init__(self, root, products):\n        self.root = root\n        self.products = products\n        self.filtered_products = products\n        self.selected_product = None\n        self.build_modal()\n    # ---------- UI ----------\n    def build_modal(self):\n        self.modal = CTkToplevel(self.root)",
+        "detail": "components.BarcodePrinter",
+        "documentation": {}
+    },
+    {
+        "label": "BuyInvoiceModal",
+        "kind": 6,
+        "importPath": "components.BuyInvoiceModal",
+        "description": "components.BuyInvoiceModal",
+        "peekOfCode": "class BuyInvoiceModal:\n    def __init__(\n        self, users_db, uid, parent, products_db, suppliers_db, on_success=None\n    ):\n        self.users_db = users_db\n        self.uid = uid\n        self.parent = parent\n        self.products_db = products_db\n        self.suppliers_db = suppliers_db\n        self.on_success = on_success",
+        "detail": "components.BuyInvoiceModal",
+        "documentation": {}
+    },
+    {
+        "label": "CustomerModal",
+        "kind": 6,
+        "importPath": "components.CustomerModal",
+        "description": "components.CustomerModal",
+        "peekOfCode": "class CustomerModal:\n    def __init__(\n        self, add_customer, tree=None, edit_customer=None, mode=\"add\", refresh_results=None, customers_dialog=None\n    ):\n        self.tree = tree\n        self.add_customer = add_customer\n        self.edit_customer = edit_customer\n        self.refresh_results = refresh_results\n        self.customers_dialog = customers_dialog\n        selected_data = None",
+        "detail": "components.CustomerModal",
+        "documentation": {}
+    },
+    {
+        "label": "ProductModal",
+        "kind": 6,
+        "importPath": "components.ProductModal",
+        "description": "components.ProductModal",
+        "peekOfCode": "class ProductModal:\n    def __init__(\n        self,\n        root,\n        products_db,\n        suppliers_db,\n        mode=\"add\",\n        product_id=None,\n        on_success=None,\n    ):",
+        "detail": "components.ProductModal",
+        "documentation": {}
+    },
+    {
+        "label": "StockMovementsModal",
+        "kind": 6,
+        "importPath": "components.StockMovementModal",
+        "description": "components.StockMovementModal",
+        "peekOfCode": "class StockMovementsModal:\n    def __init__(self, users_db, uid, parent, stock_movement_model, products_model):\n        self.users_db = users_db\n        self.uid = uid\n        self.parent = parent\n        self.stock_movement_model = stock_movement_model\n        self.products_model = products_model\n        # إنشاء نافذة منبثقة\n        self.window = CTkToplevel(parent)\n        self.window.title(\"حركات المخزون | Dealzora\")",
+        "detail": "components.StockMovementModal",
+        "documentation": {}
+    },
+    {
+        "label": "TreeView",
+        "kind": 6,
+        "importPath": "components.TreeView",
+        "description": "components.TreeView",
+        "peekOfCode": "class TreeView:\n    def __init__(self, parent, cols: tuple, width: tuple, font_size=12):\n        self.parent = parent\n        vsb = ttk.Scrollbar(self.parent, orient=\"vertical\")\n        vsb.pack(side=\"right\", fill=\"y\")\n        # تكبير الخط\n        style = ttk.Style()\n        style.configure(\"Treeview\", font=(\"Cairo\", font_size, \"bold\"), rowheight=30)\n        style.configure(\"Treeview.Heading\", font=(\"Cairo\", font_size, \"bold\"))\n        self.tree = ttk.Treeview(",
+        "detail": "components.TreeView",
+        "documentation": {}
+    },
+    {
+        "label": "UpdateModal",
+        "kind": 6,
+        "importPath": "components.UpdateModal",
+        "description": "components.UpdateModal",
+        "peekOfCode": "class UpdateModal:\n    def __init__(self, root, version, url, on_close=None):\n        self.root = root\n        self.version = version\n        self.url = url\n        self.on_close_callback = on_close  # callback للـ splash\n        self.overlay = None\n        self.frame = None\n        self.disabled_widgets = []\n        self.progress_bar = None",
+        "detail": "components.UpdateModal",
+        "documentation": {}
+    },
+    {
+        "label": "UploadImage",
+        "kind": 6,
+        "importPath": "components.UploadImage",
+        "description": "components.UploadImage",
+        "peekOfCode": "class UploadImage:\n    def __init__(self, parent):\n        self.parent = parent\n        self.default_image = \"assets/icon.png\"\n        self.selected_image = self.default_image\n        self.img_preview = image(self.selected_image, (60, 60))\n        self.label_image = CTkLabel(self.parent, text=\"\", image=self.img_preview)\n        self.label_image.pack(pady=5, padx=5)\n        CTkButton(\n            self.parent,",
+        "detail": "components.UploadImage",
+        "documentation": {}
+    },
+    {
+        "label": "UserDialog",
+        "kind": 6,
+        "importPath": "components.UserDialog",
+        "description": "components.UserDialog",
+        "peekOfCode": "class UserDialog(CTkToplevel):\n    def __init__(self, parent, users_db, callback, user=None):\n        super().__init__(parent)\n        self.users_db = users_db\n        self.callback = callback\n        self.user = user  # None للإضافة، موجود للتعديل\n        self.title(\"إضافة مستخدم جديد\" if not user else \"تعديل المستخدم\")\n        self.geometry(\"600x650\")\n        self.resizable(False, False)\n        # جعل النافذة في المقدمة",
+        "detail": "components.UserDialog",
+        "documentation": {}
+    },
+    {
+        "label": "CustomersModel",
+        "kind": 6,
+        "importPath": "models.customers",
+        "description": "models.customers",
+        "peekOfCode": "class CustomersModel:\n    def __init__(self, cur, con):\n        self.con = con\n        self.cur = cur\n        # Create DB\n        self.cur.execute(\n            \"\"\"CREATE TABLE IF NOT EXISTS customers(\n            id INTEGER PRIMARY KEY AUTOINCREMENT,\n            name TEXT NOT NULL,\n            phone TEXT UNIQUE,",
+        "detail": "models.customers",
+        "documentation": {}
+    },
+    {
+        "label": "ProductsModel",
+        "kind": 6,
+        "importPath": "models.products",
+        "description": "models.products",
+        "peekOfCode": "class ProductsModel:\n    def __init__(self, cur, con):\n        self.con = con\n        self.cur = cur\n        self.suppliers_db = SupplierModel(self.cur, self.con)\n        self.stock_movements_db = StockMovementsModel(self.cur, self.con)\n        self.cur.execute(\n            \"\"\"CREATE TABLE IF NOT EXISTS category(\n            id INTEGER PRIMARY KEY AUTOINCREMENT,\n            name TEXT UNIQUE NOT NULL",
+        "detail": "models.products",
+        "documentation": {}
+    },
+    {
+        "label": "SalesModel",
+        "kind": 6,
+        "importPath": "models.sales",
+        "description": "models.sales",
+        "peekOfCode": "class SalesModel:\n    def __init__(self, cur, con):\n        self.con = con\n        self.cur = cur\n        # Create DB\n        self.cur.execute(\n            \"\"\"CREATE TABLE IF NOT EXISTS sales(\n            id INTEGER PRIMARY KEY AUTOINCREMENT,\n            number INTEGER UNIQUE NOT NULL,\n            total REAL NOT NULL,",
+        "detail": "models.sales",
+        "documentation": {}
+    },
+    {
+        "label": "SaleItmesModel",
+        "kind": 6,
+        "importPath": "models.sale_items",
+        "description": "models.sale_items",
+        "peekOfCode": "class SaleItmesModel:\n    def __init__(self, cur, con):\n        self.con = con\n        self.cur = cur\n        # Create DB\n        self.cur.execute(\n            \"\"\"CREATE TABLE IF NOT EXISTS sale_items(\n            id INTEGER PRIMARY KEY AUTOINCREMENT,\n            sale_id INTEGER NOT NULL,\n            product_id INTEGER NOT NULL,",
+        "detail": "models.sale_items",
+        "documentation": {}
+    },
+    {
+        "label": "SettingsModel",
+        "kind": 6,
+        "importPath": "models.settings",
+        "description": "models.settings",
+        "peekOfCode": "class SettingsModel:\n    def __init__(self, path=\"settings.json\"):\n        self.path = path\n        self.defaults = {\n            \"shop_name\": \"DEALZORA\",\n            \"currency\": \"ج.م\",\n            \"tax\": 0.0,\n            \"theme\": \"dark\",\n            \"logo_path\": \"assets/icon.png\",\n            \"printer_name\": \"\",",
+        "detail": "models.settings",
+        "documentation": {}
+    },
+    {
+        "label": "StockMovementsModel",
+        "kind": 6,
+        "importPath": "models.stock_movements",
+        "description": "models.stock_movements",
+        "peekOfCode": "class StockMovementsModel:\n    def __init__(self, cur, con):\n        self.con = con\n        self.cur = cur\n        self.cur.execute(\n            \"\"\"CREATE TABLE IF NOT EXISTS stock_movements (\n                id INTEGER PRIMARY KEY AUTOINCREMENT,\n                product_id INTEGER NOT NULL,\n                quantity REAL NOT NULL,\n                old_quantity REAL NOT NULL,",
+        "detail": "models.stock_movements",
+        "documentation": {}
+    },
+    {
+        "label": "SupplierModel",
+        "kind": 6,
+        "importPath": "models.supplier",
+        "description": "models.supplier",
+        "peekOfCode": "class SupplierModel:\n    def __init__(self, cur, con):\n        self.cur = cur\n        self.con = con\n        # Create DB\n        self.cur.execute(\n            \"\"\"CREATE TABLE IF NOT EXISTS suppliers(\n            id INTEGER PRIMARY KEY AUTOINCREMENT,\n            name TEXT NOT NULL,\n            phone TEXT UNIQUE",
+        "detail": "models.supplier",
+        "documentation": {}
+    },
+    {
+        "label": "UsersModel",
+        "kind": 6,
+        "importPath": "models.users",
+        "description": "models.users",
+        "peekOfCode": "class UsersModel:\n    def __init__(self, cursor: sqlite3.Cursor, connection: sqlite3.Connection):\n        self.cur = cursor\n        self.con = connection\n        self.create_table()\n        self.create_default_admin()\n        self.create_default_cashier()\n    def create_table(self):\n        \"\"\"إنشاء جدول المستخدمين إذا لم يكن موجوداً\"\"\"\n        self.cur.execute(",
+        "detail": "models.users",
+        "documentation": {}
+    },
+    {
+        "label": "CartPanel",
+        "kind": 6,
+        "importPath": "ui.Sales.components.cart_panel",
+        "description": "ui.Sales.components.cart_panel",
+        "peekOfCode": "class CartPanel(CTkFrame):\n    def __init__(self, parent, data_service):\n        super().__init__(parent)\n        self.data_service = data_service\n        CTkLabel(self, text=\"🛒 سلة المشتريات\", font=(\"Cairo\", 16, \"bold\")).pack(\n            padx=5, pady=5\n        )\n        self._build_selected_customer()\n    def _build_selected_customer(self):\n        container = CTkFrame(self, fg_color=\"transparent\")",
+        "detail": "ui.Sales.components.cart_panel",
+        "documentation": {}
+    },
+    {
+        "label": "CustomerDialog",
+        "kind": 6,
+        "importPath": "ui.Sales.components.customer_dialog",
+        "description": "ui.Sales.components.customer_dialog",
+        "peekOfCode": "class CustomerDialog(CTkToplevel):\n    def __init__(self, parent, data_service):\n        super().__init__(parent)\n        self.data_service = data_service\n        self.all_customers = self.load_customers()\n        self.filtered_customers = self.all_customers\n        self._config_dialog()\n        # ===== Title =====\n        CTkLabel(\n            self,",
+        "detail": "ui.Sales.components.customer_dialog",
+        "documentation": {}
+    },
+    {
+        "label": "SearchSection",
+        "kind": 6,
+        "importPath": "ui.Sales.components.products_section",
+        "description": "ui.Sales.components.products_section",
+        "peekOfCode": "class SearchSection(CTkFrame):\n    def __init__(self, parent, data_service):\n        super().__init__(parent)\n        self.data_service = data_service\n        self._build_search_section()\n    def _build_search_section(self):\n        \"\"\"قسم البحث والفئات في صف واحد\"\"\"\n        # إطار أفقي لتوزيع العناصر\n        search_container = CTkFrame(self, fg_color=\"transparent\")\n        search_container.pack(fill=\"x\", padx=20, pady=15)",
+        "detail": "ui.Sales.components.products_section",
+        "documentation": {}
+    },
+    {
+        "label": "ProductTable",
+        "kind": 6,
+        "importPath": "ui.Sales.components.products_section",
+        "description": "ui.Sales.components.products_section",
+        "peekOfCode": "class ProductTable(CTkFrame):\n    def __init__(self, parent, data_service):\n        super().__init__(parent)\n        self.data_service = data_service\n        main_frame = CTkFrame(self)\n        main_frame.pack(fill=\"both\", expand=True)\n        self.products = self.load_products()\n        CTkLabel(\n            main_frame,\n            text=f\"({len(self.products)}) المنتجات\",",
+        "detail": "ui.Sales.components.products_section",
+        "documentation": {}
+    },
+    {
+        "label": "ProductSection",
+        "kind": 6,
+        "importPath": "ui.Sales.components.products_section",
+        "description": "ui.Sales.components.products_section",
+        "peekOfCode": "class ProductSection(CTkFrame):\n    def __init__(self, parent, data_service):\n        super().__init__(parent)\n        # قسم البحث والفئات\n        SearchSection(self, data_service).pack(fill=\"x\")\n        # جدول المنتجات\n        ProductTable(self, data_service).pack(\n            fill=\"both\", expand=True, padx=20, pady=(0, 20)\n        )",
+        "detail": "ui.Sales.components.products_section",
+        "documentation": {}
+    },
+    {
+        "label": "Toolbar",
+        "kind": 6,
+        "importPath": "ui.Sales.components.toolbar",
+        "description": "ui.Sales.components.toolbar",
+        "peekOfCode": "class Toolbar(CTkFrame):\n    def __init__(self, parent):\n        super().__init__(parent)\n        self.invoice_number = self._generate_invoice_number()\n        self.date = self._get_current_date()\n        self.main_font = (\"Cairo\", 16, \"bold\")\n        self._build_toolbar()\n        self._update_time()\n    def _build_toolbar(self):\n        # عرض رقم الفاتورة",
+        "detail": "ui.Sales.components.toolbar",
+        "documentation": {}
+    },
+    {
+        "label": "DataService",
+        "kind": 6,
+        "importPath": "ui.Sales.services.DataService",
+        "description": "ui.Sales.services.DataService",
+        "peekOfCode": "class DataService:\n    def __init__(self, products_db, customers_db):\n        self.products_db = products_db\n        self.customers_db = customers_db\n    def get_products(self):\n        return self.products_db.get_products()\n    def get_categorys(self):\n        return [c[1] for c in self.products_db.get_categorys()]\n    def get_customers(self):\n        return self.customers_db.get_customers()",
+        "detail": "ui.Sales.services.DataService",
+        "documentation": {}
+    },
+    {
+        "label": "Sale",
+        "kind": 6,
+        "importPath": "ui.Sales.sale_screen",
+        "description": "ui.Sales.sale_screen",
+        "peekOfCode": "class Sale:\n    def __init__(\n        self,\n        root,\n        products_db,\n        customers_db,\n        sales_db,\n        sale_items_db,\n        stock_movements_db,\n        settings_db,",
+        "detail": "ui.Sales.sale_screen",
+        "documentation": {}
+    },
+    {
+        "label": "Auth",
+        "kind": 6,
+        "importPath": "ui.Auth",
+        "description": "ui.Auth",
+        "peekOfCode": "class Auth:\n    def __init__(self, root, on_success, users_db):\n        self.root = root\n        self.on_success = on_success\n        self.users_db = users_db\n        self.show_password = False\n        self.setup_window()\n        self.create_widgets()\n    def setup_window(self):\n        \"\"\"تجهيز إعدادات النافذة\"\"\"",
+        "detail": "ui.Auth",
+        "documentation": {}
+    },
+    {
+        "label": "Customers",
+        "kind": 6,
+        "importPath": "ui.Customers",
+        "description": "ui.Customers",
+        "peekOfCode": "class Customers:\n    def __init__(self, root, customers_db):\n        self.root = root\n        self.customers_db = customers_db\n        self.customers = self.get_all_customers()\n        self.customer_selected_phone = \"\"\n        self.search_after_id = None\n        self.filter_debt = StringVar(value=\"الكل\")\n        header = CTkFrame(self.root, fg_color=\"transparent\")\n        header.pack(padx=10, pady=10)",
+        "detail": "ui.Customers",
+        "documentation": {}
+    },
+    {
+        "label": "Invoices",
+        "kind": 6,
+        "importPath": "ui.Invoices",
+        "description": "ui.Invoices",
+        "peekOfCode": "class Invoices:\n    def __init__(\n        self,\n        root,\n        con,\n        invoices_db,\n        sale_items_db,\n        customers_db,\n        products_db,\n        stock_movements_db,",
+        "detail": "ui.Invoices",
+        "documentation": {}
+    },
+    {
+        "label": "LicenseScreen",
+        "kind": 6,
+        "importPath": "ui.license_screen",
+        "description": "ui.license_screen",
+        "peekOfCode": "class LicenseScreen(CTkFrame):\n    def __init__(self, master, on_success):\n        super().__init__(master)\n        self.pack(expand=True, fill=\"both\", padx=30, pady=30)\n        CTkLabel(self, text=\"🔐 تفعيل البرنامج\", font=(\"Cairo\", 26, \"bold\")).pack(\n            pady=15\n        )\n        CTkLabel(\n            self,\n            text=(",
+        "detail": "ui.license_screen",
+        "documentation": {}
+    },
+    {
+        "label": "Products",
+        "kind": 6,
+        "importPath": "ui.Products",
+        "description": "ui.Products",
+        "peekOfCode": "class Products:\n    def __init__(self, root, products_db, suppliers_db):\n        self.root = root\n        self.products_db = products_db\n        self.suppliers_db = suppliers_db\n        self.search_after_id = None\n        self.products = []\n        self.categorys = []\n        self.suppliers = [s[1] for s in self.suppliers_db.get_suppliers()]\n        self.category_map = {\"الكل\": \"all\"}",
+        "detail": "ui.Products",
+        "documentation": {}
+    },
+    {
+        "label": "RejectUI",
+        "kind": 6,
+        "importPath": "ui.RejectUI",
+        "description": "ui.RejectUI",
+        "peekOfCode": "class RejectUI:\n    def __init__(self, root):\n        self.root = root\n        CTkLabel(\n            self.root, text=\"\", image=image(\"assets/unauthorized.png\", (100, 100))\n        ).pack(pady=5, padx=5)\n        CTkLabel(\n            self.root,\n            text=\"غير مسموح لك بالدخول لهذه الواجهه\",\n            font=(\"Cairo\", 40, \"bold\"),",
+        "detail": "ui.RejectUI",
+        "documentation": {}
+    },
+    {
+        "label": "Reports",
+        "kind": 6,
+        "importPath": "ui.Reports",
+        "description": "ui.Reports",
+        "peekOfCode": "class Reports:\n    def __init__(self, root, cur):\n        self.root = root\n        self.cur = cur\n        # إطارات رئيسية\n        self.main_container = CTkFrame(self.root, fg_color=\"transparent\")\n        self.main_container.pack(fill=\"both\", expand=True, padx=5, pady=5)\n        # عنوان الصفحة\n        header_frame = CTkFrame(self.main_container, fg_color=\"transparent\", height=50)\n        header_frame.pack(fill=\"x\", pady=(0, 10))",
+        "detail": "ui.Reports",
+        "documentation": {}
+    },
+    {
+        "label": "Sale",
+        "kind": 6,
+        "importPath": "ui.Sale copy",
+        "description": "ui.Sale copy",
+        "peekOfCode": "class Sale:\n    \"\"\"\n    Main sales interface for processing customer transactions.\n    Handles product selection, cart management, discounts, taxes, and payment.\n    \"\"\"\n    def __init__(\n        self,\n        root,\n        products_db,\n        customers_db,",
+        "detail": "ui.Sale copy",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "kind": 6,
+        "importPath": "ui.Settings",
+        "description": "ui.Settings",
+        "peekOfCode": "class Settings:\n    def __init__(self, root, settings_db):\n        self.root = root\n        self.vars = {}\n        # ======= الهيدر =======\n        header_frame = CTkFrame(self.root, fg_color=\"transparent\")\n        header_frame.pack(fill=\"x\", pady=(0, 20))\n        CTkLabel(\n            header_frame,\n            text=\"اعدادات النظام\",",
+        "detail": "ui.Settings",
+        "documentation": {}
+    },
+    {
+        "label": "SplashScreen",
+        "kind": 6,
+        "importPath": "ui.Splash_screen",
+        "description": "ui.Splash_screen",
+        "peekOfCode": "class SplashScreen:\n    def __init__(self, root, on_finish):\n        self.root = root\n        self.on_finish = on_finish  # callback لتشغيل البرنامج الرئيسي بعد الـ splash\n        self.frame = None\n        self.progress_bar = None\n        self.status_label = None\n        self.version_label = None\n        self.check_thread = None\n        self.init_splash()",
+        "detail": "ui.Splash_screen",
+        "documentation": {}
+    },
+    {
+        "label": "APP_VERSION",
+        "kind": 5,
+        "importPath": "ui.Splash_screen",
+        "description": "ui.Splash_screen",
+        "peekOfCode": "APP_VERSION = \"1.4.5\"\nclass SplashScreen:\n    def __init__(self, root, on_finish):\n        self.root = root\n        self.on_finish = on_finish  # callback لتشغيل البرنامج الرئيسي بعد الـ splash\n        self.frame = None\n        self.progress_bar = None\n        self.status_label = None\n        self.version_label = None\n        self.check_thread = None",
+        "detail": "ui.Splash_screen",
+        "documentation": {}
+    },
+    {
+        "label": "Stock",
+        "kind": 6,
+        "importPath": "ui.Stock",
+        "description": "ui.Stock",
+        "peekOfCode": "class Stock:\n    def __init__(\n        self,\n        root,\n        users_db,\n        uid,\n        products_db,\n        suppliers_db,\n        stock_movements_db,\n        settings,",
+        "detail": "ui.Stock",
+        "documentation": {}
+    },
+    {
+        "label": "Suppliers",
+        "kind": 6,
+        "importPath": "ui.Suppliers",
+        "description": "ui.Suppliers",
+        "peekOfCode": "class Suppliers:\n    def __init__(self, root, supplier_model, uid, users_db):\n        self.root = root\n        self.supplier_model = supplier_model\n        self.selected_supplier_id = None\n        self.uid = uid\n        self.users_db = users_db\n        self.build_modal()\n    # ================= BUILD =================\n    def build_modal(self):",
+        "detail": "ui.Suppliers",
+        "documentation": {}
+    },
+    {
+        "label": "UsersManagement",
+        "kind": 6,
+        "importPath": "ui.Users",
+        "description": "ui.Users",
+        "peekOfCode": "class UsersManagement:\n    def __init__(self, parent, users_db):\n        self.parent = parent\n        self.users_db = users_db\n        header = CTkFrame(self.parent, fg_color=\"transparent\")\n        header.pack(padx=10, pady=10)\n        CTkLabel(\n            header,\n            text=\"ادارة المستخدمين\",\n            image=image(\"assets/users.png\", (40, 40)),",
+        "detail": "ui.Users",
+        "documentation": {}
+    },
+    {
+        "label": "alter_column_type",
+        "kind": 2,
+        "importPath": "utils.alter_column_type",
+        "description": "utils.alter_column_type",
+        "peekOfCode": "def alter_column_type(cur, con, table_name, column_name, new_type):\n    \"\"\"\n    دالة عامة لتغيير نوع عمود في أي جدول SQLite\n    تتأكد أولًا إذا كان العمود من النوع الجديد لتجنب إعادة التعديل\n    \"\"\"\n    # جلب معلومات الأعمدة\n    cur.execute(f\"PRAGMA table_info({table_name})\")\n    columns_info = cur.fetchall()\n    # التأكد إذا العمود موجود والتحقق من نوعه الحالي\n    qty_type = None",
+        "detail": "utils.alter_column_type",
+        "documentation": {}
+    },
+    {
+        "label": "ar",
+        "kind": 2,
+        "importPath": "utils.ar_support",
+        "description": "utils.ar_support",
+        "peekOfCode": "def ar(text):\n    reshaped = arabic_reshaper.reshape(text)\n    bidi_text = get_display(reshaped)\n    return bidi_text",
+        "detail": "utils.ar_support",
+        "documentation": {}
+    },
+    {
+        "label": "plt.rcParams[\"font.family\"]",
+        "kind": 5,
+        "importPath": "utils.ar_support",
+        "description": "utils.ar_support",
+        "peekOfCode": "plt.rcParams[\"font.family\"] = \"Cairo\"\ndef ar(text):\n    reshaped = arabic_reshaper.reshape(text)\n    bidi_text = get_display(reshaped)\n    return bidi_text",
+        "detail": "utils.ar_support",
+        "documentation": {}
+    },
+    {
+        "label": "backup_database",
+        "kind": 2,
+        "importPath": "utils.backup_database",
+        "description": "utils.backup_database",
+        "peekOfCode": "def backup_database(backup_path=None, return_message=False):\n    \"\"\"\n    عمل نسخة احتياطية من قاعدة البيانات\n    :param backup_path: المسار المخصص لحفظ النسخ الاحتياطية (اختياري)\n    \"\"\"\n    # إذا لم يتم تحديد مسار، استخدم المسار الافتراضي\n    if backup_path is None:\n        backup_path = \"backup\"\n    try:\n        # محاولة إنشاء المجلد إذا لم يكن موجوداً",
+        "detail": "utils.backup_database",
+        "documentation": {}
+    },
+    {
+        "label": "center_modal",
+        "kind": 2,
+        "importPath": "utils.center_modal",
+        "description": "utils.center_modal",
+        "peekOfCode": "def center_modal(modal):\n    modal.update_idletasks()\n    modal.grab_set()\n    modal.focus_force()\n    modal.geometry(f\"+200+100\")",
+        "detail": "utils.center_modal",
+        "documentation": {}
+    },
+    {
+        "label": "clear",
+        "kind": 2,
+        "importPath": "utils.clear",
+        "description": "utils.clear",
+        "peekOfCode": "def clear(frame):\n    for widget in frame.winfo_children():\n        widget.destroy()",
+        "detail": "utils.clear",
+        "documentation": {}
+    },
+    {
+        "label": "DatabaseMerger",
+        "kind": 6,
+        "importPath": "utils.database_merger",
+        "description": "utils.database_merger",
+        "peekOfCode": "class DatabaseMerger:\n    \"\"\"\n    أداة مساعدة لدمج قواعد البيانات مع الاحتفاظ بالبيانات الجديدة\n    \"\"\"\n    # تعريف الجداول ومفاتيحها الأساسية وسلوك الدمج\n    TABLES_CONFIG = {\n        \"customers\": {\n            \"primary_key\": \"id\",\n            \"conflict_resolution\": \"ignore\",  # تجاهل إذا موجود (الاحتفاظ بالجديد)\n            \"order_by\": \"id\",",
+        "detail": "utils.database_merger",
+        "documentation": {}
+    },
+    {
+        "label": "merge_databases_with_thread",
+        "kind": 2,
+        "importPath": "utils.database_merger",
+        "description": "utils.database_merger",
+        "peekOfCode": "def merge_databases_with_thread(source_path: str, target_path: str, \n                                 progress_callback: Callable = None,\n                                 complete_callback: Callable = None):\n    \"\"\"\n    دمج قواعد البيانات في thread منفصل\n    \"\"\"\n    def run_merge():\n        merger = DatabaseMerger(progress_callback)\n        success, message, stats = merger.merge_database(source_path, target_path)\n        if complete_callback:",
+        "detail": "utils.database_merger",
+        "documentation": {}
+    },
+    {
+        "label": "export_products",
+        "kind": 2,
+        "importPath": "utils.export_products",
+        "description": "utils.export_products",
+        "peekOfCode": "def export_products(products, get_category):\n    \"\"\"Export products to Excel/CSV\"\"\"\n    from tkinter import filedialog, messagebox\n    import csv\n    filename = filedialog.asksaveasfilename(\n        title=\"حفظ ملف التصدير\",\n        defaultextension=\".xlsx\",\n        initialfile=\"products\",\n        filetypes=[\n            (\"CSV files\", \"*.csv\"),",
+        "detail": "utils.export_products",
+        "documentation": {}
+    },
+    {
+        "label": "format_currency",
+        "kind": 2,
+        "importPath": "utils.format_currency",
+        "description": "utils.format_currency",
+        "peekOfCode": "def format_currency(value):\n    c = SettingsModel().get_setting(\"currency\")\n    return f\"{value:,.2f} {c}\"",
+        "detail": "utils.format_currency",
+        "documentation": {}
+    },
+    {
+        "label": "get_stock_tag",
+        "kind": 2,
+        "importPath": "utils.get_stock_tag",
+        "description": "utils.get_stock_tag",
+        "peekOfCode": "def get_stock_tag(qty, low):\n    if qty == 0:\n        return \"danger\"\n    if qty <= low:\n        return \"warning\"\n    return \"success\"",
+        "detail": "utils.get_stock_tag",
+        "documentation": {}
+    },
+    {
+        "label": "image",
+        "kind": 2,
+        "importPath": "utils.image",
+        "description": "utils.image",
+        "peekOfCode": "def image(path, size=(40, 40)):\n    \"\"\"تحميل صورة للأستخدام في Customtkinter Widgets\"\"\"\n    if not path or not Path(path).is_file():\n        path = \"assets/icon.png\"\n    img = Image.open(path)\n    return CTkImage(img, size=size)",
+        "detail": "utils.image",
+        "documentation": {}
+    },
+    {
+        "label": "import_products",
+        "kind": 2,
+        "importPath": "utils.import_products",
+        "description": "utils.import_products",
+        "peekOfCode": "def import_products(self):\n    file_path = filedialog.askopenfilename(\n        filetypes=[(\"CSV files\", \"*.csv\")]\n    )\n    if not file_path:\n        return\n    def worker():\n        try:\n            conn = connect(\"db/dealzora.db\")\n            cur = conn.cursor()",
+        "detail": "utils.import_products",
+        "documentation": {}
+    },
+    {
+        "label": "is_number",
+        "kind": 2,
+        "importPath": "utils.is_number",
+        "description": "utils.is_number",
+        "peekOfCode": "def is_number(number):\n    try:\n        float(number)\n        return True\n    except:\n        return False",
+        "detail": "utils.is_number",
+        "documentation": {}
+    },
+    {
+        "label": "key_shortcut",
+        "kind": 2,
+        "importPath": "utils.key_shortcut",
+        "description": "utils.key_shortcut",
+        "peekOfCode": "def key_shortcut(widget, keys, func):\n    if not isinstance(keys, (tuple, list)):\n        keys = [keys]\n    def on_press(event):\n        func()\n        return \"break\"\n    for key in keys:\n        widget.bind(key, on_press)",
+        "detail": "utils.key_shortcut",
+        "documentation": {}
+    },
+    {
+        "label": "get_machine_guid",
+        "kind": 2,
+        "importPath": "utils.license",
+        "description": "utils.license",
+        "peekOfCode": "def get_machine_guid():\n    try:\n        key = winreg.OpenKey(\n            winreg.HKEY_LOCAL_MACHINE, r\"SOFTWARE\\Microsoft\\Cryptography\"\n        )\n        guid, _ = winreg.QueryValueEx(key, \"MachineGuid\")\n        return guid\n    except Exception:\n        try:\n            return socket.gethostname()",
+        "detail": "utils.license",
+        "documentation": {}
+    },
+    {
+        "label": "generate_expected_license",
+        "kind": 2,
+        "importPath": "utils.license",
+        "description": "utils.license",
+        "peekOfCode": "def generate_expected_license():\n    guid = get_machine_guid()\n    if not guid:\n        return None\n    raw = f\"{guid}-{SECRET_KEY}\"\n    return hashlib.sha256(raw.encode()).hexdigest()\ndef is_license_valid():\n    if not LICENSE_FILE.exists():\n        return False\n    saved_license = LICENSE_FILE.read_text().strip()",
+        "detail": "utils.license",
+        "documentation": {}
+    },
+    {
+        "label": "is_license_valid",
+        "kind": 2,
+        "importPath": "utils.license",
+        "description": "utils.license",
+        "peekOfCode": "def is_license_valid():\n    if not LICENSE_FILE.exists():\n        return False\n    saved_license = LICENSE_FILE.read_text().strip()\n    return saved_license == generate_expected_license()\ndef save_license(license_key: str):\n    LICENSE_FILE.write_text(license_key)",
+        "detail": "utils.license",
+        "documentation": {}
+    },
+    {
+        "label": "save_license",
+        "kind": 2,
+        "importPath": "utils.license",
+        "description": "utils.license",
+        "peekOfCode": "def save_license(license_key: str):\n    LICENSE_FILE.write_text(license_key)",
+        "detail": "utils.license",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET_KEY",
+        "kind": 5,
+        "importPath": "utils.license",
+        "description": "utils.license",
+        "peekOfCode": "SECRET_KEY = \"mostafa-hamdi-dealzora\"\nLICENSE_FILE = Path.home() / \".dealzora_license\"\ndef get_machine_guid():\n    try:\n        key = winreg.OpenKey(\n            winreg.HKEY_LOCAL_MACHINE, r\"SOFTWARE\\Microsoft\\Cryptography\"\n        )\n        guid, _ = winreg.QueryValueEx(key, \"MachineGuid\")\n        return guid\n    except Exception:",
+        "detail": "utils.license",
+        "documentation": {}
+    },
+    {
+        "label": "LICENSE_FILE",
+        "kind": 5,
+        "importPath": "utils.license",
+        "description": "utils.license",
+        "peekOfCode": "LICENSE_FILE = Path.home() / \".dealzora_license\"\ndef get_machine_guid():\n    try:\n        key = winreg.OpenKey(\n            winreg.HKEY_LOCAL_MACHINE, r\"SOFTWARE\\Microsoft\\Cryptography\"\n        )\n        guid, _ = winreg.QueryValueEx(key, \"MachineGuid\")\n        return guid\n    except Exception:\n        try:",
+        "detail": "utils.license",
+        "documentation": {}
+    },
+    {
+        "label": "load_font",
+        "kind": 2,
+        "importPath": "utils.load_font",
+        "description": "utils.load_font",
+        "peekOfCode": "def load_font(font_path):\n    FR_PRIVATE = 0x10\n    path = os.path.abspath(font_path)\n    if os.name == \"nt\":\n        ctypes.windll.gdi32.AddFontResourceExW(path, FR_PRIVATE, 0)",
+        "detail": "utils.load_font",
+        "documentation": {}
+    },
+    {
+        "label": "number_to_arabic_words",
+        "kind": 2,
+        "importPath": "utils.number_to_arabic_words",
+        "description": "utils.number_to_arabic_words",
+        "peekOfCode": "def number_to_arabic_words(number, currency_name=\"جنيهاً\", sub_currency=\"قرشاً\"):\n    try:\n        number = float(number)\n        pounds = int(number)\n        piastres = int(round((number - pounds) * 100))\n        parts = []\n        if pounds > 0:\n            words_pounds = num2words.num2words(pounds, lang=\"ar\")\n            parts.append(f\"{words_pounds} {currency_name}\")\n        if piastres > 0:",
+        "detail": "utils.number_to_arabic_words",
+        "documentation": {}
+    },
+    {
+        "label": "A4InvoiceGenerator",
+        "kind": 6,
+        "importPath": "utils.print_A4",
+        "description": "utils.print_A4",
+        "peekOfCode": "class A4InvoiceGenerator:\n    def __init__(self, sale_data, products_data):\n        self.sale = sale_data\n        self.products = products_data\n        self.settings = SettingsModel()\n        # ===== Enhanced Styles =====\n        self.shop_title_style = ParagraphStyle(\n            name=\"shop_title\",\n            fontName=\"ArabicBold\",\n            fontSize=28,",
+        "detail": "utils.print_A4",
+        "documentation": {}
+    },
+    {
+        "label": "A4Printer",
+        "kind": 6,
+        "importPath": "utils.print_A4",
+        "description": "utils.print_A4",
+        "peekOfCode": "class A4Printer:\n    def print(self, sale, products):\n        try:\n            with tempfile.NamedTemporaryFile(delete=False, suffix=\".pdf\") as f:\n                path = f.name\n            invoice_generator = A4InvoiceGenerator(sale, products)\n            invoice_generator.generate(path)\n            printer_name = invoice_generator.settings.get_setting(\"printer_name\")\n            sumatra_path = \"Dealzora_printer.exe\"\n            if not os.path.exists(sumatra_path):",
+        "detail": "utils.print_A4",
+        "documentation": {}
+    },
+    {
+        "label": "print_A4",
+        "kind": 2,
+        "importPath": "utils.print_A4",
+        "description": "utils.print_A4",
+        "peekOfCode": "def print_A4(sale_data, products_data):\n    def run():\n        try:\n            A4Printer().print(sale_data, products_data)\n            return True\n        except:\n            return False\n    threading.Thread(target=run, daemon=True).start()",
+        "detail": "utils.print_A4",
+        "documentation": {}
+    },
+    {
+        "label": "FONT_BOLD",
+        "kind": 5,
+        "importPath": "utils.print_A4",
+        "description": "utils.print_A4",
+        "peekOfCode": "FONT_BOLD = \"assets/fonts/Amiri-Bold.ttf\"\nFONT_REG = \"assets/fonts/Amiri-Regular.ttf\"\npdfmetrics.registerFont(TTFont(\"ArabicBold\", FONT_BOLD))\npdfmetrics.registerFont(TTFont(\"Arabic\", FONT_REG))\nclass A4InvoiceGenerator:\n    def __init__(self, sale_data, products_data):\n        self.sale = sale_data\n        self.products = products_data\n        self.settings = SettingsModel()\n        # ===== Enhanced Styles =====",
+        "detail": "utils.print_A4",
+        "documentation": {}
+    },
+    {
+        "label": "FONT_REG",
+        "kind": 5,
+        "importPath": "utils.print_A4",
+        "description": "utils.print_A4",
+        "peekOfCode": "FONT_REG = \"assets/fonts/Amiri-Regular.ttf\"\npdfmetrics.registerFont(TTFont(\"ArabicBold\", FONT_BOLD))\npdfmetrics.registerFont(TTFont(\"Arabic\", FONT_REG))\nclass A4InvoiceGenerator:\n    def __init__(self, sale_data, products_data):\n        self.sale = sale_data\n        self.products = products_data\n        self.settings = SettingsModel()\n        # ===== Enhanced Styles =====\n        self.shop_title_style = ParagraphStyle(",
+        "detail": "utils.print_A4",
+        "documentation": {}
+    },
+    {
+        "label": "print_barcode_to_printer",
+        "kind": 2,
+        "importPath": "utils.print_barcode_to_printer",
+        "description": "utils.print_barcode_to_printer",
+        "peekOfCode": "def print_barcode_to_printer(img):\n    \"\"\"\n    يطبع الصورة على الطابعة المحددة في الإعدادات\n    \"\"\"\n    settings = SettingsModel()\n    printer_name = settings.get_setting(\"printer_name\")\n    if not printer_name:\n        messagebox.showerror(\"خطأ\", \"لم يتم تحديد طابعة\")\n        return\n    try:",
+        "detail": "utils.print_barcode_to_printer",
+        "documentation": {}
+    },
+    {
+        "label": "draw_ar",
+        "kind": 2,
+        "importPath": "utils.print_thermal",
+        "description": "utils.print_thermal",
+        "peekOfCode": "def draw_ar(draw, x, y, text, font, align=\"center\", fill=\"black\"):\n    text = ar(str(text))\n    bbox = draw.textbbox((0, 0), text, font=font)\n    w = bbox[2] - bbox[0]\n    h = bbox[3] - bbox[1]\n    if align == \"right\":\n        x = x - w - 5\n    elif align == \"center\":\n        x = x - w / 2\n    draw.text((x, y - h / 2), text, font=font, fill=fill)",
+        "detail": "utils.print_thermal",
+        "documentation": {}
+    },
+    {
+        "label": "draw_cell",
+        "kind": 2,
+        "importPath": "utils.print_thermal",
+        "description": "utils.print_thermal",
+        "peekOfCode": "def draw_cell(draw, x, y, w, h, text, font, align=\"center\", fill=None):\n    if fill:\n        draw.rectangle((x, y, x + w, y + h), fill=fill)\n    draw.rectangle((x, y, x + w, y + h), outline=\"black\", width=1)\n    # دعم النصوص الطويلة (wrap)\n    lines = []\n    words = text.split(\" \")\n    current_line = \"\"\n    for word in words:\n        test_line = current_line + (\" \" if current_line else \"\") + word",
+        "detail": "utils.print_thermal",
+        "documentation": {}
+    },
+    {
+        "label": "generate_invoice",
+        "kind": 2,
+        "importPath": "utils.print_thermal",
+        "description": "utils.print_thermal",
+        "peekOfCode": "def generate_invoice(sale_data, products_data, width=580):\n    settings = SettingsModel()\n    shop = settings.get_setting(\"shop_name\") or \"متجرنا\"\n    phone = settings.get_setting(\"shop_phone\") or \"\"\n    address = settings.get_setting(\"shop_address\") or \"\"\n    currency = settings.get_setting(\"currency_name\")\n    sub_currency = settings.get_setting(\"sub_currency_name\")\n    # Fonts\n    f_shop = ImageFont.truetype(FONT_BOLD, 30)\n    f_title = ImageFont.truetype(FONT_BOLD, 20)",
+        "detail": "utils.print_thermal",
+        "documentation": {}
+    },
+    {
+        "label": "print_image_to_printer",
+        "kind": 2,
+        "importPath": "utils.print_thermal",
+        "description": "utils.print_thermal",
+        "peekOfCode": "def print_image_to_printer(img, printer_name):\n    hprinter = win32print.OpenPrinter(printer_name)\n    hdc = win32ui.CreateDC()\n    hdc.CreatePrinterDC(printer_name)\n    hdc.StartDoc(\"Thermal Invoice\")\n    hdc.StartPage()\n    if img.mode != \"1\":\n        img = img.convert(\"1\")\n    dib = ImageWin.Dib(img)\n    dib.draw(hdc.GetHandleOutput(), (0, 0, img.width, img.height))",
+        "detail": "utils.print_thermal",
+        "documentation": {}
+    },
+    {
+        "label": "print_shop_invoice",
+        "kind": 2,
+        "importPath": "utils.print_thermal",
+        "description": "utils.print_thermal",
+        "peekOfCode": "def print_shop_invoice(sale_data, products_data):\n    settings = SettingsModel()\n    printer_name = settings.get_setting(\"printer_name\")\n    try:\n        img = generate_invoice(sale_data, products_data)\n        print_image_to_printer(img, printer_name)\n        return True\n    except Exception as e:\n        showerror(\"خطأ في الطباعة\", str(e))\n        return False",
+        "detail": "utils.print_thermal",
+        "documentation": {}
+    },
+    {
+        "label": "FONT_BOLD",
+        "kind": 5,
+        "importPath": "utils.print_thermal",
+        "description": "utils.print_thermal",
+        "peekOfCode": "FONT_BOLD = \"assets/fonts/NotoNaskhArabic-Bold.ttf\"\n# ================= RTL TEXT =================\ndef draw_ar(draw, x, y, text, font, align=\"center\", fill=\"black\"):\n    text = ar(str(text))\n    bbox = draw.textbbox((0, 0), text, font=font)\n    w = bbox[2] - bbox[0]\n    h = bbox[3] - bbox[1]\n    if align == \"right\":\n        x = x - w - 5\n    elif align == \"center\":",
+        "detail": "utils.print_thermal",
+        "documentation": {}
+    },
+    {
+        "label": "init_trial",
+        "kind": 2,
+        "importPath": "utils.trial",
+        "description": "utils.trial",
+        "peekOfCode": "def init_trial():\n    if TRIAL_FILE.exists():\n        return\n    machine_guid = get_machine_guid()\n    if machine_guid is None:\n        import socket\n        machine_guid = socket.gethostname()\n    data = {\"start\": datetime.now().isoformat(), \"guid\": _hash(machine_guid)}\n    TRIAL_FILE.write_text(json.dumps(data))\ndef get_remaining_days():",
+        "detail": "utils.trial",
+        "documentation": {}
+    },
+    {
+        "label": "get_remaining_days",
+        "kind": 2,
+        "importPath": "utils.trial",
+        "description": "utils.trial",
+        "peekOfCode": "def get_remaining_days():\n    if not TRIAL_FILE.exists():\n        return 0\n    try:\n        data = json.loads(TRIAL_FILE.read_text())\n        machine_guid = get_machine_guid()\n        if machine_guid is None:\n            import socket\n            machine_guid = socket.gethostname()\n        if _hash(machine_guid) != data[\"guid\"]:",
+        "detail": "utils.trial",
+        "documentation": {}
+    },
+    {
+        "label": "is_trial_valid",
+        "kind": 2,
+        "importPath": "utils.trial",
+        "description": "utils.trial",
+        "peekOfCode": "def is_trial_valid():\n    return get_remaining_days() > 0",
+        "detail": "utils.trial",
+        "documentation": {}
+    },
+    {
+        "label": "TRIAL_FILE",
+        "kind": 5,
+        "importPath": "utils.trial",
+        "description": "utils.trial",
+        "peekOfCode": "TRIAL_FILE = Path.home() / \".dealzora_trial\"\nTRIAL_DAYS = 7\nSECRET = \"trial-mostafa-dealzora\"\ndef _hash(data: str) -> str:\n    return hashlib.sha256((data + SECRET).encode()).hexdigest()\ndef init_trial():\n    if TRIAL_FILE.exists():\n        return\n    machine_guid = get_machine_guid()\n    if machine_guid is None:",
+        "detail": "utils.trial",
+        "documentation": {}
+    },
+    {
+        "label": "TRIAL_DAYS",
+        "kind": 5,
+        "importPath": "utils.trial",
+        "description": "utils.trial",
+        "peekOfCode": "TRIAL_DAYS = 7\nSECRET = \"trial-mostafa-dealzora\"\ndef _hash(data: str) -> str:\n    return hashlib.sha256((data + SECRET).encode()).hexdigest()\ndef init_trial():\n    if TRIAL_FILE.exists():\n        return\n    machine_guid = get_machine_guid()\n    if machine_guid is None:\n        import socket",
+        "detail": "utils.trial",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET",
+        "kind": 5,
+        "importPath": "utils.trial",
+        "description": "utils.trial",
+        "peekOfCode": "SECRET = \"trial-mostafa-dealzora\"\ndef _hash(data: str) -> str:\n    return hashlib.sha256((data + SECRET).encode()).hexdigest()\ndef init_trial():\n    if TRIAL_FILE.exists():\n        return\n    machine_guid = get_machine_guid()\n    if machine_guid is None:\n        import socket\n        machine_guid = socket.gethostname()",
+        "detail": "utils.trial",
+        "documentation": {}
+    },
+    {
+        "label": "check_for_update",
+        "kind": 2,
+        "importPath": "utils.update_checker",
+        "description": "utils.update_checker",
+        "peekOfCode": "def check_for_update():\n    try:\n        url = f\"https://api.github.com/repos/{OWNER}/{REPO}/contents/{FILE_PATH}\"\n        token = os.getenv(\"GITHUB_TOKEN\")\n        headers = {\n            \"Accept\": \"application/vnd.github.v3+json\",\n            \"User-Agent\": \"Dealzora-App\"\n        }\n        # ضيف التوكن لو موجود\n        if token:",
+        "detail": "utils.update_checker",
+        "documentation": {}
+    },
+    {
+        "label": "OWNER",
+        "kind": 5,
+        "importPath": "utils.update_checker",
+        "description": "utils.update_checker",
+        "peekOfCode": "OWNER = \"mostafaelfawal\"\nREPO = \"Dealzora_desktop\"\nFILE_PATH = \"version.json\"\nAPP_VERSION = \"1.4.5\"\ndef check_for_update():\n    try:\n        url = f\"https://api.github.com/repos/{OWNER}/{REPO}/contents/{FILE_PATH}\"\n        token = os.getenv(\"GITHUB_TOKEN\")\n        headers = {\n            \"Accept\": \"application/vnd.github.v3+json\",",
+        "detail": "utils.update_checker",
+        "documentation": {}
+    },
+    {
+        "label": "REPO",
+        "kind": 5,
+        "importPath": "utils.update_checker",
+        "description": "utils.update_checker",
+        "peekOfCode": "REPO = \"Dealzora_desktop\"\nFILE_PATH = \"version.json\"\nAPP_VERSION = \"1.4.5\"\ndef check_for_update():\n    try:\n        url = f\"https://api.github.com/repos/{OWNER}/{REPO}/contents/{FILE_PATH}\"\n        token = os.getenv(\"GITHUB_TOKEN\")\n        headers = {\n            \"Accept\": \"application/vnd.github.v3+json\",\n            \"User-Agent\": \"Dealzora-App\"",
+        "detail": "utils.update_checker",
+        "documentation": {}
+    },
+    {
+        "label": "FILE_PATH",
+        "kind": 5,
+        "importPath": "utils.update_checker",
+        "description": "utils.update_checker",
+        "peekOfCode": "FILE_PATH = \"version.json\"\nAPP_VERSION = \"1.4.5\"\ndef check_for_update():\n    try:\n        url = f\"https://api.github.com/repos/{OWNER}/{REPO}/contents/{FILE_PATH}\"\n        token = os.getenv(\"GITHUB_TOKEN\")\n        headers = {\n            \"Accept\": \"application/vnd.github.v3+json\",\n            \"User-Agent\": \"Dealzora-App\"\n        }",
+        "detail": "utils.update_checker",
+        "documentation": {}
+    },
+    {
+        "label": "APP_VERSION",
+        "kind": 5,
+        "importPath": "utils.update_checker",
+        "description": "utils.update_checker",
+        "peekOfCode": "APP_VERSION = \"1.4.5\"\ndef check_for_update():\n    try:\n        url = f\"https://api.github.com/repos/{OWNER}/{REPO}/contents/{FILE_PATH}\"\n        token = os.getenv(\"GITHUB_TOKEN\")\n        headers = {\n            \"Accept\": \"application/vnd.github.v3+json\",\n            \"User-Agent\": \"Dealzora-App\"\n        }\n        # ضيف التوكن لو موجود",
+        "detail": "utils.update_checker",
+        "documentation": {}
+    },
+    {
+        "label": "Layout",
+        "kind": 6,
+        "importPath": "layout",
+        "description": "layout",
+        "peekOfCode": "class Layout:\n    def __init__(\n        self,\n        root,\n        customers_db,\n        products_db,\n        user_id,\n        users_db,\n        sale_itmes_db,\n        sales_db,",
+        "detail": "layout",
+        "documentation": {}
+    },
+    {
+        "label": "generate_license",
+        "kind": 2,
+        "importPath": "license_generator",
+        "description": "license_generator",
+        "peekOfCode": "def generate_license(machine_id: str) -> str:\n    raw = f\"{machine_id}-{SECRET_KEY}\"\n    return hashlib.sha256(raw.encode()).hexdigest()\ndef on_generate():\n    machine_id = entry_machine.get().strip()\n    if not machine_id:\n        result_label.configure(text=\"دخل كود الجهاز الأول\", text_color=\"red\")\n        return\n    license_key = generate_license(machine_id)\n    result_label.configure(",
+        "detail": "license_generator",
+        "documentation": {}
+    },
+    {
+        "label": "on_generate",
+        "kind": 2,
+        "importPath": "license_generator",
+        "description": "license_generator",
+        "peekOfCode": "def on_generate():\n    machine_id = entry_machine.get().strip()\n    if not machine_id:\n        result_label.configure(text=\"دخل كود الجهاز الأول\", text_color=\"red\")\n        return\n    license_key = generate_license(machine_id)\n    result_label.configure(\n        text=f\"كود التفعيل:\\n{license_key}\",\n        text_color=\"green\"\n    )",
+        "detail": "license_generator",
+        "documentation": {}
+    },
+    {
+        "label": "SECRET_KEY",
+        "kind": 5,
+        "importPath": "license_generator",
+        "description": "license_generator",
+        "peekOfCode": "SECRET_KEY = \"mostafa-hamdi-dealzora\"\ndef generate_license(machine_id: str) -> str:\n    raw = f\"{machine_id}-{SECRET_KEY}\"\n    return hashlib.sha256(raw.encode()).hexdigest()\ndef on_generate():\n    machine_id = entry_machine.get().strip()\n    if not machine_id:\n        result_label.configure(text=\"دخل كود الجهاز الأول\", text_color=\"red\")\n        return\n    license_key = generate_license(machine_id)",
+        "detail": "license_generator",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "license_generator",
+        "description": "license_generator",
+        "peekOfCode": "app = ctk.CTk()\napp.title(\"License Generator - Dealzora\")\napp.geometry(\"500x300\")\nctk.CTkLabel(\n    app,\n    text=\"ادخل كود الجهاز\",\n    font=(\"Cairo\", 16)\n).pack(pady=15)\nentry_machine = ctk.CTkEntry(app, width=400)\nentry_machine.pack(pady=10)",
+        "detail": "license_generator",
+        "documentation": {}
+    },
+    {
+        "label": "entry_machine",
+        "kind": 5,
+        "importPath": "license_generator",
+        "description": "license_generator",
+        "peekOfCode": "entry_machine = ctk.CTkEntry(app, width=400)\nentry_machine.pack(pady=10)\nctk.CTkButton(\n    app,\n    text=\"توليد كود التفعيل\",\n    command=on_generate,\n    font=(\"Cairo\", 16)\n).pack(pady=15)\nresult_label = ctk.CTkLabel(app, text=\"\", wraplength=450, font=(\"Cairo\", 18))\nresult_label.pack(pady=10)",
+        "detail": "license_generator",
+        "documentation": {}
+    },
+    {
+        "label": "result_label",
+        "kind": 5,
+        "importPath": "license_generator",
+        "description": "license_generator",
+        "peekOfCode": "result_label = ctk.CTkLabel(app, text=\"\", wraplength=450, font=(\"Cairo\", 18))\nresult_label.pack(pady=10)\nctk.CTkLabel(\n    app,\n    text=\"(تم نسخ كود التفعيل تلقائيًا)\",\n    font=(\"Cairo\", 12),\n    text_color=\"gray\"\n).pack(pady=5)\napp.mainloop()",
+        "detail": "license_generator",
+        "documentation": {}
+    },
+    {
+        "label": "Dealzora",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class Dealzora:\n    def __init__(self, root):\n        self.root = root\n        self.init_window()\n        self.init_db()\n        init_trial()\n        self.start_app()\n        # SplashScreen(self.root, self.start_app)\n    def start_app(self):\n        from ui.Auth import Auth",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "check_sha256",
+        "kind": 2,
+        "importPath": "updater",
+        "description": "updater",
+        "peekOfCode": "def check_sha256(file_path, expected_hash):\n    \"\"\"تحقق من سلامة الملف باستخدام SHA256\"\"\"\n    sha256 = hashlib.sha256()\n    with open(file_path, \"rb\") as f:\n        for chunk in iter(lambda: f.read(8192), b\"\"):\n            sha256.update(chunk)\n    return sha256.hexdigest() == expected_hash\ndef force_close_process(process_name):\n    \"\"\"إغلاق العملية بالقوة إذا كانت تعمل\"\"\"\n    for proc in psutil.process_iter([\"pid\", \"name\", \"exe\"]):",
+        "detail": "updater",
+        "documentation": {}
+    },
+    {
+        "label": "force_close_process",
+        "kind": 2,
+        "importPath": "updater",
+        "description": "updater",
+        "peekOfCode": "def force_close_process(process_name):\n    \"\"\"إغلاق العملية بالقوة إذا كانت تعمل\"\"\"\n    for proc in psutil.process_iter([\"pid\", \"name\", \"exe\"]):\n        try:\n            if proc.info[\"name\"] == process_name or (\n                proc.info[\"exe\"] and process_name in proc.info[\"exe\"]\n            ):\n                proc.kill()\n                time.sleep(0.5)\n        except (psutil.NoSuchProcess, psutil.AccessDenied):",
+        "detail": "updater",
+        "documentation": {}
+    },
+    {
+        "label": "wait_for_close",
+        "kind": 2,
+        "importPath": "updater",
+        "description": "updater",
+        "peekOfCode": "def wait_for_close(exe_path, timeout=15):\n    \"\"\"انتظر حتى يغلق البرنامج القديم قبل الاستبدال\"\"\"\n    for _ in range(timeout * 2):\n        try:\n            running = False\n            for proc in psutil.process_iter([\"exe\", \"name\"]):\n                try:\n                    if proc.info[\"exe\"] and proc.info[\"exe\"] == exe_path:\n                        running = True\n                        break",
+        "detail": "updater",
+        "documentation": {}
+    },
+    {
+        "label": "root",
+        "kind": 5,
+        "importPath": "updater",
+        "description": "updater",
+        "peekOfCode": "root = Tk()\nroot.withdraw()  # اخفي نافذة الـ Tkinter الرئيسية\n# تحديد المسار الصحيح\nif getattr(sys, \"frozen\", False):\n    app_dir = os.path.dirname(sys.executable)\nelse:\n    app_dir = os.path.dirname(os.path.abspath(__file__))\nold_exe = os.path.join(app_dir, \"Dealzora.exe\")\nnew_exe = os.path.join(app_dir, \"Dealzora_new.exe\")  # الملف الذي تم تحميله\nprint(f\"App directory: {app_dir}\")",
+        "detail": "updater",
+        "documentation": {}
+    },
+    {
+        "label": "old_exe",
+        "kind": 5,
+        "importPath": "updater",
+        "description": "updater",
+        "peekOfCode": "old_exe = os.path.join(app_dir, \"Dealzora.exe\")\nnew_exe = os.path.join(app_dir, \"Dealzora_new.exe\")  # الملف الذي تم تحميله\nprint(f\"App directory: {app_dir}\")\nprint(f\"Old exe: {old_exe}\")\nprint(f\"New exe: {new_exe}\")\n# تحقق من وجود الملف الجديد\nif not os.path.exists(new_exe):\n    messagebox.showerror(\"تحديث فشل\", \"ملف التحديث غير موجود! التحديث فشل.\")\n    sys.exit(1)\n# توليد hash تلقائي من الملف الجديد",
+        "detail": "updater",
+        "documentation": {}
+    },
+    {
+        "label": "new_exe",
+        "kind": 5,
+        "importPath": "updater",
+        "description": "updater",
+        "peekOfCode": "new_exe = os.path.join(app_dir, \"Dealzora_new.exe\")  # الملف الذي تم تحميله\nprint(f\"App directory: {app_dir}\")\nprint(f\"Old exe: {old_exe}\")\nprint(f\"New exe: {new_exe}\")\n# تحقق من وجود الملف الجديد\nif not os.path.exists(new_exe):\n    messagebox.showerror(\"تحديث فشل\", \"ملف التحديث غير موجود! التحديث فشل.\")\n    sys.exit(1)\n# توليد hash تلقائي من الملف الجديد\nwith open(new_exe, \"rb\") as f:",
+        "detail": "updater",
+        "documentation": {}
+    }
+]

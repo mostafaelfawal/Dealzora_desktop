@@ -71,7 +71,7 @@ class Products:
         self.products = self.get_all_products()
         if hasattr(self, "tree"):
             self.refresh_table()
-        self.refresh_categories()
+        self.refresh_categorys()
 
     def validate_numbers(self, *vals):
         return all(is_number(v) for v in vals)
@@ -253,7 +253,7 @@ class Products:
             messagebox.showerror("خطأ", str(e))
             return []
 
-    def refresh_categories(self):
+    def refresh_categorys(self):
         raw = self.get_all_categorys()
         self.categorys.clear()
         self.category_map = {"الكل": "all"}

@@ -50,10 +50,10 @@ class ProductsModel:
         self.con.commit()
 
     def finalize_changes(self):
-        self.clean_empty_categories()
+        self.clean_empty_categorys()
         self.con.commit()
 
-    def clean_empty_categories(self):
+    def clean_empty_categorys(self):
         self.cur.execute(
             """
             DELETE FROM category
@@ -89,6 +89,31 @@ class ProductsModel:
             "SELECT * FROM products WHERE name LIKE ?",
             (f"%{keyword}%",),
         )
+        return self.cur.fetchall()
+    
+    def search_products_advanced(self, keyword="", category_id=None):
+        keyword = keyword.strip()
+
+        query = """
+            SELECT *
+            FROM products
+            WHERE 1=1
+        """
+        params = []
+
+        # فلترة بالفئة
+        if category_id and category_id != "all":
+            query += " AND category_id = ?"
+            params.append(category_id)
+
+        # فلترة بالكلمة
+        if keyword:
+            query += " AND (barcode LIKE ? OR name LIKE ?)"
+            params.extend([f"{keyword}%", f"%{keyword}%"])
+
+        query += " ORDER BY id DESC"
+
+        self.cur.execute(query, params)
         return self.cur.fetchall()
 
     def product_exists(self, p_name):

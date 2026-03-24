@@ -168,6 +168,28 @@ class Settings:
             corner_radius=8,
         )
         printer_type_menu.pack(fill="x", pady=(0, 15))
+        
+        # حجم ورق الطباعه
+        CTkLabel(
+            container,
+            text=":حجم ورق الطباعة",
+            font=("Cairo", 18),
+            anchor="e",
+        ).pack(anchor="e", pady=(0, 5))
+
+        paper_size_var = StringVar(value=self.settings.get("paper_size", "58"))
+        self.vars["paper_size"] = paper_size_var
+
+        paper_size_menu = CTkOptionMenu(
+            container,
+            values=["58", "80"],
+            variable=paper_size_var,
+            font=("Cairo", 16),
+            height=45,
+            corner_radius=8,
+            dropdown_font=("Cairo", 14),
+        )
+        paper_size_menu.pack(fill="x", pady=(0, 15))
 
         # ===== عدد الفواتير =====
         CTkLabel(
@@ -191,18 +213,26 @@ class Settings:
         )
         copies_entry.pack(fill="x")
 
+        # ===== اسم العملة + العملة الصغرى =====
         CTkLabel(
             container,
-            text=":اسم العملة (للطباعة على الفاتورة)",
+            text=":اسم العملة والقروش",
             font=("Cairo", 18),
             anchor="e",
         ).pack(anchor="e", pady=(0, 5))
 
-        currency_name_var = StringVar(value=self.settings.get("currency_name", "جنيهاً"))
-        self.vars["currency_name"] = currency_name_var
+        row = CTkFrame(container, fg_color="transparent")
+        row.pack(fill="x", pady=(0, 10))
 
-        currency_name_entry = CTkEntry(
-            container,
+        currency_name_var = StringVar(value=self.settings.get("currency_name", "جنيهاً"))
+        sub_currency_var = StringVar(value=self.settings.get("sub_currency_name", "قرشاً"))
+
+        self.vars["currency_name"] = currency_name_var
+        self.vars["sub_currency_name"] = sub_currency_var
+
+        # ===== العملة الأساسية =====
+        currency_entry = CTkEntry(
+            row,
             textvariable=currency_name_var,
             justify="center",
             font=("Cairo", 16),
@@ -210,8 +240,19 @@ class Settings:
             corner_radius=8,
             border_width=2,
         )
-        currency_name_entry.pack(fill="x")
-        self.vars["currency_name"] = currency_name_var
+        currency_entry.pack(side="right", fill="x", expand=True, padx=(5, 5))
+
+        # ===== العملة الصغرى =====
+        sub_currency_entry = CTkEntry(
+            row,
+            textvariable=sub_currency_var,
+            justify="center",
+            font=("Cairo", 16),
+            height=45,
+            corner_radius=8,
+            border_width=2,
+        )
+        sub_currency_entry.pack(side="left", fill="x", expand=True, padx=(5, 5))
 
         # ===== الطباعة التلقائية =====
         auto_print_var = BooleanVar(value=self.settings.get("auto_print", True))
@@ -571,20 +612,22 @@ class Settings:
                 return messagebox.showerror("خطأ", "ادخل عملة ثلاثية مثلا (ج.م)")
 
             self.settings_db.update_settings(
-                self.vars["shop_name"].get(),
-                currency,
-                tax,
-                theme,
-                self.upload_logo.get_image(),
-                self.vars["printer_name"].get(),
-                copies,
-                self.vars["auto_print"].get(),
-                self.vars["auto_backup"].get(),
-                self.vars["backup_path"].get(),
-                self.vars["printer_type"].get(),
-                self.vars["shop_phone"].get(),
-                self.vars["shop_address"].get(),
-                self.vars["currency_name"].get()
+                shop_name=self.vars["shop_name"].get(),
+                currency=currency,
+                tax=tax,
+                theme=theme,
+                logo_path=self.upload_logo.get_image(),
+                printer_name=self.vars["printer_name"].get(),
+                invoices_per_print=copies,
+                auto_print=self.vars["auto_print"].get(),
+                auto_backup=self.vars["auto_backup"].get(),
+                backup_path=self.vars["backup_path"].get(),
+                printer_type=self.vars["printer_type"].get(),
+                paper_size=self.vars["paper_size"].get(),
+                shop_phone=self.vars["shop_phone"].get(),
+                shop_address=self.vars["shop_address"].get(),
+                currency_name=self.vars["currency_name"].get(),
+                sub_currency_name=self.vars["sub_currency_name"].get(),
             )
 
             # ======= تطبيق الـ Theme فوراً =======

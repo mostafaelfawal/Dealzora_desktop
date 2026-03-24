@@ -3,17 +3,18 @@ from customtkinter import (
     CTkLabel,
     CTkButton,
     CTkScrollableFrame,
-    StringVar,
     set_appearance_mode,
 )
 from tkinter.messagebox import askokcancel
+from ui.Sales.SaleState import SaleState
+from ui.Sales.services.DataService import DataService
 from utils.image import image
 from utils.clear import clear
 from utils.trial import get_remaining_days
 from utils.license import is_license_valid
 
 # import UIs
-from ui.Sale import Sale
+from ui.Sales.sale_screen import Sale
 from ui.Products import Products
 from ui.Users import UsersManagement
 from ui.Stock import Stock
@@ -54,27 +55,32 @@ class Layout:
         self.con = con
         self.cur = cur
 
-        self.sidebar_collapsed = False  # 👈 حالة الـ sidebar
+        tax_rate = self.settings.get_setting("tax")
+        
+        self.data_service = DataService(
+            self.products_db,
+            self.customers_db,
+            self.stock_movements_db,
+            self.sales_db,
+            self.sale_itmes_db,
+            self.settings
+        )
+        
+        self.sale_state = SaleState(tax_rate, self.data_service)
+
+        self.sidebar_collapsed = False
 
         theme = self.settings.get_setting("theme")
         set_appearance_mode(theme)
         self.root.title("Dealzora | Basic")
 
         clear(self.root)
-        self.init_sale_vars()
         self.init_side_bar()
 
         self.main_frame = CTkFrame(self.root, fg_color="transparent")
         self.main_frame.pack(expand=True, fill="both")
 
         self.init_ui()
-
-    def init_sale_vars(self):
-        self.selected_products = []
-        self.customer_var = StringVar(value="نقدي")
-        self.customer_id = None
-        self.discount_type = "amount"
-        self.discount_value = 0.0
 
     def init_ui(self):
         CTkLabel(
@@ -93,7 +99,7 @@ class Layout:
         ).pack()
 
         CTkLabel(
-            self.main_frame, text="Powered by Mostafa hamdi", font=("Cairo", 15)
+            self.main_frame, text="Powered by Softvanta", font=("Cairo", 15)
         ).pack(side="bottom")
 
         CTkLabel(self.main_frame, text="v1.4.5", font=("Cairo", 15)).pack(
@@ -113,7 +119,7 @@ class Layout:
                 "text": "الموردين",
                 "icon": "assets/suppliers.png",
                 "screen": "suppliers",
-            },  # 👈 جديد
+            },
             {"text": "الأعدادات", "icon": "assets/settings.png", "screen": "settings"},
         ]
 
@@ -129,7 +135,7 @@ class Layout:
             command=self.toggle_sidebar,
         ).pack(fill="x", pady=5)
 
-        # Scrollable Frame 👇
+        # Scrollable Frame
         self.scroll_frame = CTkScrollableFrame(self.side_bar)
         self.scroll_frame.pack(fill="both", expand=True)
 
@@ -225,7 +231,7 @@ class Layout:
             "invoices": "invoices_management",
             "settings": "settings_edit",
             "users": "users_management",
-            "suppliers": "suppliers_management",  # 👈 جديد
+            "suppliers": "suppliers_management",
         }
 
         if not self.users_db.check_permission(self.uid, roles.get(screen_type, "all")):
@@ -233,23 +239,7 @@ class Layout:
             return
 
         if screen_type == "sale":
-            Sale(
-                self.main_frame,
-                self.products_db,
-                self.customers_db,
-                self.sales_db,
-                self.sale_itmes_db,
-                self.stock_movements_db,
-                self.settings,
-                self.selected_products,
-                self.customer_var,
-                self.customer_id,
-                self.discount_type,
-                self.discount_value,
-                self.con,
-                self.uid,
-                self.users_db,
-            )
+            Sale(self.main_frame, self.settings, self.sale_state, self.data_service)
 
         elif screen_type == "products":
             Products(self.main_frame, self.products_db, self.suppliers_db)
@@ -283,6 +273,7 @@ class Layout:
                 self.customers_db,
                 self.products_db,
                 self.stock_movements_db,
+                self.settings,
             )
 
         elif screen_type == "suppliers":

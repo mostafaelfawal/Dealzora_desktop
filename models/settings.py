@@ -6,11 +6,10 @@ class SettingsModel:
     def __init__(self, path="settings.json"):
         self.path = path
 
-        # القيم الافتراضية
         self.defaults = {
             "shop_name": "DEALZORA",
             "currency": "ج.م",
-            "tax": 0,
+            "tax": 0.0,
             "theme": "dark",
             "logo_path": "assets/icon.png",
             "printer_name": "",
@@ -19,118 +18,76 @@ class SettingsModel:
             "auto_backup": False,
             "backup_path": "backup",
             "printer_type": "حرارية",
+            "paper_size": "58",
             "shop_phone": "",
             "shop_address": "",
-            "currency_name": "جنيهاً"
+            "currency_name": "جنيهاً",
+            "sub_currency_name": "قرشاً",
         }
 
-        # لو الملف مش موجود
+        # validators لكل مفتاح
+        self.validators = {
+            "tax": lambda v: float(v) if self._is_number(v) else 0.0,
+            "invoices_per_print": lambda v: int(v) if self._is_number(v) else 1,
+            "auto_print": bool,
+            "auto_backup": bool,
+            "theme": lambda v: v if v in ["dark", "light", "system"] else "system",
+            "printer_type": lambda v: v if v in ["A4", "حرارية"] else "A4",
+        }
+
+        self._ensure_file()
+
+    # ================== Utils ==================
+    def _ensure_file(self):
         if not os.path.exists(self.path):
             self.save_settings(self.defaults)
 
-    # قراءة كل الإعدادات
+    def _is_number(self, value):
+        try:
+            float(value)
+            return True
+        except:
+            return False
+
+    # ================== Core ==================
     def get_settings(self):
         try:
             with open(self.path, "r", encoding="utf-8") as f:
                 data = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
-            data = self.defaults.copy()
-            self.save_settings(data)
+        except:
+            data = {}
 
-        # التأكد من وجود كل المفاتيح
-        for key, value in self.defaults.items():
-            if key not in data:
-                data[key] = value
+        # merge مع defaults
+        merged = {**self.defaults, **data}
+        return merged
 
-        return data
-
-    # قراءة قيمة واحدة
     def get_setting(self, key):
         if key not in self.defaults:
-            raise ValueError(
-                f"{key} معامل خاطئ يجب ان يكون احد هذه: {list(self.defaults.keys())}"
-            )
+            raise ValueError(f"{key} غير موجود في الإعدادات")
 
-        return self.get_settings().get(key, self.defaults[key])
+        return self.get_settings()[key]
 
-    # تحديث الإعدادات
-    def update_settings(
-        self,
-        shop_name=None,
-        currency=None,
-        tax=None,
-        theme=None,
-        logo_path=None,
-        printer_name=None,
-        copies=None,
-        auto_print=None,
-        auto_backup=None,
-        backup_path=None,
-        printer_type=None,
-        shop_phone=None,
-        shop_address=None,
-        currency_name=None
-
-    ):
+    # ================== Update ==================
+    def update_settings(self, **kwargs):
         data = self.get_settings()
 
-        if shop_name is not None:
-            data["shop_name"] = shop_name
+        for key, value in kwargs.items():
 
-        if currency is not None:
-            data["currency"] = currency
+            if key not in self.defaults:
+                continue  # تجاهل أي مفتاح غلط
 
-        if tax is not None:
-            try:
-                data["tax"] = float(tax)
-            except (ValueError, TypeError):
-                data["tax"] = 0
+            # apply validator لو موجود
+            if key in self.validators:
+                try:
+                    value = self.validators[key](value)
+                except:
+                    value = self.defaults[key]
 
-        if theme is not None:
-            if theme in ["dark", "light", "system"]:
-                data["theme"] = theme
-            else:
-                data["theme"] = "system"
+            data[key] = value
 
-        if logo_path is not None:
-            data["logo_path"] = logo_path
-
-        if printer_name is not None:
-            data["printer_name"] = printer_name
-
-        if copies is not None:
-            try:
-                data["invoices_per_print"] = int(copies)
-            except (ValueError, TypeError):
-                data["invoices_per_print"] = 1
-
-        if auto_print is not None:
-            data["auto_print"] = bool(auto_print)
-
-        if auto_backup is not None:
-            data["auto_backup"] = bool(auto_backup)
-
-        if backup_path is not None:
-            data["backup_path"] = backup_path
-            
-        if printer_type is not None:
-            if printer_type in ["A4", "حرارية"]:
-                data["printer_type"] = printer_type
-            else:
-                data["printer_type"] = "A4"
-
-        if shop_phone is not None:
-            data["shop_phone"] = shop_phone
-        
-        if shop_address is not None:
-            data["shop_address"] = shop_address
-        
-        if currency_name is not None:
-            data["currency_name"] = currency_name
-        
         self.save_settings(data)
 
-    # حفظ الملف
+    # ================== Save ==================
     def save_settings(self, data):
         with open(self.path, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)

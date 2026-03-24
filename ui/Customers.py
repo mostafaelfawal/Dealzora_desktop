@@ -288,15 +288,15 @@ class Customers:
     # ------------------------ Modals ------------------------
     def add_customer_modal(self):
         CustomerModal(
-            self.tree,
             self.add_customer,
+            self.tree,
             self.edit_customer,
         )
 
     def edit_customer_modal(self):
         CustomerModal(
-            self.tree,
             self.add_customer,
+            self.tree,
             self.edit_customer,
             "edit",
         )

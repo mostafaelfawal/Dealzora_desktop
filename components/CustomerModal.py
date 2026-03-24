@@ -8,7 +8,7 @@ from utils.is_number import is_number
 
 class CustomerModal:
     def __init__(
-        self, tree, add_customer, edit_customer=None, mode="add", refresh_results=None, customers_dialog=None
+        self, add_customer, tree=None, edit_customer=None, mode="add", refresh_results=None, customers_dialog=None
     ):
         self.tree = tree
         self.add_customer = add_customer
@@ -17,7 +17,7 @@ class CustomerModal:
         self.customers_dialog = customers_dialog
         selected_data = None
 
-        if mode == "edit":
+        if mode == "edit" and self.tree:
             selected = self.tree.tree.selection()
             if not selected:
                 return messagebox.showwarning("تنبيه", "اختر عميل")

@@ -689,12 +689,12 @@ class Reports:
         """
         )
 
-        categories = self.cur.fetchall()
+        categorys = self.cur.fetchall()
 
         self.category_plot.clear()
-        if categories:
-            names = [ar(row[0]) for row in categories if row[1] > 0]
-            counts = [row[1] for row in categories if row[1] > 0]
+        if categorys:
+            names = [ar(row[0]) for row in categorys if row[1] > 0]
+            counts = [row[1] for row in categorys if row[1] > 0]
 
             if names and counts:
                 colors = plt.cm.Set3(np.linspace(0, 1, len(names)))
