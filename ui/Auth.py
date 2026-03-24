@@ -214,7 +214,7 @@ class Auth:
 
     def help_click(self):
         """معالج المساعدة"""
-        help_text = """مرحباً بك في نظام Dealzora 1.4.5v
+        help_text = """مرحباً بك في نظام Dealzora 1.4.6v
 
 للاستفسار:
 armostafa982@gmail.com 
