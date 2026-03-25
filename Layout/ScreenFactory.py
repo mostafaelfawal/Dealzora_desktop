@@ -7,6 +7,7 @@ from ui.Customers import Customers
 from ui.Invoices import Invoices
 from ui.Settings import Settings
 from ui.Suppliers import Suppliers
+from ui.Expenses.Expenses import Expenses
 from Layout.data_structures import AppDependencies
 from ui.Sales.services.DataService import DataService
 from typing import Callable
@@ -79,6 +80,9 @@ class ScreenFactory:
             parent, self._deps.suppliers_db, self._deps.user_id, self._deps.users_db
         )
 
+    def _build_expenses(self, parent) -> None:
+        Expenses(parent, self._deps.expenses_db)
+    
     def _build_settings(self, parent) -> None:
         Settings(parent, self._deps.settings)
 
@@ -94,6 +98,7 @@ class ScreenFactory:
             "customers": ScreenFactory._build_customers,
             "invoices": ScreenFactory._build_invoices,
             "suppliers": ScreenFactory._build_suppliers,
+            "expenses": ScreenFactory._build_expenses,
             "settings": ScreenFactory._build_settings,
         }
 

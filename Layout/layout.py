@@ -42,6 +42,7 @@ class Layout:
         stock_movements_db,
         suppliers_db,
         settings,
+        expenses_db,
         con,
         cur,
     ) -> None:
@@ -56,6 +57,7 @@ class Layout:
             stock_movements_db=stock_movements_db,
             suppliers_db=suppliers_db,
             settings=settings,
+            expenses_db=expenses_db,
             con=con,
             cur=cur,
         )

@@ -24,6 +24,7 @@ class AppDependencies:
     stock_movements_db: object
     suppliers_db: object
     settings: object
+    expenses_db: object
     con: object
     cur: object
 

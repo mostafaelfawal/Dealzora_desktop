@@ -16,6 +16,7 @@ from models.sales import SalesModel
 from models.stock_movements import StockMovementsModel
 from models.supplier import SupplierModel
 from models.settings import SettingsModel
+from models.expenses import ExpensesModel
 
 
 class Dealzora:
@@ -73,6 +74,7 @@ class Dealzora:
         self.stock_movements_db = StockMovementsModel(self.cur, self.con)
         self.suppliers_db = SupplierModel(self.cur, self.con)
         self.settings = SettingsModel()
+        self.expenses_db = ExpensesModel(self.cur, self.con)
 
     def on_success(self, user_id):
         Layout(
@@ -86,6 +88,7 @@ class Dealzora:
             self.stock_movements_db,
             self.suppliers_db,
             self.settings,
+            self.expenses_db,
             self.con,
             self.cur,
         )
