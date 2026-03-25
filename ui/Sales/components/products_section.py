@@ -140,15 +140,16 @@ class ProductTable(CTkFrame):
             width=(20, 130, 80, 80, 200),
         )
 
-        self.refresh_table()
+        self.refresh_table(self.products)
         self.add_shortcuts()
 
     def load_products(self):
         products = self.data_service.get_products()
         return products
 
-    def refresh_table(self):
+    def refresh_table(self, products=None):
         tree = self.tree.tree
+        self.products = products if products else self.load_products()
         # تنظيف البيانات في الجدول
         tree.delete(*tree.get_children())
         # ملأ الجدول بالبيانات الجديدة
@@ -213,7 +214,7 @@ class ProductTable(CTkFrame):
 
     def update_products(self, products):
         self.products = products
-        self.refresh_table()
+        self.refresh_table(products)
 
 
 class ProductSection(CTkFrame):

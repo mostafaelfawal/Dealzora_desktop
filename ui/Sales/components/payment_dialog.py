@@ -17,6 +17,7 @@ from utils.image import image
 # Product Item Component with Observer
 # =============================
 
+
 class InvoiceItem(CTkFrame):
     def __init__(self, parent, product, sale_state, on_price_edit, data_service):
         super().__init__(
@@ -35,7 +36,7 @@ class InvoiceItem(CTkFrame):
         # تخزين مراجع للعناصر التي سيتم تحديثها
         self.price_label = None
         self.total_label = None
-        
+
         # تسجيل هذا العنصر كمراقب للتغييرات
         self.sale_state.add_observer(self)
 
@@ -44,19 +45,19 @@ class InvoiceItem(CTkFrame):
     def on_state_changed(self):
         """يتم استدعاؤها عند تغيير الحالة في SaleState"""
         self._update_display()
-    
+
     def _update_display(self):
         """تحديث عرض السعر والإجمالي"""
         if not self.winfo_exists():
             return
-            
+
         display_price = self.sale_state.get_product_display_price(self.product["id"])
         qty = self.product["qty"]
         total = display_price * qty
-        
+
         if self.price_label:
             self.price_label.configure(text=format_currency(display_price))
-        
+
         if self.total_label:
             self.total_label.configure(text=format_currency(total))
 
@@ -90,7 +91,7 @@ class InvoiceItem(CTkFrame):
             text_color=("green", "#00ff00"),
         )
         self.total_label.pack(side="right", padx=5, pady=2)
-        
+
         price_edit_permission = self.data_service.price_edit_permission
         if price_edit_permission:
             # زر التعديل
@@ -108,7 +109,7 @@ class InvoiceItem(CTkFrame):
 
     def _edit_price(self):
         self.on_price_edit(self.product)
-    
+
     def destroy(self):
         """إزالة المراقب عند تدمير العنصر"""
         try:
@@ -117,9 +118,11 @@ class InvoiceItem(CTkFrame):
             pass
         super().destroy()
 
+
 # =============================
 # Items List مع رؤوس الأعمدة
 # =============================
+
 
 class InvoiceItemsList(CTkScrollableFrame):
     def __init__(self, parent, sale_state, on_price_edit, data_service):
@@ -223,7 +226,9 @@ class InvoiceItemsList(CTkScrollableFrame):
 
         # عرض المنتجات
         for product in self.sale_state.selected_products:
-            item = InvoiceItem(self, product, self.sale_state, self.on_price_edit, self.data_service)
+            item = InvoiceItem(
+                self, product, self.sale_state, self.on_price_edit, self.data_service
+            )
             item.pack(fill="x", pady=1, padx=10)
             self.items[product["id"]] = item
 
@@ -376,7 +381,7 @@ class PaymentBox(CTkFrame):
         self.change_label = CTkLabel(self, font=("Cairo", 11, "bold"))
         self.change_label.pack(pady=2)
         self._update_change()
-        
+
         # أزرار
         button_frame = CTkFrame(self, fg_color="transparent")
         button_frame.pack(fill="x", padx=15, pady=4)
@@ -392,7 +397,7 @@ class PaymentBox(CTkFrame):
             corner_radius=8,
             fg_color=("blue", "#2c3e66"),
             hover_color=("darkblue", "#1e2b4f"),
-            command=self._print_invoice
+            command=self._print_invoice,
         )
         self.print_btn.grid(row=0, column=0, padx=2, pady=2, sticky="ew")
 
@@ -407,7 +412,7 @@ class PaymentBox(CTkFrame):
             command=self._confirm_payment,
         )
         self.confirm_btn.grid(row=0, column=1, padx=2, pady=2, sticky="ew")
-        
+
     def _print_invoice(self):
         amount_paid = self.paid_var.get()
         try:
@@ -418,7 +423,7 @@ class PaymentBox(CTkFrame):
     def _confirm_payment(self):
         amount_paid = self.paid_var.get()
         self.sale_state.complete_sale(amount_paid)
-        
+
         self.dialog.destroy()
         messagebox.showinfo(
             "تم البيع", "Dealzora تمت عملية البيع بنجاح! شكراً لاستخدامك"
@@ -465,6 +470,7 @@ class PaymentBox(CTkFrame):
 # =============================
 # Header
 # =============================
+
 
 class InvoiceHeader(CTkFrame):
     def __init__(self, parent, sale_state):
@@ -548,6 +554,7 @@ class InvoiceHeader(CTkFrame):
 # Main Invoice UI
 # =============================
 
+
 class InvoiceView(CTkToplevel):
     def __init__(self, parent, sale_state, on_finish_callback, data_service):
         super().__init__(parent)
@@ -573,7 +580,9 @@ class InvoiceView(CTkToplevel):
         self.header.pack(fill="x", pady=(0, 4))
 
         # Items List
-        self.items = InvoiceItemsList(main_frame, self.sale_state, self._on_price_edit, self.data_service)
+        self.items = InvoiceItemsList(
+            main_frame, self.sale_state, self._on_price_edit, self.data_service
+        )
         self.items.pack(fill="both", expand=True, pady=(0, 4))
 
         # Totals
@@ -581,9 +590,11 @@ class InvoiceView(CTkToplevel):
         self.totals.pack(fill="x", pady=(0, 4))
 
         # Payment
-        self.payment = PaymentBox(main_frame, self.sale_state, self, self.on_finish_callback)
+        self.payment = PaymentBox(
+            main_frame, self.sale_state, self, self.on_finish_callback
+        )
         self.payment.pack(fill="x")
-    
+
     def _on_price_edit(self, product):
         """فتح نافذة تعديل السعر"""
         edit_dialog = CTkToplevel(self)
@@ -597,22 +608,22 @@ class InvoiceView(CTkToplevel):
         CTkLabel(
             edit_dialog, text=f"تعديل سعر {product['name']}", font=("Cairo", 13, "bold")
         ).pack(pady=8)
-        
+
         # عرض السعر الأصلي
         CTkLabel(
-            edit_dialog, 
+            edit_dialog,
             text=f"السعر الأصلي: {format_currency(product['original_price'])}",
             font=("Cairo", 10),
-            text_color=("gray", "gray60")
+            text_color=("gray", "gray60"),
         ).pack(pady=2)
-        
+
         # عرض السعر الحالي
         current_price = self.sale_state.get_product_display_price(product["id"])
         CTkLabel(
-            edit_dialog, 
+            edit_dialog,
             text=f"السعر الحالي: {format_currency(current_price)}",
             font=("Cairo", 10),
-            text_color=("blue", "#00aaff")
+            text_color=("blue", "#00aaff"),
         ).pack(pady=2)
 
         def save_price():
@@ -640,7 +651,7 @@ class InvoiceView(CTkToplevel):
         price_entry.pack(pady=8)
         key_shortcut(price_entry, "<Return>", save_price)
         key_shortcut(edit_dialog, "<Escape>", edit_dialog.destroy)
-        
+
         # أزرار
         button_frame = CTkFrame(edit_dialog, fg_color="transparent")
         button_frame.pack(pady=12)

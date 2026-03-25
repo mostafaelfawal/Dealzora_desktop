@@ -15,7 +15,7 @@ class Sale:
         self.data_service = data_service
 
         Toolbar(self.root, self.sale_state).pack(fill="x", padx=10, pady=5)
-        
+
         # انشاء مربع البيع
         self._build_sale_section()
 
@@ -32,7 +32,12 @@ class Sale:
         self.product_section.grid(row=0, column=0, sticky="nsew")
 
         self.totals_panel = TotalsPanel(
-            center_container, self.currency, self.tax_rate, self.sale_state, self.data_service
+            center_container,
+            self.currency,
+            self.tax_rate,
+            self.sale_state,
+            self.data_service,
+            self.product_section.table.refresh_table,
         )
         self.totals_panel.grid(row=1, column=0, columnspan=2, sticky="ew")
 
@@ -40,5 +45,3 @@ class Sale:
             center_container, self.data_service, self.sale_state
         )
         self.cart_panel.grid(row=0, column=1, sticky="nsew")
-
-

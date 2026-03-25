@@ -6,13 +6,13 @@ from utils.format_currency import format_currency
 from .payment_dialog import InvoiceView
 
 class TotalsPanel(CTkFrame):
-    def __init__(self, parent, currency, tax_rate, sale_state, data_service):
+    def __init__(self, parent, currency, tax_rate, sale_state, data_service, refresh_table_callback):
         super().__init__(parent)
 
         self.currency = currency
         self.tax_rate = tax_rate
         self.data_service = data_service
-
+        self.refresh_table_callback = refresh_table_callback
         self.sale_state = sale_state
         # تسجيل كمراقب للتغييرات في حالة البيع
         self.sale_state.add_observer(self)
@@ -239,6 +239,7 @@ class TotalsPanel(CTkFrame):
         self.discount_entry.delete(0, "end")
         self.tax_entry.delete(0, "end")
         self.tax_entry.insert(0, self.tax_rate)
+        self.refresh_table_callback()
 
     def on_state_changed(self):
         self.total_amount_label.configure(

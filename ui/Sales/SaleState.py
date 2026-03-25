@@ -1,4 +1,3 @@
-import threading
 from time import strftime
 from tkinter import messagebox
 from utils.is_number import is_number
