@@ -149,19 +149,66 @@ class SaleState:
 
     @property
     def selected_products(self):
-        """إرجاع قائمة المنتجات مع السعر المعروض"""
+        """إرجاع قائمة المنتجات مع التحقق من صحتها"""
+        
+        self._validate_selected_products()
+
         products = []
         for product_id, product in self._selected_products.items():
             product_copy = product.copy()
-            # استخدام السعر المعدل إذا وجد
+
             if product_id in self._product_effects:
-                product_copy["price"] = self._product_effects[product_id][
-                    "adjusted_price"
-                ]
+                product_copy["price"] = self._product_effects[product_id]["adjusted_price"]
             else:
                 product_copy["price"] = product_copy["original_price"]
+
             products.append(product_copy)
+
         return products
+    
+    def _validate_selected_products(self):
+        """
+        التحقق من المنتجات داخل السلة:
+        - حذف المنتجات المحذوفة من قاعدة البيانات
+        - تحديث المخزون
+        - تعديل الكمية لو أكبر من المتاح
+        """
+        invalid_products = []
+        out_of_stock_products = []
+        
+        for product_id, product in list(self._selected_products.items()):
+            db_product = self.data_service.get_product(product_id)
+
+            # ❌ المنتج اتحذف من قاعدة البيانات
+            if not db_product:
+                invalid_products.append(product.get("name", "منتج غير معروف"))
+                self._remove_product_effect(product_id)
+                del self._selected_products[product_id]
+                continue
+
+            db_stock = db_product[5]
+
+            # تحديث المخزون
+            self._selected_products[product_id]["stock"] = db_stock
+
+            # ❌ الكمية أكبر من المخزون
+            if product["qty"] > db_stock:
+                self._selected_products[product_id]["qty"] = db_stock
+                if db_stock <= 0:
+                    del self._selected_products[product_id]
+                out_of_stock_products.append(product.get("name", "منتج غير معروف"))
+
+        if invalid_products:
+            showwarning(
+                "تنبيه",
+                f"تم حذف بعض المنتجات لأنها لم تعد موجودة:\n" + "\n".join(invalid_products)
+            )
+        
+        if out_of_stock_products:
+            showwarning(
+                "تنبيه",
+                f"تم تعديل كمية بعض المنتجات لأنها تجاوزت المخزون:\n" + "\n".join(out_of_stock_products)
+            )
 
     def get_product_display_price(self, product_id):
         """الحصول على السعر المعروض للمنتج"""
