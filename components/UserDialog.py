@@ -175,6 +175,7 @@ class UserDialog(CTkToplevel):
             ("invoices_management", "إدارة الفواتير"),
             ("settings_edit", "تعديل الإعدادات"),
             ("suppliers_management", "إدارة الموردين"),
+            ("expenses_management", "إدارة المصاريف"),
             ("purchase_invoices", "إنشاء فواتير الشراء"),
             ("stock_movements_view", "رؤية حركة المخزون"),
             ("edit_price_in_invoice", "تعديل السعر في الفاتورة"),

@@ -1,0 +1,16 @@
+SIDEBAR_EXPANDED_WIDTH = 250
+SIDEBAR_COLLAPSED_WIDTH = 120
+
+FONT_TITLE = ("Cairo", 30, "bold")
+FONT_LARGE = ("Cairo", 50, "bold")
+FONT_MEDIUM = ("Cairo", 40)
+FONT_NAV = ("Cairo", 20, "bold")
+FONT_SMALL = ("Cairo", 15)
+FONT_TRIAL = ("Cairo", 14)
+
+COLOR_PRIMARY = "#0078da"
+COLOR_HOVER = "#0060af"
+COLOR_DANGER = "#c62828"
+COLOR_DANGER_HV = "#b71c1c"
+COLOR_ACCENT = "#00b7ff"
+COLOR_TRIAL = ("#997a00", "#facc15")

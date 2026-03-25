@@ -1,7 +1,7 @@
 from customtkinter import set_appearance_mode, CTk
 from sqlite3 import connect
 from os import makedirs
-from layout import Layout
+from Layout.layout import Layout
 from utils.backup_database import backup_database
 from utils.load_font import load_font
 from utils.trial import init_trial

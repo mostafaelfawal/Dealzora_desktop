@@ -156,10 +156,16 @@ class AuthView:
     def get_role(self):
         return self.role_var.get()
 
+    def highlight_password(self, success):
+        self.password_entry.configure(border_color="#33ff00" if success else "#e74c3c")
+        self.password_entry.focus()
+
     def show_error(self, title, msg):
         from tkinter import messagebox
+        self.highlight_password(success=False)
         messagebox.showerror(title, msg)
-
+    
     def show_success(self, msg):
         from tkinter import messagebox
+        self.highlight_password(success=True)
         messagebox.showinfo("نجاح", msg)
