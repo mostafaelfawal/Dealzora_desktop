@@ -185,7 +185,7 @@ class Reports:
         daily_frame = CTkFrame(charts_frame)
         daily_frame.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
 
-        CTkLabel(daily_frame, text="المبيعات اليومية", font=("Cairo", 16, "bold")).pack(
+        CTkLabel(daily_frame, text="(10) المبيعات اليومية", font=("Cairo", 16, "bold")).pack(
             pady=5
         )
         self.daily_sales_figure = Figure(figsize=(6, 4), dpi=100, facecolor="#2b2b2b")
@@ -482,7 +482,7 @@ class Reports:
         )
 
         CTkLabel(
-            daily_profit_frame, text="الأرباح اليومية", font=("Cairo", 16, "bold")
+            daily_profit_frame, text="(20) الأرباح اليومية", font=("Cairo", 16, "bold")
         ).pack(pady=5)
         self.daily_profit_figure = Figure(figsize=(12, 4), dpi=100, facecolor="#2b2b2b")
         self.daily_profit_plot = self.daily_profit_figure.add_subplot(111)
@@ -1039,6 +1039,7 @@ class Reports:
             WHERE s.date BETWEEN ? AND ?
             GROUP BY s.date
             ORDER BY s.date
+            LIMIT 20
         """,
             (start, end),
         )
