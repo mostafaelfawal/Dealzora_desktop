@@ -1,7 +1,7 @@
 from models.supplier import SupplierModel
 from models.stock_movements import StockMovementsModel
 from utils.alter_column_type import alter_column_type
-
+from utils.column_exists import column_exists
 
 class ProductsModel:
     def __init__(self, cur, con):
@@ -11,7 +11,19 @@ class ProductsModel:
         self.stock_movements_db = StockMovementsModel(self.cur, self.con)
 
         self.cur.execute(
-            """CREATE TABLE IF NOT EXISTS category(
+            """
+            CREATE TABLE IF NOT EXISTS units(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT UNIQUE NOT NULL,
+            small_unit_name TEXT,
+            conversion_factor REAL
+            )
+            """
+        )
+        
+        self.cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS category(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT UNIQUE NOT NULL
             )"""
@@ -30,12 +42,18 @@ class ProductsModel:
             low_stock INTEGER DEFAULT 5,
             supplier_id INTEGER,
             created_at TEXT DEFAULT (date('now','localtime')),
+            unit_id INTEGER,
             FOREIGN KEY(category_id) REFERENCES category(id),
-            FOREIGN KEY(supplier_id) REFERENCES suppliers(id)
+            FOREIGN KEY(supplier_id) REFERENCES suppliers(id),
+            FOREIGN KEY(unit_id) REFERENCES units(id)
             )"""
         )
         
         alter_column_type(cur, con, "products", "quantity", "REAL")
+        
+        if not column_exists(self.cur, "products", "unit_id"):
+            self.cur.execute("ALTER TABLE products ADD COLUMN unit_id INTEGER")
+            self.con.commit()
 
         self.cur.execute(
             "CREATE INDEX IF NOT EXISTS idx_products_name ON products(name)"
@@ -180,6 +198,16 @@ class ProductsModel:
         )
 
         return self.cur.fetchall()
+    
+    def delete_products(self, products_IDs: list):
+        if not products_IDs:
+            return
+        ids = tuple(products_IDs)
+        self.cur.execute(
+            "DELETE FROM products WHERE id IN (%s)" % ",".join("?" * len(ids)),
+            ids,
+        )
+        self.finalize_changes()
 
     def add_product(
         self,
@@ -194,6 +222,7 @@ class ProductsModel:
         category_id=None,
         supplier_name=None,
         category_name=None,
+        unit_id=None,  # Add unit_id parameter
     ):
         if category_name and not category_id:
             category_id = self.get_or_create_category_id(category_name)
@@ -219,8 +248,8 @@ class ProductsModel:
 
         self.cur.execute(
             """INSERT INTO products
-            (name,barcode,buy_price,sell_price,quantity,category_id,image_path,low_stock,supplier_id)
-            VALUES (?,?,?,?,?,?,?,?,?)""",
+            (name,barcode,buy_price,sell_price,quantity,category_id,image_path,low_stock,supplier_id,unit_id)
+            VALUES (?,?,?,?,?,?,?,?,?,?)""",
             (
                 name,
                 barcode,
@@ -231,17 +260,8 @@ class ProductsModel:
                 image_path,
                 low_stock,
                 supplier_id,
+                unit_id,  # Add unit_id
             ),
-        )
-        self.finalize_changes()
-
-    def delete_products(self, products_IDs: list):
-        if not products_IDs:
-            return
-        ids = tuple(products_IDs)
-        self.cur.execute(
-            "DELETE FROM products WHERE id IN (%s)" % ",".join("?" * len(ids)),
-            ids,
         )
         self.finalize_changes()
 
@@ -259,6 +279,7 @@ class ProductsModel:
         category_id=None,
         supplier_name=None,
         category_name=None,
+        unit_id=None,  # Add unit_id parameter
     ):
         if category_name and not category_id:
             category_id = self.get_or_create_category_id(category_name)
@@ -270,7 +291,7 @@ class ProductsModel:
         self.cur.execute(
             """UPDATE products SET
             name=?,barcode=?,buy_price=?,sell_price=?,
-            quantity=?,image_path=?,low_stock=?,supplier_id=?,category_id=?
+            quantity=?,image_path=?,low_stock=?,supplier_id=?,category_id=?,unit_id=?
             WHERE id=?""",
             (
                 name,
@@ -282,6 +303,7 @@ class ProductsModel:
                 low_stock,
                 supplier_id,
                 category_id,
+                unit_id,  # Add unit_id
                 product_id,
             ),
         )
@@ -299,4 +321,3 @@ class ProductsModel:
             )
 
         self.finalize_changes()
-    
