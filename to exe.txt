@@ -2,7 +2,7 @@ Dealzora updater
 pyinstaller --noconfirm --onefile --windowed --icon=updater_icon.png --name=Dealzora_update updater.py
 
 Dealzora Basic
-pyinstaller --noconfirm --onedir --windowed --icon=icon.ico --name=Dealzora_1.4.6v main.py --hidden-import=barcode --hidden-import=barcode.writer --hidden-import=reportlab --hidden-import=reportlab.graphics.barcode --hidden-import=reportlab.graphics.barcode.common --hidden-import=reportlab.graphics.barcode.code39 --hidden-import=reportlab.graphics.barcode.code128 --hidden-import=reportlab.graphics.barcode.eanbc --hidden-import=reportlab.pdfbase --hidden-import=reportlab.pdfbase.ttfonts --collect-all reportlab --collect-all barcode
+pyinstaller --noconfirm --onedir --windowed --icon=icon.ico --name=Dealzora_1.5.6v main.py --hidden-import=barcode --hidden-import=barcode.writer --hidden-import=reportlab --hidden-import=reportlab.graphics.barcode --hidden-import=reportlab.graphics.barcode.common --hidden-import=reportlab.graphics.barcode.code39 --hidden-import=reportlab.graphics.barcode.code128 --hidden-import=reportlab.graphics.barcode.eanbc --hidden-import=reportlab.pdfbase --hidden-import=reportlab.pdfbase.ttfonts --collect-all reportlab --collect-all barcode
 
 Dealzora license
 pyinstaller --noconfirm --onefile --windowed --icon=license_icon.png --name=Dealzora_license license_generator.py
