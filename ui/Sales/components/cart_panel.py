@@ -96,6 +96,7 @@ class CartPanel(CTkFrame):
                     product,
                     self._update_qty,
                     self._remove_product,
+                    self.sale_state,
                 )
                 card.pack(side="bottom", fill="x", pady=3, padx=3)
                 self.product_cards[product_id] = card

@@ -50,6 +50,15 @@ class DataService:
     def get_categorys(self):
         return [c[1] for c in self.products_db.get_categorys()]
 
+    # ========= units =========
+    def get_unit(self, unit_id):
+        unit = self.products_db.get_unit(unit_id)
+        return {
+            "unit_name": unit[1],
+            "sub_unit_name": unit[2],
+            "conversion_factor": unit[3]
+        }
+
     # ========= Customers =========
     def get_customers(self):
         return self.customers_db.get_customers()

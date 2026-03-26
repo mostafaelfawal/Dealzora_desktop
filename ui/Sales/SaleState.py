@@ -146,7 +146,7 @@ class SaleState:
 
     def reset_sale(self):
         return self._reset_sale()
-
+    
     @property
     def selected_products(self):
         """إرجاع قائمة المنتجات مع التحقق من صحتها"""
@@ -165,6 +165,11 @@ class SaleState:
             products.append(product_copy)
 
         return products
+    
+    def change_current_unit(self, product_id, new_unit):
+        """تغيير الوحدة الحالية لمنتج معين"""
+        if product_id in self._selected_products:
+            self._selected_products[product_id]["current_unit"] = new_unit
     
     def _validate_selected_products(self):
         """
@@ -192,10 +197,7 @@ class SaleState:
             self._selected_products[product_id]["stock"] = db_stock
 
             # ❌ الكمية أكبر من المخزون
-            if product["qty"] > db_stock:
-                self._selected_products[product_id]["qty"] = db_stock
-                if db_stock <= 0:
-                    del self._selected_products[product_id]
+            if self.check_out_of_stock(product_id, product["qty"], False):    
                 out_of_stock_products.append(product.get("name", "منتج غير معروف"))
 
         if invalid_products:
@@ -373,18 +375,28 @@ class SaleState:
 
         self._notify_observers()
 
-    def check_out_of_stock(self, product_id, new_qty):
+    def check_out_of_stock(self, product_id, new_qty, show_message=True):
         selected_product = self._selected_products.get(product_id)
+
         if not selected_product:
             return False
 
+        sub_unit = selected_product.get("sub_unit")
+        conversion_factor = selected_product.get("conversion_factor")
+        current_unit = selected_product.get("current_unit")
+        
         max_qty = selected_product["stock"]
+        max_qty_in_selected_unit = max_qty
+        
+        if sub_unit == current_unit:
+            max_qty_in_selected_unit = max_qty * conversion_factor
 
-        if new_qty > max_qty:
-            showwarning(
-                "كمية غير متوفرة",
-                f"الكمية المطلوبة تتجاوز المخزون\nتم تحديد كمية المنتج = {max_qty}",
-            )
+        if new_qty > max_qty_in_selected_unit:
+            if show_message:
+                showwarning(
+                    "كمية غير متوفرة",
+                    f"الكمية المطلوبة تتجاوز المخزون\nتم تحديد كمية المنتج = {max_qty_in_selected_unit}",
+                )
             return True
 
         return False

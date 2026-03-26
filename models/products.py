@@ -20,6 +20,7 @@ class ProductsModel:
             )
             """
         )
+        self.create_default_units()
         
         self.cur.execute(
             """
@@ -67,6 +68,28 @@ class ProductsModel:
 
         self.con.commit()
 
+    def create_default_units(self):
+        """إنشاء وحدات افتراضية إذا لم تكن موجودة"""
+        # التحقق من وجود أي وحدات في قاعدة البيانات
+        self.cur.execute("SELECT COUNT(*) FROM units")
+        count = self.cur.fetchone()[0]
+        
+        if count == 0:
+            default_units = [
+                ("قطعة", None, 1),
+                ("لتر", None, 1),
+                ("كجم", "جرام", 1000),
+                ("متر", "سنتيمتر", 100),
+                ("سنتيمتر", None, 1),
+                ("جرام", None, 1),
+            ]
+            
+            self.cur.executemany(
+                "INSERT INTO units (name, small_unit_name, conversion_factor) VALUES (?, ?, ?)",
+                default_units
+            )
+            self.con.commit()
+    
     def finalize_changes(self):
         self.clean_empty_categorys()
         self.con.commit()
@@ -163,6 +186,11 @@ class ProductsModel:
         self.cur.execute("SELECT name FROM category WHERE id=?", (cid,))
         row = self.cur.fetchone()
         return row[0] if row else ""
+    
+    def get_unit(self, uid):
+        self.cur.execute("SELECT * FROM units WHERE id=?", (uid,))
+        row = self.cur.fetchone()
+        return row
 
     def get_products_by_category(self, category_id):
         if category_id == "all":

@@ -185,6 +185,9 @@ class ProductTable(CTkFrame):
             product_id = values[0]
 
             product_data = self.data_service.get_product(product_id)
+            unit_id = product_data[11] if len(product_data) > 11 else None
+            unit_info = self.data_service.get_unit(unit_id) if unit_id else None
+            
             if not product_data:
                 continue
             
@@ -201,6 +204,10 @@ class ProductTable(CTkFrame):
                 "stock": int(product_data[5]),
                 "low_stock": int(product_data[8]),
                 "qty": 1,
+                "unit": unit_info["unit_name"] if unit_info else "قطعة",
+                "sub_unit": unit_info["sub_unit_name"] if unit_info else None,
+                "conversion_factor": unit_info["conversion_factor"] if unit_info else 1,
+                "current_unit": unit_info["unit_name"] if unit_info else "قطعة",
             }
             products.append(product)
 

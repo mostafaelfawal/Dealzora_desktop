@@ -141,7 +141,7 @@ class ProductModal:
             unit_frame,
             values=self.units,
             variable=self.unit_var,
-            width=200,
+            width=130,
             font=("Cairo", 16, "bold"),
             dropdown_font=("Cairo", 16),
             fg_color="#1f538d",
@@ -150,6 +150,17 @@ class ProductModal:
         )
         self.unit_select.pack(side="right", padx=5)
 
+        CTkButton(
+            unit_frame,
+            text="",
+            image=image("assets/cancel.png", (20, 20)),
+            width=40,
+            font=("Cairo", 14, "bold"),
+            fg_color="#d40c0c",
+            hover_color="#b91010",
+            command=self.remove_unit_selection,
+        ).pack(side="right", padx=10)
+        
         # ================= Fields =================
         fields = [
             "*الأسم",
@@ -206,6 +217,10 @@ class ProductModal:
             command=self.save,
         ).pack(side="right", padx=10)
 
+    def remove_unit_selection(self):
+        """Remove unit selection and reset to default"""
+        self.unit_var.set("")
+    
     def show_add_unit_modal(self):
         """Show modal to add new unit with small unit and conversion factor"""
         add_unit_modal = CTkToplevel(self.modal)

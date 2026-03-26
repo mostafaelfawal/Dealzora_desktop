@@ -1,11 +1,19 @@
-from customtkinter import CTkFrame, CTkLabel, CTkButton, CTkEntry, StringVar
+from customtkinter import (
+    CTkFrame,
+    CTkLabel,
+    CTkButton,
+    CTkEntry,
+    StringVar,
+    CTkOptionMenu,
+)
 from utils.format_currency import format_currency
 from utils.image import image
 from utils.is_number import is_number
 from utils.key_shortcut import key_shortcut
 
+
 class ProductCard(CTkFrame):
-    def __init__(self, parent, product_data, on_qty_change, on_remove):
+    def __init__(self, parent, product_data, on_qty_change, on_remove, sale_state):
         super().__init__(
             parent, corner_radius=8, border_width=1, border_color=("#e5e5e5", "#4D4D4D")
         )
@@ -13,8 +21,24 @@ class ProductCard(CTkFrame):
         self.on_qty_change = on_qty_change
         self.on_remove = on_remove
         self.product_id = product_data["id"]
+        self.sale_state = sale_state
         self._updating = False  # منع الحلقات اللانهائية
 
+        # بيانات الوحدة
+        self.unit = product_data["unit"]
+        self.sub_unit = product_data["sub_unit"]
+        self.conversion_factor = product_data["conversion_factor"]
+        
+        # تحديد قائمة الوحدات المتاحة
+        if self.sub_unit:
+            self.units_list = [self.unit, self.sub_unit]
+            self.current_unit = StringVar(value=self.unit)
+            self.unit_enabled = True
+        else:
+            self.units_list = [self.unit]
+            self.current_unit = StringVar(value=self.unit)
+            self.unit_enabled = False
+        
         self._build_card()
 
     def _build_card(self):
@@ -23,9 +47,9 @@ class ProductCard(CTkFrame):
         top_row = self._create_product_info_row()
         top_row.pack(fill="x", padx=6, pady=4)
 
-        # Quantity controls row
-        qty_frame = self._create_quantity_controls()
-        qty_frame.pack(fill="x", padx=6, pady=(0, 6))
+        # Bottom row with unit selection and quantity controls
+        bottom_row = self._create_bottom_row()
+        bottom_row.pack(fill="x", padx=6, pady=(0, 6))
 
     def _create_product_info_row(self):
         """Create the top row with product image, name, and subtotal."""
@@ -67,9 +91,33 @@ class ProductCard(CTkFrame):
 
         return top_row
 
-    def _create_quantity_controls(self):
-        """Create quantity control buttons and entry."""
-        qty_frame = CTkFrame(self, fg_color="transparent")
+    def _create_bottom_row(self):
+        """Create bottom row with unit selection and quantity controls"""
+        bottom_row = CTkFrame(self, fg_color="transparent")
+
+        # Unit selection (OptionMenu)
+        self.unit_menu = CTkOptionMenu(
+            bottom_row,
+            values=self.units_list,
+            variable=self.current_unit,
+            width=70,
+            height=28,
+            font=("Cairo", 10),
+            dropdown_font=("Cairo", 10),
+            fg_color="#2b6aaf",
+            button_color="#2b6aaf",
+            button_hover_color="#1f538d",
+            command=self._on_unit_change,  # ربط التغيير بالدالة
+        )
+        self.unit_menu.pack(side="right", padx=2)
+        
+        # تعطيل القائمة إذا لم توجد وحدة صغرى
+        if not self.unit_enabled:
+            self.unit_menu.configure(state="disabled")
+
+        # Quantity controls frame
+        qty_frame = CTkFrame(bottom_row, fg_color="transparent")
+        qty_frame.pack(side="right")
 
         # Decrease button
         CTkButton(
@@ -93,7 +141,7 @@ class ProductCard(CTkFrame):
             font=("Cairo", 12, "bold"),
         )
         self.qty_entry.pack(side="right", padx=2)
-        
+
         self._bind_qty_entry_events()
         self._bind_shortcuts_qty()
 
@@ -109,7 +157,7 @@ class ProductCard(CTkFrame):
 
         # Delete button
         CTkButton(
-            qty_frame,
+            bottom_row,
             text="",
             width=28,
             height=28,
@@ -117,16 +165,58 @@ class ProductCard(CTkFrame):
             hover_color=("#8D0000", "#740000"),
             image=image("assets/delete.png", (20, 20)),
             command=self._on_remove,
-        ).pack(side="left", padx=10)
+        ).pack(side="left", padx=2)
 
-        return qty_frame
-    
+        return bottom_row
+
+    def _on_unit_change(self, selected_unit):
+        """معالجة تغيير الوحدة"""
+        if self._updating:
+            return
+        
+        self._updating = True
+        try:
+            # تحديث الكمية في product_data
+            current_qty = self.product_data["qty"]
+            
+            # إعادة حساب السعر بناءً على الوحدة المختارة
+            self._update_subtotal()
+            
+            # استدعاء callback لتحديث الإجمالي العام - إزالة unit_changed
+            self.on_qty_change(self.product_id, current_qty)
+            
+        finally:
+            self._updating = False
+
+    def _calculate_effective_price(self):
+        """حساب السعر الفعلي بناءً على الوحدة المختارة"""
+        base_price = self.product_data["price"]
+        selected_unit = self.current_unit.get()
+        self.sale_state.change_current_unit(self.product_id, selected_unit)
+
+        if selected_unit == self.sub_unit and self.sub_unit:
+            # إذا اختار الوحدة الصغرى: السعر الفعلي = السعر الأساسي ÷ معامل التحويل
+            effective_price = base_price / self.conversion_factor
+        else:
+            # إذا اختار الوحدة الرئيسية: السعر الفعلي = السعر الأساسي
+            effective_price = base_price
+            
+        return effective_price
+
+    def _get_details_text(self):
+        """الحصول على نص التفاصيل مع مراعاة الوحدة"""
+        qty = self.product_data["qty"]
+        effective_price = self._calculate_effective_price()
+        total = effective_price * qty
+        
+        return f"{effective_price:.2f} × {qty} = {format_currency(total)}"
+
     def _bind_qty_entry_events(self):
         # عند أي تغيير في Entry، حاول تحديث الكمية
         def on_entry_change(*args):
             if self._updating:
                 return
-                
+
             value = self.qty_entry_var.get()
             if is_number(value):
                 new_qty = float(value)
@@ -145,7 +235,7 @@ class ProductCard(CTkFrame):
                     return
 
         self.qty_entry_var.trace_add("write", on_entry_change)
-        
+
     def _bind_shortcuts_qty(self):
         key_shortcut(
             self.qty_entry,
@@ -158,17 +248,8 @@ class ProductCard(CTkFrame):
             self._decrease_qty,
         )
         key_shortcut(
-            self.qty_entry,
-            ["<Delete>", "<Control-d>", "<Control-D>"],
-            self._on_remove
+            self.qty_entry, ["<Delete>", "<Control-d>", "<Control-D>"], self._on_remove
         )
-    
-    def _get_details_text(self):
-        """الحصول على نص التفاصيل: السعر × الكمية = الإجمالي"""
-        price = self.product_data["price"]
-        qty = self.product_data["qty"]
-        total = price * qty
-        return f"{price} × {qty} = {format_currency(total)}"
 
     def _increase_qty(self):
         """زيادة الكمية"""
@@ -220,3 +301,7 @@ class ProductCard(CTkFrame):
             self.sub_total_label.configure(text=self._get_details_text())
         finally:
             self._updating = False
+    
+    def _update_subtotal(self):
+        """تحديث الإجمالي فقط دون تغيير الكمية"""
+        self.sub_total_label.configure(text=self._get_details_text())
