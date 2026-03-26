@@ -1,8 +1,6 @@
 from customtkinter import CTkFrame, CTkLabel, CTkEntry, CTkButton
 from utils.license import get_machine_guid, generate_expected_license, save_license
-from utils.trial import get_remaining_days
 from tkinter.messagebox import showinfo
-from utils.trial import is_trial_valid
 
 
 class LicenseScreen(CTkFrame):
@@ -28,19 +26,6 @@ class LicenseScreen(CTkFrame):
             text_color="#9ca3af",
             wraplength=500,
         ).pack(pady=(5, 15))
-
-        days = get_remaining_days()
-        text = (
-            f"الفترة التجريبية المتبقية: {days} يوم"
-            if days
-            else "انتهت الفتره التجريبيه\nDealzora ارتقى بمستوى متجرك مع"
-        )
-        CTkLabel(
-            self,
-            text=text,
-            font=("Cairo", 16),
-            text_color="#1baa4f" if days else "#ef4444",
-        ).pack(pady=5)
 
         CTkLabel(self, text="كود جهازك", font=("Cairo", 16)).pack(pady=(20, 5))
 
@@ -72,17 +57,16 @@ class LicenseScreen(CTkFrame):
             font=("Cairo", 18),
         ).pack()
 
-        if is_trial_valid():
-            CTkButton(
-                self,
-                text="▶ الدخول بالفترة التجريبية",
-                height=40,
-                fg_color="#22c55e",
-                text_color="black",
-                hover_color="#16a34a",
-                font=("Cairo", 16),
-                command=lambda: self.enter_trial(on_success),
-            ).pack(pady=10)
+        CTkButton(
+            self,
+            text="▶ الدخول بالفترة التجريبية",
+            height=40,
+            fg_color="#22c55e",
+            text_color="black",
+            hover_color="#16a34a",
+            font=("Cairo", 16),
+            command=lambda: self.enter_trial(on_success),
+        ).pack(pady=10)
 
     def enter_trial(self, on_success):
         self.destroy()

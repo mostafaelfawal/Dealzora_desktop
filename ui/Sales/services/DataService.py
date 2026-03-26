@@ -1,3 +1,6 @@
+from utils.check_limit import check_limit
+
+
 class DataService:
     def __init__(
         self,
@@ -52,6 +55,9 @@ class DataService:
         return self.customers_db.get_customers()
 
     def add_customer(self, name, phone, debt):
+        current = len(self.get_customers())
+        if not check_limit("اضافة العملاء", current):
+            return None
         return self.customers_db.add_customer(name, phone, debt)
 
     def search_customers_by_query(self, keyword, search_type):
@@ -78,7 +84,14 @@ class DataService:
         )
 
     # ========= Invoices =========
+    def get_sales(self):
+        return self.sales_db.get_sales()
+    
     def record_invoice(self, number, total, discount, tax, paid, change, customer_id):
+        current = len(self.get_sales())
+        if not check_limit("انشاء الفواتير", current):
+            return None
+        
         return self.sales_db.add_sale(
             number, total, discount, tax, paid, change, customer_id
         )

@@ -1,4 +1,5 @@
 import hashlib
+import uuid
 import winreg
 import socket
 from pathlib import Path
@@ -10,16 +11,17 @@ LICENSE_FILE = Path.home() / ".dealzora_license"
 def get_machine_guid():
     try:
         key = winreg.OpenKey(
-            winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Cryptography"
+            winreg.HKEY_LOCAL_MACHINE,
+            r"SOFTWARE\Microsoft\Cryptography"
         )
         guid, _ = winreg.QueryValueEx(key, "MachineGuid")
-        return guid
-    except Exception:
-        try:
-            return socket.gethostname()
-        except:
-            return "UNKNOWN_MACHINE"
+    except:
+        guid = ""
 
+    mac = str(uuid.getnode())
+    hostname = socket.gethostname()
+
+    return f"{guid}-{mac}-{hostname}"
 
 def generate_expected_license():
     guid = get_machine_guid()

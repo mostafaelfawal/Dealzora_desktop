@@ -1,7 +1,6 @@
 from customtkinter import CTkFrame, CTkButton, CTkLabel, CTkScrollableFrame
 from typing import Callable
 from utils.license import is_license_valid
-from utils.trial import get_remaining_days
 from utils.image import image
 from .data_structures import NavItem
 from .Constants import (
@@ -76,23 +75,14 @@ class Sidebar:
         return scroll
 
     def _build_brand_label(self) -> CTkLabel:
-        if is_license_valid():
-            label = CTkLabel(
-                self._scroll,
-                image=image("assets/icon.png"),
-                compound="right",
-                text="Dealzora",
-                font=FONT_TITLE,
-                text_color=COLOR_ACCENT,
-            )
-        else:
-            days = get_remaining_days()
-            label = CTkLabel(
-                self._scroll,
-                text=f"Dealzora | الفترة التجريبيه\nباقي {days} يوم🕐",
-                font=FONT_TRIAL,
-                text_color=COLOR_TRIAL,
-            )
+        label = CTkLabel(
+            self._scroll,
+            image=image("assets/icon.png"),
+            compound="right",
+            text="Dealzora",
+            font=FONT_TITLE,
+            text_color=COLOR_ACCENT,
+        )
         label.pack(padx=4)
         return label
 
@@ -149,10 +139,4 @@ class Sidebar:
         self._exit_button.configure(text="خروج")
 
     def _refresh_brand_label(self) -> None:
-        if is_license_valid():
-            self._brand_label.configure(text="Dealzora")
-        else:
-            days = get_remaining_days()
-            self._brand_label.configure(
-                text=f"Dealzora | الفترة التجريبيه\nباقي {days} يوم🕐"
-            )
+        self._brand_label.configure(text="Dealzora")

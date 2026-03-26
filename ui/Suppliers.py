@@ -9,6 +9,7 @@ from tkinter import messagebox
 from utils.center_modal import center_modal
 from utils.image import image
 from utils.key_shortcut import key_shortcut
+from utils.check_limit import check_limit
 from components.TreeView import TreeView
 from ui.RejectUI import RejectUI
 
@@ -134,6 +135,10 @@ class Suppliers:
     # ========== مودال إضافة مورد جديد ==========
     def open_add_modal(self):
         """فتح نافذة منبثقة لإضافة مورد جديد"""
+        current = len(self.get_suppliers())
+        if not check_limit("اضافة الموردين", current):
+            return
+
         add_modal = CTkToplevel(self.root)
         add_modal.title("إضافة مورد جديد | Dealzora")
         add_modal.geometry("500x400")

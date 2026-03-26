@@ -4,7 +4,6 @@ from os import makedirs
 from Layout.layout import Layout
 from utils.backup_database import backup_database
 from utils.load_font import load_font
-from utils.trial import init_trial
 from ui.Splash_screen import SplashScreen
 
 # ============== Data bases ==============
@@ -24,7 +23,6 @@ class Dealzora:
         self.root = root
         self.init_window()
         self.init_db()
-        init_trial()
         
         SplashScreen(self.root, self.start_app)
         

@@ -399,8 +399,10 @@ class SaleState:
         invoice_data = self._prepare_invoice_data(amount_paid)
         products_data = self._prepare_products_for_printing()
 
-        self._handle_customer_debt(amount_paid)
         sale_id = self._record_invoice(amount_paid)
+        if sale_id is None:
+            return
+        self._handle_customer_debt(amount_paid)
         self._record_stock_movements(sale_id)
 
         self._print_invoice(invoice_data, products_data)

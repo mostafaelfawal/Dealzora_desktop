@@ -7,6 +7,7 @@ from customtkinter import (
 )
 from tkinter import messagebox
 from components.BarcodePrinter import BarcodePrinter
+from utils.check_limit import check_limit
 from utils.image import image
 from utils.key_shortcut import key_shortcut
 from utils.is_number import is_number
@@ -277,6 +278,9 @@ class Products:
 
     # ---------- Modals ----------
     def add_product_modal(self):
+        current = len(self.get_all_products())
+        if not check_limit("اضافة المنتجات", current):
+            return
         ProductModal(
             self.root,
             self.products_db,

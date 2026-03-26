@@ -22,6 +22,7 @@ from components.UploadImage import UploadImage
 from components.BackupButton import BackupButton
 from utils.image import image
 from utils.is_number import is_number
+from utils.check_limit import check_limit
 
 
 class Settings:
@@ -401,6 +402,8 @@ class Settings:
 
     def restore_database(self):
         """استعادة البيانات مع الدمج"""
+        if not check_limit("استعادة البيانات", 0):
+            return 
         file_path = filedialog.askopenfilename(
             title="اختر ملف قاعدة البيانات",
             filetypes=[("Database Files", "*.db")],
