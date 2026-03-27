@@ -497,3 +497,4 @@ def print_shop_invoice(sale_data, products_data):
     except Exception as e:
         showerror("خطأ في الطباعة", str(e))
         return False
+
