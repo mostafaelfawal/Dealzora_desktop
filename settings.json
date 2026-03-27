@@ -14,5 +14,6 @@
     "shop_phone": "01151083509",
     "shop_address": "123 شارع النيل، القاهرة",
     "currency_name": "دولاراً",
-    "sub_currency_name": "سنتاً"
+    "sub_currency_name": "سنتاً",
+    "decimal_places": 1
 }

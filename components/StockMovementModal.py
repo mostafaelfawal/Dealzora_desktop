@@ -9,6 +9,7 @@ from customtkinter import (
 )
 from tkinter import messagebox
 from components.TreeView import TreeView
+from utils.format_currency import format_currency
 from utils.key_shortcut import key_shortcut
 from ui.RejectUI import RejectUI
 from datetime import datetime, timedelta
@@ -123,7 +124,7 @@ class StockMovementsModal:
         self.type_menu = CTkOptionMenu(
             filter_row,
             variable=self.type_var,
-            values=["الكل", "شراء", "بيع", "ارجاع", "يدوي"],
+            values=["الكل", "شراء", "بيع", "ارجاع", "يدوي", "رصيد افتتاحي"],
             font=("Cairo", 13),
             dropdown_font=("Cairo", 13),
             fg_color=("#758AAC", "#374151"),
@@ -205,6 +206,7 @@ class StockMovementsModal:
         self.tree.tree.tag_configure("يدوي", background="#947373")
         self.tree.tree.tag_configure("ارجاع", background="#919140")
         self.tree.tree.tag_configure("شراء", background="#6785aa")
+        self.tree.tree.tag_configure("رصيد افتتاحي", background="#c0c0c0")
 
         # تفعيل النقر المزدوج لعرض التفاصيل
         key_shortcut(
@@ -300,6 +302,7 @@ class StockMovementsModal:
                     "شراء",
                     "ارجاع",
                     "يدوي",
+                    "رصيد افتتاحي",
                 ]
                 else "normal"
             )
@@ -311,8 +314,8 @@ class StockMovementsModal:
                     movement_id,
                     product_name,
                     qty_display,
-                    f"{old_qty:.2f}",
-                    f"{new_qty:.2f}",
+                    format_currency(old_qty),
+                    format_currency(new_qty),
                     type_translation.get(movement_type, movement_type),
                     ref_num or "—",
                     date if date else "—",

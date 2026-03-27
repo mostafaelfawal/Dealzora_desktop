@@ -6,3 +6,8 @@ pyinstaller --noconfirm --onedir --windowed --icon=icon.ico --name=Dealzora_1.6.
 
 Dealzora license
 pyinstaller --noconfirm --onefile --windowed --icon=license_icon.png --name=Dealzora_license license_generator.py
+
+git config --global http.postBuffer 52428800
+git config --global http.lowSpeedLimit 0
+git config --global http.lowSpeedTime 999999
+git push

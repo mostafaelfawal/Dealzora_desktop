@@ -12,6 +12,7 @@ from tkinter import messagebox
 from tkcalendar import DateEntry
 from utils.key_shortcut import key_shortcut
 from utils.center_modal import center_modal
+from utils.format_currency import format_currency
 from utils.image import image
 from components.ProductModal import ProductModal
 from components.TreeView import TreeView
@@ -176,7 +177,7 @@ class BuyInvoiceModal:
         total_label.pack(side="left", padx=20, pady=10)
 
         self.total_value_label = CTkLabel(
-            totals_frame, text="0.00", font=("Cairo", 24, "bold"), text_color="#10b981"
+            totals_frame, text=format_currency(0), font=("Cairo", 24, "bold"), text_color="#10b981"
         )
         self.total_value_label.pack(side="left", padx=5, pady=10)
 

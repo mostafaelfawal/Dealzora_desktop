@@ -291,6 +291,13 @@ class ProductsModel:
                 unit_id,  # Add unit_id
             ),
         )
+        product_id = self.cur.lastrowid
+        
+        self.stock_movements_db.add_movement(
+            product_id=product_id,
+            quantity=quantity,
+            movement_type="رصيد افتتاحي",
+        )
         self.finalize_changes()
 
     def update_product(

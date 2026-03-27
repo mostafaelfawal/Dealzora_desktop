@@ -43,7 +43,7 @@ class TotalsPanel(CTkFrame):
         # Subtotal label
         self.subtotal_label = CTkLabel(
             self.subtotal_frame,
-            text=f"الاجمالي الفرعي: 0.00",
+            text=f"الاجمالي الفرعي: {format_currency(0)}",
             font=("Cairo", 16, "bold"),
             text_color=("gray10", "gray90"),
         )
@@ -131,7 +131,7 @@ class TotalsPanel(CTkFrame):
 
         entry = CTkEntry(
             frame,
-            placeholder_text="0.00",
+            placeholder_text=format_currency(0),
             justify="center",
             width=120,
             height=35,
@@ -169,7 +169,7 @@ class TotalsPanel(CTkFrame):
         # Total amount (bold and prominent)
         self.total_amount_label = CTkLabel(
             self.total_frame,
-            text=f"0.00 {self.currency}",
+            text=format_currency(0),
             font=("Cairo", 24, "bold"),
             text_color="#0078da",
         )

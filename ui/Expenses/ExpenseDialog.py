@@ -10,6 +10,8 @@ from customtkinter import (
 from tkcalendar import DateEntry
 import tkinter.messagebox as messagebox
 
+from utils.format_currency import format_currency
+
 
 class ExpenseDialog(CTkToplevel):
     def __init__(self, parent, expense_data=None, on_save_callback=None):
@@ -146,7 +148,7 @@ class ExpenseDialog(CTkToplevel):
     def _create_amount_field(self, parent):
         """إنشاء حقل المبلغ"""
         self.amount_entry = CTkEntry(
-            parent, font=("Cairo", 12), placeholder_text="0.00", height=35
+            parent, font=("Cairo", 12), placeholder_text=format_currency(0), height=35
         )
         self.amount_entry.pack(fill="x", pady=(2, 0))
 

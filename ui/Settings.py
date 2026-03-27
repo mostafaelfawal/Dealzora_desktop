@@ -11,6 +11,7 @@ from customtkinter import (
     StringVar,
     BooleanVar,
     CTkSwitch,
+    CTkSegmentedButton,
     set_appearance_mode,
 )
 from tkinter import messagebox, filedialog
@@ -254,6 +255,46 @@ class Settings:
             border_width=2,
         )
         sub_currency_entry.pack(side="left", fill="x", expand=True, padx=(5, 5))
+        
+        # ===== تنسيق العملة (عدد الخانات العشرية) =====
+        CTkLabel(
+            container,
+            text=":تنسيق العملة (عدد الخانات العشرية)",
+            font=("Cairo", 18),
+            anchor="e",
+        ).pack(anchor="e", pady=(10, 5))
+
+        decimal_places_var = StringVar(value=str(self.settings.get("decimal_places", "2")))
+        self.vars["decimal_places"] = decimal_places_var
+
+        decimal_frame = CTkFrame(container, fg_color="transparent")
+        decimal_frame.pack(fill="x", pady=(0, 15))
+
+        # معاينة التنسيق
+        preview_label = CTkLabel(
+            decimal_frame,
+            text=f"معاينة: 0.{'0' * int(decimal_places_var.get())}",
+            font=("Cairo", 15, "bold"),
+            text_color="#0099ff",
+        )
+        preview_label.pack(side="left", padx=5)
+
+        def update_preview(value):
+            places = int(value)
+            preview_label.configure(text=f"معاينة: 0.{'0' * places}" if places > 0 else "معاينة: 0")
+
+        CTkSegmentedButton(
+            decimal_frame,
+            values=["1", "2", "3"],
+            variable=decimal_places_var,
+            font=("Cairo", 14, "bold"),
+            selected_color="#0078da",
+            selected_hover_color="#005fa3",
+            unselected_color=("#E0E0E0", "#3E3E3E"),
+            height=40,
+            corner_radius=8,
+            command=update_preview,
+        ).pack(side="right", fill="x", expand=True)
 
         # ===== الطباعة التلقائية =====
         auto_print_var = BooleanVar(value=self.settings.get("auto_print", True))
@@ -631,6 +672,7 @@ class Settings:
                 shop_address=self.vars["shop_address"].get(),
                 currency_name=self.vars["currency_name"].get(),
                 sub_currency_name=self.vars["sub_currency_name"].get(),
+                decimal_places=int(self.vars["decimal_places"].get()),
             )
 
             # ======= تطبيق الـ Theme فوراً =======

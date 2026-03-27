@@ -164,42 +164,72 @@ class SaleState:
         التحقق من المنتجات داخل السلة:
         - حذف المنتجات المحذوفة من قاعدة البيانات
         - تحديث المخزون
+        - حذف المنتج لو المخزون أصبح صفر
         - تعديل الكمية لو أكبر من المتاح
         """
-        invalid_products = []
-        out_of_stock_products = []
+        if getattr(self, "_validating", False):
+            return
+        self._validating = True
 
-        for product_id, product in list(self._selected_products.items()):
-            db_product = self.data_service.get_product(product_id)
+        try:
+            invalid_products = []
+            removed_no_stock = []
+            out_of_stock_products = []
 
-            # ❌ المنتج اتحذف من قاعدة البيانات
-            if not db_product:
-                invalid_products.append(product.get("name", "منتج غير معروف"))
-                del self._selected_products[product_id]
-                continue
+            for product_id, product in list(self._selected_products.items()):
+                db_product = self.data_service.get_product(product_id)
 
-            db_stock = db_product[5]
+                # ❌ المنتج اتحذف من قاعدة البيانات
+                if not db_product:
+                    invalid_products.append(product.get("name", "منتج غير معروف"))
+                    del self._selected_products[product_id]
+                    continue
 
-            # تحديث المخزون
-            self._selected_products[product_id]["stock"] = db_stock
+                db_stock = db_product[5]
 
-            # ❌ الكمية أكبر من المخزون
-            if self.check_out_of_stock(product_id, product["qty"], False):
-                out_of_stock_products.append(product.get("name", "منتج غير معروف"))
+                # تحديث المخزون في السلة
+                self._selected_products[product_id]["stock"] = db_stock
 
-        if invalid_products:
-            showwarning(
-                "تنبيه",
-                f"تم حذف بعض المنتجات لأنها لم تعد موجودة:\n"
-                + "\n".join(invalid_products),
-            )
+                # ❌ المخزون أصبح صفر → احذف المنتج من السلة
+                if db_stock <= 0:
+                    removed_no_stock.append(product.get("name", "منتج غير معروف"))
+                    del self._selected_products[product_id]
+                    continue
 
-        if out_of_stock_products:
-            showwarning(
-                "تنبيه",
-                f"تم تعديل كمية بعض المنتجات لأنها تجاوزت المخزون:\n"
-                + "\n".join(out_of_stock_products),
-            )
+                # ⚠️ الكمية أكبر من المخزون → عدّل الكمية فعلياً بدون رسالة هنا
+                if self.check_out_of_stock(product_id, product["qty"], False):
+                    out_of_stock_products.append(product.get("name", "منتج غير معروف"))
+                    sub_unit = product.get("sub_unit")
+                    conversion_factor = product.get("conversion_factor", 1)
+                    current_unit = product.get("current_unit")
+                    max_qty = db_stock
+                    if sub_unit == current_unit:
+                        max_qty = db_stock * conversion_factor
+                    self._selected_products[product_id]["qty"] = max_qty
+
+            # ── عرض الرسائل مرة واحدة فقط ──
+            if invalid_products:
+                showwarning(
+                    "تنبيه",
+                    "تم حذف بعض المنتجات لأنها لم تعد موجودة:\n"
+                    + "\n".join(invalid_products),
+                )
+
+            if removed_no_stock:
+                showwarning(
+                    "تنبيه",
+                    "تم حذف بعض المنتجات من السلة لأن مخزونها أصبح صفراً:\n"
+                    + "\n".join(removed_no_stock),
+                )
+
+            if out_of_stock_products:
+                showwarning(
+                    "تنبيه",
+                    "تم تعديل كمية بعض المنتجات لأنها تجاوزت المخزون:\n"
+                    + "\n".join(out_of_stock_products),
+                )
+        finally:
+            self._validating = False
 
     def get_product_display_price(self, product_id):
         """الحصول على السعر المعروض للمنتج"""

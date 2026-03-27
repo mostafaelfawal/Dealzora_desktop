@@ -1,7 +1,16 @@
-from customtkinter import CTkFrame, CTkEntry, CTkOptionMenu
+from customtkinter import (
+    CTkFrame,
+    CTkEntry,
+    CTkOptionMenu,
+    CTkSegmentedButton,
+    CTkScrollableFrame,
+    CTkLabel,
+    CTkButton,
+)
 from tkinter import messagebox
 from utils.get_stock_tag import get_stock_tag
 from utils.key_shortcut import key_shortcut
+from utils.image import image
 from utils.KeyShortcutsManager import KeyShortcutsManager
 from components.TreeView import TreeView
 
@@ -18,15 +27,12 @@ class SearchSection(CTkFrame):
 
     def _build_search_section(self):
         """قسم البحث والفئات في صف واحد"""
-        # إطار أفقي لتوزيع العناصر
         search_container = CTkFrame(self, fg_color="transparent")
         search_container.pack(fill="x", padx=20, pady=5)
 
-        # توزيع المسافات
-        search_container.grid_columnconfigure(0, weight=1)  # قائمة الفئات
-        search_container.grid_columnconfigure(1, weight=3)  # حقل البحث
+        search_container.grid_columnconfigure(0, weight=1)
+        search_container.grid_columnconfigure(1, weight=3)
 
-        # إنشاء العناصر داخل الإطار
         self.category_menu = self._create_category_menu(search_container)
         self.category_menu.grid(row=0, column=0, sticky="ew", padx=(0, 5))
         self.fill_categorys()
@@ -41,7 +47,6 @@ class SearchSection(CTkFrame):
         self.category_menu.configure(values=["جميع الفئات"] + categorys)
 
     def _create_search_box(self, parent):
-        """إنشاء حقل البحث"""
         search_entry = CTkEntry(
             parent,
             placeholder_text="...ابحث بالاسم أو الباركود 🔍",
@@ -54,7 +59,6 @@ class SearchSection(CTkFrame):
             justify="right",
         )
 
-        # تأثير التركيز
         def on_focus():
             search_entry.configure(border_color="#0099ff")
 
@@ -67,7 +71,6 @@ class SearchSection(CTkFrame):
         return search_entry
 
     def _create_category_menu(self, parent):
-        """إنشاء قائمة الفئات"""
         category_menu = CTkOptionMenu(
             parent,
             values=["جميع الفئات"],
@@ -81,8 +84,6 @@ class SearchSection(CTkFrame):
             text_color=("#1A1A1A", "#FFFFFF"),
             command=lambda _: self._on_search(),
         )
-
-        # ارجاع القائمة لتمكين التحديث لاحقًا
         return category_menu
 
     def _focus_search(self):
@@ -102,11 +103,9 @@ class SearchSection(CTkFrame):
         tree = self.product_table.tree.tree
         items = tree.get_children()
 
-        # لو مفيش نتائج
         if not items:
             return
 
-        # لو نتيجة واحدة → أضف مباشرة
         if len(items) == 1:
             tree.selection_set(items[0])
             self.product_table._on_add_product()
@@ -144,15 +143,12 @@ class ProductTable(CTkFrame):
         self.add_shortcuts()
 
     def load_products(self):
-        products = self.data_service.get_products()
-        return products
+        return self.data_service.get_products()
 
     def refresh_table(self, products=None):
         tree = self.tree.tree
         self.products = products if products else self.load_products()
-        # تنظيف البيانات في الجدول
         tree.delete(*tree.get_children())
-        # ملأ الجدول بالبيانات الجديدة
         for product in self.products:
             p = {
                 "id": product[0],
@@ -187,17 +183,16 @@ class ProductTable(CTkFrame):
             product_data = self.data_service.get_product(product_id)
             unit_id = product_data[11] if len(product_data) > 11 else None
             unit_info = self.data_service.get_unit(unit_id) if unit_id else None
-            
+
             if not product_data:
                 continue
-            
-            if product_data[5] <= 0:  # لو المخزون صفر أو أقل
+
+            if product_data[5] <= 0:
                 self.is_out_of_stock = True
                 continue
 
-            # جهز المنتج
             product = {
-                "id": (product_data[0]),
+                "id": product_data[0],
                 "name": product_data[1],
                 "price": float(product_data[4]),
                 "image_path": product_data[7],
@@ -214,7 +209,7 @@ class ProductTable(CTkFrame):
         if self.is_out_of_stock:
             messagebox.showwarning(
                 "منتج غير متوفر",
-                f"بعض المنتجات المحددة غير متوفرة في المخزون وتم تخطيها.",
+                "بعض المنتجات المحددة غير متوفرة في المخزون وتم تخطيها.",
             )
 
         self.sale_state.add_products(products)
@@ -224,16 +219,191 @@ class ProductTable(CTkFrame):
         self.refresh_table(products)
 
 
+class ProductCardsView(CTkScrollableFrame):
+    """عرض المنتجات على شكل بطاقات صغيرة في Grid"""
+
+    COLUMNS = 4  # عدد الأعمدة في الـ Grid
+
+    def __init__(self, parent, data_service, sale_state):
+        super().__init__(parent, height=300)
+        self.data_service = data_service
+        self.sale_state = sale_state
+        self.products = []
+        self._image_cache = {}  # تخزين الصور لمنع garbage collection
+
+    def update_products(self, products):
+        """تحديث البطاقات بقائمة منتجات جديدة"""
+        self.products = products if products else []
+        self._render_cards()
+
+    def _render_cards(self):
+        """مسح البطاقات القديمة وإعادة الرسم"""
+        for widget in self.winfo_children():
+            widget.destroy()
+        self._image_cache.clear()
+
+        for col in range(self.COLUMNS):
+            self.grid_columnconfigure(col, weight=1)
+
+        for idx, product in enumerate(self.products):
+            row = idx // self.COLUMNS
+            col = idx % self.COLUMNS
+            card = self._build_card(product)
+            card.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
+
+    def _build_card(self, product):
+        """بناء بطاقة منتج واحدة"""
+        p_id = product[0]
+        name = product[1]
+        price = product[4]
+        stock = product[5]
+        low_stock = product[8]
+        img_path = product[7] if len(product) > 7 else None
+
+        # تحديد لون الإطار بناءً على المخزون
+        if stock <= 0:
+            border_color = "#FF4444"
+        elif low_stock and stock <= low_stock:
+            border_color = "#FFA500"
+        else:
+            border_color = ("#E0E0E0", "#3E3E3E")
+
+        card = CTkFrame(
+            self,
+            corner_radius=10,
+            border_width=1,
+            border_color=border_color,
+            fg_color=("#FFFFFF", "#2B2B2B"),
+        )
+
+        # ── صورة المنتج ──
+        img_label = CTkLabel(
+            card,
+            text="",
+            image=image(img_path, (50, 50)),
+            font=("Cairo", 22),
+            width=50,
+            height=50,
+        )
+        img_label.pack(pady=(6, 2))
+
+        # ── اسم المنتج ──
+        CTkLabel(
+            card,
+            text=("..." if len(name) > 20 else "") + name[:20],
+            font=("Cairo", 11, "bold"),
+            text_color=("#1A1A1A", "#FFFFFF"),
+            wraplength=110,
+            justify="center",
+        ).pack(padx=4)
+
+        # ── السعر ──
+        CTkLabel(
+            card,
+            text=f"💰 {price}",
+            font=("Cairo", 10, "bold"),
+            text_color="#0099ff",
+        ).pack()
+
+        # ── زر الإضافة ──
+        CTkButton(
+            card,
+            text="+ إضافة",
+            font=("Cairo", 10),
+            height=26,
+            corner_radius=8,
+            fg_color="#0078da",
+            hover_color="#005fa3",
+            command=lambda pid=p_id: self._add_product_by_id(pid),
+        ).pack(side="bottom", padx=6, pady=(0, 6), fill="x")
+
+        return card
+
+    def _add_product_by_id(self, product_id):
+        """إضافة منتج بالضغط على زر البطاقة"""
+        product_data = self.data_service.get_product(product_id)
+        if not product_data:
+            return
+
+        if product_data[5] <= 0:
+            messagebox.showwarning("منتج غير متوفر", "هذا المنتج غير متوفر في المخزون.")
+            return
+
+        unit_id = product_data[11] if len(product_data) > 11 else None
+        unit_info = self.data_service.get_unit(unit_id) if unit_id else None
+
+        product = {
+            "id": product_data[0],
+            "name": product_data[1],
+            "price": float(product_data[4]),
+            "image_path": product_data[7],
+            "stock": int(product_data[5]),
+            "low_stock": int(product_data[8]),
+            "qty": 1,
+            "unit": unit_info["unit_name"] if unit_info else "قطعة",
+            "sub_unit": unit_info["sub_unit_name"] if unit_info else None,
+            "conversion_factor": unit_info["conversion_factor"] if unit_info else 1,
+            "current_unit": unit_info["unit_name"] if unit_info else "قطعة",
+        }
+
+        self.sale_state.add_products([product])
+
+
 class ProductSection(CTkFrame):
     def __init__(self, parent, data_service, sale_state):
         super().__init__(parent)
+        self.data_service = data_service
+        self.sale_state = sale_state
 
-        self.search = SearchSection(self, data_service)
-        self.search.pack(fill="x")
+        # ── شريط التحكم (بحث + زر التبديل) ──
+        top_bar = CTkFrame(self, fg_color="transparent")
+        top_bar.pack(fill="x")
 
+        self.search = SearchSection(top_bar, data_service)
+        self.search.pack(side="right", fill="x", expand=True)
+
+        self.view_toggle = CTkSegmentedButton(
+            top_bar,
+            values=["🗂 جدول", "🃏 بطاقات"],
+            font=("Cairo", 13),
+            selected_color="#0078da",
+            selected_hover_color="#005fa3",
+            unselected_color=("#E0E0E0", "#3E3E3E"),
+            unselected_hover_color=("#CCCCCC", "#4A4A4A"),
+            fg_color=("#F0F0F0", "#2B2B2B"),
+            text_color=("#1A1A1A", "#FFFFFF"),
+            height=38,
+            corner_radius=10,
+            command=self._on_view_change,
+        )
+        self.view_toggle.set("🗂 جدول")
+        self.view_toggle.pack(side="left", padx=(20, 5), pady=5)
+
+        # ── عرض الجدول ──
         self.table = ProductTable(self, data_service, sale_state)
         self.table.pack(fill="both", expand=True, padx=20)
-        self.search.product_table = self.table
 
-        # ربط البحث بالجدول
-        self.search.on_search_callback = self.table.update_products
+        # ── عرض البطاقات (مخفي في البداية) ──
+        self.cards_view = ProductCardsView(self, data_service, sale_state)
+        # لا نعرضه الآن
+
+        # ربط البحث بالعرض الحالي
+        self.search.product_table = self.table
+        self.search.on_search_callback = self._on_search_results
+
+        # تحميل البطاقات بالبيانات الأولية
+        self.cards_view.update_products(self.table.products)
+
+    def _on_view_change(self, value):
+        """التبديل بين عرض الجدول والبطاقات"""
+        if value == "🗂 جدول":
+            self.cards_view.pack_forget()
+            self.table.pack(fill="both", expand=True, padx=20)
+        else:
+            self.table.pack_forget()
+            self.cards_view.pack(fill="both", expand=True, padx=20)
+
+    def _on_search_results(self, results):
+        """تمرير نتائج البحث لكلا العرضين"""
+        self.table.update_products(results)
+        self.cards_view.update_products(results)

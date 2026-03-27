@@ -23,6 +23,7 @@ class SettingsModel:
             "shop_address": "",
             "currency_name": "جنيهاً",
             "sub_currency_name": "قرشاً",
+            "decimal_places": 2,
         }
 
         # validators لكل مفتاح
