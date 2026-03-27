@@ -12,7 +12,7 @@ OWNER = "mostafaelfawal"
 REPO = "Dealzora_desktop"
 FILE_PATH = "version.json"
 
-APP_VERSION = "1.6.6"
+APP_VERSION = "1.6.7"
 
 
 def check_for_update():
