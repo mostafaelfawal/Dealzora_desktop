@@ -615,7 +615,7 @@ class Invoices:
                 product_id = item[2]
                 quantity = item[3]
                 price = float(item[4])
-                item_total = float(item[5])
+                item_total = price * quantity
 
                 product = self.products_db.get_product(product_id)
                 product_name = product[1] if product else "منتج محذوف"

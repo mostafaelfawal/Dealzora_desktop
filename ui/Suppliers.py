@@ -135,7 +135,7 @@ class Suppliers:
     # ========== مودال إضافة مورد جديد ==========
     def open_add_modal(self):
         """فتح نافذة منبثقة لإضافة مورد جديد"""
-        current = len(self.get_suppliers())
+        current = len(self.supplier_model.get_suppliers())
         if not check_limit("اضافة الموردين", current):
             return
 

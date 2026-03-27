@@ -197,6 +197,7 @@ class UsersManagement:
             "inventory_management": "إدارة المخزون",
             "reports_view": "رؤية التقارير",
             "customers_management": "إدارة العملاء",
+            "cost_center_management": "إدارة مراكز التكلفة",
             "users_management": "إدارة المستخدمين",
             "invoices_management": "إدارة الفواتير",
             "settings_edit": "تعديل الإعدادات",

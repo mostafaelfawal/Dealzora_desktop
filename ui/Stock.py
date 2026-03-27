@@ -367,7 +367,7 @@ class Stock:
         potential_profit_value = 0
 
         for p in products:
-            pid, name, barcode, buy, sell, qty, cat_id, _, low, supplier_id, _ = p
+            pid, name, barcode, buy, sell, qty, cat_id, _, low, supplier_id, _, _ = p
             category_name = self.products_model.get_category(cat_id)
             supplier_name = (
                 self.supplier_model.get_supplier_by_id(supplier_id)

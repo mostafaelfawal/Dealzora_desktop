@@ -31,6 +31,7 @@ class Expenses:
         self.root = root
         self._search_after_id = None  # For debouncing search
         self._is_updating = False  # Prevent recursive updates
+        self.selected_expense_id = None
 
         self.expenses_service = DataService(expenses_db)
         self.expenses_state = ExpensesState(self.expenses_service)

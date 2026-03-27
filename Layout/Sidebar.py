@@ -1,6 +1,5 @@
 from customtkinter import CTkFrame, CTkButton, CTkLabel, CTkScrollableFrame
 from typing import Callable
-from utils.license import is_license_valid
 from utils.image import image
 from .data_structures import NavItem
 from .Constants import (
@@ -9,8 +8,6 @@ from .Constants import (
     COLOR_DANGER_HV,
     COLOR_HOVER,
     COLOR_PRIMARY,
-    COLOR_TRIAL,
-    FONT_TRIAL,
     FONT_NAV,
     FONT_TITLE,
     SIDEBAR_EXPANDED_WIDTH,

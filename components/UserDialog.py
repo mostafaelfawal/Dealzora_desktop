@@ -20,7 +20,6 @@ class UserDialog(CTkToplevel):
 
         self.title("إضافة مستخدم جديد" if not user else "تعديل المستخدم")
         self.geometry("600x650")
-        self.resizable(False, False)
 
         # جعل النافذة في المقدمة
         self.transient(parent)
@@ -172,6 +171,7 @@ class UserDialog(CTkToplevel):
             ("users_management", "إدارة المستخدمين"),
             ("reports_view", "رؤية التقارير"),
             ("customers_management", "إدارة العملاء"),
+            ("cost_center_management", "إدارة مراكز التكلفة"),
             ("invoices_management", "إدارة الفواتير"),
             ("settings_edit", "تعديل الإعدادات"),
             ("suppliers_management", "إدارة الموردين"),

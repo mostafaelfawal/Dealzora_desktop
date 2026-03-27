@@ -28,6 +28,7 @@ class CustomerModal:
         modal.title(
             "اضافة عميل | Dealzora" if mode == "add" else "تعديل العميل | Dealzora"
         )
+        modal.resizable(False, False)
         center_modal(modal)
 
         fields = ["*الأسم", "الهاتف", "حجم الدين"]

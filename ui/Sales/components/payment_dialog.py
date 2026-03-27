@@ -609,15 +609,7 @@ class InvoiceView(CTkToplevel):
             edit_dialog, text=f"تعديل سعر {product['name']}", font=("Cairo", 13, "bold")
         ).pack(pady=8)
 
-        # عرض السعر الأصلي
-        CTkLabel(
-            edit_dialog,
-            text=f"السعر الأصلي: {format_currency(product['original_price'])}",
-            font=("Cairo", 10),
-            text_color=("gray", "gray60"),
-        ).pack(pady=2)
-
-        # عرض السعر الحالي
+        # عرض السعر الحالي فقط
         current_price = self.sale_state.get_product_display_price(product["id"])
         CTkLabel(
             edit_dialog,

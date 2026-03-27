@@ -36,10 +36,6 @@ class SaleState:
         self._tax_type = "percent"  # or fixed
         self._tax_value = self._get_default_tax()
 
-        # تخزين تأثير كل منتج على الخصم والضريبة
-        # {product_id: {'discount_effect': value, 'tax_effect': value, 'adjusted_price': price}}
-        self._product_effects = {}
-
         if hasattr(self, "_observers"):
             self._notify_observers()
 
@@ -78,16 +74,14 @@ class SaleState:
 
     @property
     def subtotal(self):
-        """حساب الإجمالي الفرعي باستخدام الأسعار الأصلية"""
-        result = sum(
-            item["original_price"] * item["qty"] for item in self.selected_products
-        )
+        """حساب الإجمالي الفرعي باستخدام الأسعار المعدلة"""
+        result = sum(item["price"] * item["qty"] for item in self.selected_products)
         return round(result, 2)
 
     @property
     def total(self):
         result = self.subtotal - self.discount_amount + self.tax_amount
-        return round(result, 2)        
+        return round(result, 2)
 
     # ======= Discount =============
     @property
@@ -98,7 +92,7 @@ class SaleState:
         else:
             result = self._discount_value
         return round(result, 2)
-    
+
     @discount_amount.setter
     def discount_amount(self, value):
         if not is_number(value):
@@ -126,7 +120,7 @@ class SaleState:
         else:
             result = self._tax_value
         return round(result, 2)
-    
+
     @tax_amount.setter
     def tax_amount(self, value):
         if not is_number(value):
@@ -146,31 +140,25 @@ class SaleState:
 
     def reset_sale(self):
         return self._reset_sale()
-    
+
     @property
     def selected_products(self):
         """إرجاع قائمة المنتجات مع التحقق من صحتها"""
-        
+
         self._validate_selected_products()
 
         products = []
         for product_id, product in self._selected_products.items():
             product_copy = product.copy()
-
-            if product_id in self._product_effects:
-                product_copy["price"] = self._product_effects[product_id]["adjusted_price"]
-            else:
-                product_copy["price"] = product_copy["original_price"]
-
             products.append(product_copy)
 
         return products
-    
+
     def change_current_unit(self, product_id, new_unit):
         """تغيير الوحدة الحالية لمنتج معين"""
         if product_id in self._selected_products:
             self._selected_products[product_id]["current_unit"] = new_unit
-    
+
     def _validate_selected_products(self):
         """
         التحقق من المنتجات داخل السلة:
@@ -180,14 +168,13 @@ class SaleState:
         """
         invalid_products = []
         out_of_stock_products = []
-        
+
         for product_id, product in list(self._selected_products.items()):
             db_product = self.data_service.get_product(product_id)
 
             # ❌ المنتج اتحذف من قاعدة البيانات
             if not db_product:
                 invalid_products.append(product.get("name", "منتج غير معروف"))
-                self._remove_product_effect(product_id)
                 del self._selected_products[product_id]
                 continue
 
@@ -197,27 +184,27 @@ class SaleState:
             self._selected_products[product_id]["stock"] = db_stock
 
             # ❌ الكمية أكبر من المخزون
-            if self.check_out_of_stock(product_id, product["qty"], False):    
+            if self.check_out_of_stock(product_id, product["qty"], False):
                 out_of_stock_products.append(product.get("name", "منتج غير معروف"))
 
         if invalid_products:
             showwarning(
                 "تنبيه",
-                f"تم حذف بعض المنتجات لأنها لم تعد موجودة:\n" + "\n".join(invalid_products)
+                f"تم حذف بعض المنتجات لأنها لم تعد موجودة:\n"
+                + "\n".join(invalid_products),
             )
-        
+
         if out_of_stock_products:
             showwarning(
                 "تنبيه",
-                f"تم تعديل كمية بعض المنتجات لأنها تجاوزت المخزون:\n" + "\n".join(out_of_stock_products)
+                f"تم تعديل كمية بعض المنتجات لأنها تجاوزت المخزون:\n"
+                + "\n".join(out_of_stock_products),
             )
 
     def get_product_display_price(self, product_id):
         """الحصول على السعر المعروض للمنتج"""
-        if product_id in self._product_effects:
-            return self._product_effects[product_id]["adjusted_price"]
-        elif product_id in self._selected_products:
-            return self._selected_products[product_id]["original_price"]
+        if product_id in self._selected_products:
+            return self._selected_products[product_id]["price"]
         return 0
 
     def add_product(self, product):
@@ -242,7 +229,6 @@ class SaleState:
         else:
             product_copy = product.copy()
             product_copy["qty"] = new_qty
-            product_copy["original_price"] = product["price"]
             self._selected_products[product_id] = product_copy
 
     def add_products(self, products):
@@ -254,38 +240,20 @@ class SaleState:
     @selected_products.setter
     def selected_products(self, products):
         self._selected_products.clear()
-        self._product_effects.clear()
 
         for product in products:
             if not is_number(product["price"]) or not is_number(product["qty"]):
                 raise ValueError("سعر المنتج او كميته يجب ان تكون رقماً")
 
             product_copy = product.copy()
-            product_copy["original_price"] = product["price"]
             self._selected_products[product["id"]] = product_copy
 
         self._notify_observers()
 
     def remove_product(self, product_id):
         if product_id in self._selected_products:
-            # قبل حذف المنتج، نقوم بإلغاء تأثيره على الخصم والضريبة
-            self._remove_product_effect(product_id)
             del self._selected_products[product_id]
             self._notify_observers()
-
-    def _remove_product_effect(self, product_id):
-        """إزالة تأثير منتج معين من الخصم والضريبة"""
-        if product_id not in self._product_effects:
-            return
-        
-        effect = self._product_effects.pop(product_id)
-        
-        # فقط للنوع fixed — للنسبة المئوية إعادة حساب كاملة أضمن
-        if self._discount_type == "fixed":
-            self._discount_value = max(0, self._discount_value - effect.get("discount_effect", 0))
-        
-        if self._tax_type == "fixed":
-            self._tax_value = max(0, self._tax_value - effect.get("tax_effect", 0))
 
     def update_product_qty(self, product_id, new_qty):
         if product_id not in self._selected_products:
@@ -303,19 +271,13 @@ class SaleState:
         else:
             self._selected_products[product_id]["qty"] = new_qty
 
-        # إذا كان هناك تعديل سعر لهذا المنتج، نحتاج لإعادة حساب تأثيره
-        if product_id in self._product_effects:
-            current_adjusted_price = self._product_effects[product_id]["adjusted_price"]
-            self.update_product_price(product_id, current_adjusted_price)
-
         self._notify_observers()
 
     def update_product_price(self, product_id, new_price):
         """
-        تعديل سعر المنتج:
-        - يتم إزالة التأثير السابق لهذا المنتج
-        - يتم حساب التأثير الجديد وإضافته
-        - لا يتم تعديل سعر المنتج في السلة
+        تعديل سعر المنتج نهائياً:
+        - يتم تحديث السعر مباشرة في المنتج
+        - لا يوجد أي تأثير على الضريبة أو الخصم
         """
         if product_id not in self._selected_products:
             return
@@ -323,56 +285,7 @@ class SaleState:
         if not is_number(new_price):
             raise ValueError("سعر المنتج يجب أن يكون رقماً")
 
-        product = self._selected_products[product_id]
-        original_price = product["original_price"]
-        new_price = float(new_price)
-
-        # إذا كان السعر الجديد هو نفس السعر الأصلي، قم بإزالة التأثير فقط
-        if abs(new_price - original_price) < 0.01:
-            if product_id in self._product_effects:
-                self._remove_product_effect(product_id)
-            return
-
-        # إزالة التأثير السابق لهذا المنتج إن وجد
-        if product_id in self._product_effects:
-            self._remove_product_effect(product_id)
-
-        # حساب التأثير الجديد
-        qty = product["qty"]
-        total_diff = (new_price - original_price) * qty
-
-        discount_effect = 0
-        tax_effect = 0
-
-        if total_diff < 0:
-            # السعر الجديد أقل -> خصم
-            discount_effect = abs(total_diff)
-            if self._discount_type == "fixed":
-                self._discount_value += discount_effect
-            else:
-                if self.subtotal > 0:
-                    additional_discount_percent = (
-                        abs(total_diff) / self.subtotal
-                    ) * 100
-                    self._discount_value += additional_discount_percent
-        elif total_diff > 0:
-            # السعر الجديد أكبر -> ضريبة
-            tax_effect = total_diff
-            if self._tax_type == "fixed":
-                self._tax_value += tax_effect
-            else:
-                base = self.subtotal - self.discount_amount
-                if base > 0:
-                    additional_tax_percent = (total_diff / base) * 100
-                    self._tax_value += additional_tax_percent
-
-        # تخزين التأثير الجديد
-        self._product_effects[product_id] = {
-            "adjusted_price": new_price,
-            "discount_effect": discount_effect,
-            "tax_effect": tax_effect,
-        }
-
+        self._selected_products[product_id]["price"] = float(new_price)
         self._notify_observers()
 
     def check_out_of_stock(self, product_id, new_qty, show_message=True):
@@ -384,10 +297,10 @@ class SaleState:
         sub_unit = selected_product.get("sub_unit")
         conversion_factor = selected_product.get("conversion_factor")
         current_unit = selected_product.get("current_unit")
-        
+
         max_qty = selected_product["stock"]
         max_qty_in_selected_unit = max_qty
-        
+
         if sub_unit == current_unit:
             max_qty_in_selected_unit = max_qty * conversion_factor
 
@@ -404,7 +317,6 @@ class SaleState:
     def clear_cart(self):
         """تفريغ السلة بالكامل"""
         self._selected_products.clear()
-        self._product_effects.clear()
         self._notify_observers()
 
     def complete_sale(self, amount_paid):
@@ -437,7 +349,7 @@ class SaleState:
             self.tax_amount,
             self.total,
             remaining_amount,
-            self.customer_id
+            self.customer_id,
         )
 
         self._record_invoice_item(sale_id)
@@ -446,7 +358,7 @@ class SaleState:
     def _record_invoice_item(self, sale_id):
         sale_items_data = self._prepare_sale_items_data()
         self.data_service.record_invoice_item(sale_id, sale_items_data)
-    
+
     def _prepare_sale_items_data(self):
         sale_items_data = []
         for product in self.selected_products:
@@ -455,27 +367,29 @@ class SaleState:
 
             sale_items_data.append(
                 (
-                    product["id"], 
-                    qty,  
-                    price, 
-                    self.total,  
+                    product["id"],
+                    qty,
+                    price,
+                    self.total,
                 )
             )
 
         return sale_items_data
-    
+
     def _record_stock_movements(self, sale_id):
         for product in self.selected_products:
             product_id = product["id"]
             qty_sold = float(product["qty"])
-            self.data_service.add_movement(product_id, -qty_sold, self.invoice_number, sale_id)
-            
+            self.data_service.add_movement(
+                product_id, -qty_sold, self.invoice_number, sale_id
+            )
+
     def _calculate_remaining(self, amount_paid):
         if not is_number(amount_paid):
             raise ValueError("المبلغ المدفوع يجب أن يكون رقماً")
         remaining = self.total - float(amount_paid)
         return round(remaining, 2)
-    
+
     def _print_invoice(self, invoice_data, products_data):
         try:
             from utils.print_thermal import print_shop_invoice
@@ -490,7 +404,7 @@ class SaleState:
 
         except Exception as e:
             messagebox.showwarning("تحذير", f"فشل الطباعة: {e}")
-    
+
     def print_current_invoice(self, amount_paid=0):
         """طباعة الفاتورة بدون تسجيل البيع"""
         try:
@@ -499,12 +413,12 @@ class SaleState:
             self._print_invoice(invoice_data, products_data)
         except Exception as e:
             messagebox.showwarning("تحذير", f"فشل الطباعة: {e}")
-    
+
     def _prepare_invoice_data(self, amount_paid):
         """Prepare invoice data for printing."""
         amount_paid = float(amount_paid) if is_number(amount_paid) else 0
         remaining = self._calculate_remaining(amount_paid)
-        
+
         return {
             "invoice_number": self.invoice_number,
             "date": strftime("%Y-%m-%d"),
@@ -517,7 +431,7 @@ class SaleState:
             "paid": round(amount_paid, 2),
             "remaining": remaining,
         }
-    
+
     def _prepare_products_for_printing(self):
         products = []
         for product in self.selected_products:

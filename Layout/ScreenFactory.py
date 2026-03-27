@@ -4,6 +4,7 @@ from ui.Users import UsersManagement
 from ui.Stock import Stock
 from ui.Reports import Reports
 from ui.Customers import Customers
+from ui.CostCenter import CostCenter
 from ui.Invoices import Invoices
 from ui.Settings import Settings
 from ui.Suppliers import Suppliers
@@ -63,6 +64,9 @@ class ScreenFactory:
     def _build_customers(self, parent) -> None:
         Customers(parent, self._deps.customers_db)
 
+    def _build_cost_center(self, parent) -> None:
+        CostCenter(parent)
+    
     def _build_invoices(self, parent) -> None:
         Invoices(
             parent,
@@ -96,6 +100,7 @@ class ScreenFactory:
             "stock": ScreenFactory._build_stock,
             "reports": ScreenFactory._build_reports,
             "customers": ScreenFactory._build_customers,
+            "cost_center": ScreenFactory._build_cost_center,
             "invoices": ScreenFactory._build_invoices,
             "suppliers": ScreenFactory._build_suppliers,
             "expenses": ScreenFactory._build_expenses,
