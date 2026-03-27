@@ -328,8 +328,9 @@ class SaleState:
             return
         self._handle_customer_debt(amount_paid)
         self._record_stock_movements(sale_id)
-
-        self._print_invoice(invoice_data, products_data)
+        
+        if self.data_service.get_setting("auto_print"):
+            self._print_invoice(invoice_data, products_data)
 
         self._reset_sale()
 

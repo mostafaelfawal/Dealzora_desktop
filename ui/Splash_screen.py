@@ -2,7 +2,7 @@ import threading
 from customtkinter import CTkLabel, CTkFrame, CTkProgressBar
 from components.UpdateModal import UpdateModal
 from utils.image import image
-from utils.license import is_license_valid
+from utils.license import is_activated
 from utils.update_checker import check_for_update
 
 APP_VERSION = "1.6.6"
@@ -75,7 +75,7 @@ class SplashScreen:
         if self.frame and self.frame.winfo_exists():
             self.frame.destroy()
         self.root.state("zoomed")
-        if is_license_valid():
+        if is_activated():
             self.on_finish()
         else:
             from ui.license_screen import LicenseScreen

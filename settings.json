@@ -1,7 +1,7 @@
 {
     "shop_name": "Dealzora - ماركت",
     "currency": "ج.م",
-    "tax": 10.0,
+    "tax": 0.0,
     "theme": "dark",
     "logo_path": "D:/my_softweres/desktop/Dealzora Project/Dealzora/assets/icon.png",
     "printer_name": "Microsoft Print to PDF",
