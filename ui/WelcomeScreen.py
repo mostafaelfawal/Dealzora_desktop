@@ -23,7 +23,7 @@ class WelcomeScreen:
         ).pack(pady=(10, 0))
 
         CTkLabel(parent, text="لإدارة المتاجر بأحترافيه", font=FONT_MEDIUM).pack()
-        CTkLabel(parent, text="v1.5.6", font=FONT_SMALL).pack(side="bottom")
+        CTkLabel(parent, text="v1.6.6", font=FONT_SMALL).pack(side="bottom")
         CTkLabel(parent, text="Powered by Softvanta", font=FONT_SMALL).pack(
             side="bottom"
         )

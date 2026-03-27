@@ -48,7 +48,7 @@ class BuyInvoiceModal:
         # عنوان النافذة
         title_label = CTkLabel(
             self.main_frame,
-            text="فاتورة شراء جديدة",
+            text="فاتورة شراء جديدة (قيد التطوير)",
             font=("Cairo", 24, "bold"),
             text_color="#2563eb",
             image=image("assets/invoices.png"),

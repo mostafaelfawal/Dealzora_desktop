@@ -25,9 +25,9 @@ def get_paper_config(paper_size_mm):
             "width_mm": 58,
             "width_px": mm_to_pixels(58),
             "font_shop": 24,
-            "font_title": 18,
-            "font_bold": 14,
-            "font_small": 12,
+            "font_title": 20,
+            "font_bold": 16,
+            "font_small": 14,
             "row_height": 40,
             "padding": 15,
             "inner_padding": 8,
@@ -39,9 +39,9 @@ def get_paper_config(paper_size_mm):
             "width_mm": 80,
             "width_px": mm_to_pixels(80),
             "font_shop": 30,
-            "font_title": 20,
-            "font_bold": 16,
-            "font_small": 14,
+            "font_title": 22,
+            "font_bold": 18,
+            "font_small": 16,
             "row_height": 45,
             "padding": 20,
             "inner_padding": 12,
@@ -62,7 +62,8 @@ def draw_ar(draw, x, y, text, font, align="center", fill="black"):
     elif align == "center":
         x = x - w / 2
 
-    draw.text((x, y), text, font=font, fill=fill)
+    # ✅ الإصلاح: طرح bbox[1] لتصحيح offset الخط العربي
+    draw.text((x, y - bbox[1]), text, font=font, fill=fill)
     return h
 
 
@@ -93,50 +94,42 @@ def wrap_text(draw, text, font, max_width):
 def draw_cell(
     draw, x, y, w, h, text, font, align="center", fill=None, draw_border=True
 ):
-    """رسم خلية مع دعم النصوص الطويلة وتقسيمها لأسطر متعددة"""
-
-    # رسم الخلفية إذا وجدت
     if fill:
         draw.rectangle((x, y, x + w, y + h), fill=fill)
-
-    # رسم الحدود
     if draw_border:
         draw.rectangle((x, y, x + w, y + h), outline="black", width=1)
 
-    # تقسيم النص إلى أسطر
     max_text_width = w - 10
     lines = wrap_text(draw, str(text), font, max_text_width)
-
     if not lines:
         lines = [""]
 
-    # حساب ارتفاع كل سطر
     line_heights = []
     for line in lines:
         bbox = draw.textbbox((0, 0), line, font=font)
+        # ✅ الإصلاح: استخدم الارتفاع الفعلي مش bbox[3] فقط
         line_heights.append(bbox[3] - bbox[1])
 
     total_height = sum(line_heights)
 
-    # بداية الرسم العمودي (توسيط عمودي)
-    start_y = y + (h - total_height) / 2
+    # ✅ الإصلاح: توسيط حقيقي مع مراعاة offset الخط
+    start_y = y + (h - total_height) // 2
 
-    # رسم كل سطر
     current_y = start_y
     for i, line in enumerate(lines):
         bbox = draw.textbbox((0, 0), line, font=font)
         tw = bbox[2] - bbox[0]
+        # ✅ الإصلاح: طرح bbox[1] عشان تصحح offset الخط العربي
+        text_y = current_y - bbox[1]
 
-        # تحديد المحاذاة الأفقية
         if align == "right":
             tx = x + w - tw - 5
         elif align == "left":
             tx = x + 5
-        else:  # center
+        else:
             tx = x + (w - tw) / 2
 
-        # رسم النص
-        draw.text((tx, current_y), ar(line), font=font, fill="black")
+        draw.text((tx, text_y), ar(line), font=font, fill="black")
         current_y += line_heights[i]
 
     return max(h, total_height + 10)
@@ -194,23 +187,22 @@ def generate_invoice(sale_data, products_data, width=None):
     # حساب عرض النص أولاً لمعرفة المساحة المطلوبة
     temp_text = "فاتورة بيع"
     temp_bbox = draw.textbbox((0, 0), ar(temp_text), font=f_title)
-    text_width = temp_bbox[2] - temp_bbox[0]
     text_height = temp_bbox[3] - temp_bbox[1]
-    
+
     # حساب ارتفاع الخلفية (إضافة مسافة أعلى وأسفل النص)
     title_padding = 12
     title_height = text_height + (title_padding * 2)
     title_y = y
-    
+
     # رسم الخلفية السوداء
     draw.rectangle(
         (margin, title_y, width - margin, title_y + title_height), fill="black"
     )
-    
+
     # رسم النص في المنتصف تماماً
     text_x = center
     text_y = title_y + title_height // 2
-    
+
     # رسم النص مع إزاحة بسيطة لضمان ظهوره كاملاً
     draw_ar(draw, text_x, text_y, "فاتورة بيع", f_title, "center", "white")
 
@@ -371,6 +363,9 @@ def generate_invoice(sale_data, products_data, width=None):
     # ===== SUMMARY BOX =====
     box_x = margin
     box_w = content_width
+    header_height = 35
+    box_start_y = y  # ✅ احفظ بداية الصندوق
+
 
     # حساب عدد العناصر في الملخص
     summary_items = 1  # العنوان
@@ -385,22 +380,17 @@ def generate_invoice(sale_data, products_data, width=None):
     # حساب ارتفاع الصندوق
     header_height = 35
     content_height = summary_items * paper_config["summary_spacing"]
-    box_height = header_height + content_height + 15
+    box_height = header_height + content_height + 40
 
     # رسم الصندوق الخارجي
     draw.rectangle((box_x, y, box_x + box_w, y + box_height), outline="black", width=2)
 
     # رسم رأس الصندوق
-    draw.rectangle((box_x, y, box_x + box_w, y + header_height), fill="black")
-    draw_ar(
-        draw,
-        box_x + box_w / 2,
-        y + header_height // 2,
-        "ملخص الفاتورة",
-        f_bold,
-        "center",
-        "white",
-    )
+    draw.rectangle((box_x, box_start_y, box_x + box_w, box_start_y + header_height), fill="black")
+    title_bbox = draw.textbbox((0, 0), ar("ملخص الفاتورة"), font=f_bold)
+    title_h = title_bbox[3] - title_bbox[1]
+    title_y = box_start_y + (header_height - title_h) // 2
+    draw_ar(draw, box_x + box_w / 2, title_y, "ملخص الفاتورة", f_bold, "center", "white")
 
     # بداية المحتوى مع مسافات داخلية
     y += header_height + inner_padding
@@ -436,7 +426,6 @@ def generate_invoice(sale_data, products_data, width=None):
 
     # عرض البيانات
     draw_summary_row("الإجمالي", sale_data["subtotal"])
-
     if sale_data.get("discount", 0) > 0:
         draw_summary_row("الخصم", sale_data["discount"])
     if sale_data.get("tax", 0) > 0:
@@ -444,14 +433,9 @@ def generate_invoice(sale_data, products_data, width=None):
 
     # خط فاصل
     y += 5
-    draw.line(
-        (margin + inner_padding, y, width - margin - inner_padding, y),
-        fill="black",
-        width=1,
-    )
+    draw.line((margin + inner_padding, y, width - margin - inner_padding, y), fill="black", width=1)
     y += paper_config["summary_spacing"] - 10
 
-    # المجموع النهائي
     draw_summary_row("المطلوب", sale_data["total"], is_bold=True, is_total=True)
     draw_summary_row("المدفوع", sale_data["paid"])
     draw_summary_row("الباقي", sale_data["remaining"])
@@ -460,6 +444,8 @@ def generate_invoice(sale_data, products_data, width=None):
 
     # ===== AMOUNT IN WORDS =====
     try:
+        box_end_y = y + 5
+        draw.rectangle((box_x, box_start_y, box_x + box_w, box_end_y), outline="black", width=2)
         words = number_to_arabic_words(sale_data["total"], currency, sub_currency)
         # تقسيم النص الطويل
         max_word_width = content_width - (inner_padding * 2)
@@ -475,7 +461,7 @@ def generate_invoice(sale_data, products_data, width=None):
         pass
 
     # ===== FOOTER =====
-    y += 5
+    y += 15
     draw_ar(draw, center, y, "شكراً لزيارتكم", f_bold, "center")
     y += 25 if paper_size == 80 else 20
     draw_ar(draw, center, y, "Powered By Dealzora", f_small, "center")
