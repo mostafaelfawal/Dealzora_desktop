@@ -187,6 +187,10 @@ class ProductsModel:
         row = self.cur.fetchone()
         return row[0] if row else ""
     
+    def get_units(self):
+        self.cur.execute("SELECT * FROM units")
+        return self.cur.fetchall()
+    
     def get_unit(self, uid):
         self.cur.execute("SELECT * FROM units WHERE id=?", (uid,))
         row = self.cur.fetchone()

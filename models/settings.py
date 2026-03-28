@@ -24,6 +24,7 @@ class SettingsModel:
             "currency_name": "جنيهاً",
             "sub_currency_name": "قرشاً",
             "decimal_places": 2,
+            "user_id": "",
         }
 
         # validators لكل مفتاح

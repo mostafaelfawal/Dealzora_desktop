@@ -40,7 +40,7 @@ NAV_ITEMS: list[NavItem] = [
     NavItem("مخزون", "assets/stock.png", "stock", "inventory_management"),
     NavItem("تقارير", "assets/reports.png", "reports", "reports_view"),
     NavItem("عملاء", "assets/customers.png", "customers", "customers_management"),
-    # NavItem("مراكز التكلفة", "assets/cost_center.png", "cost_center", "cost_center_management"),
+    NavItem("مراكز التكلفة", "assets/cost_center.png", "cost_center", "cost_center_management"),
     NavItem("فواتير", "assets/invoices.png", "invoices", "invoices_management"),
     NavItem("الموردين", "assets/suppliers.png", "suppliers", "suppliers_management"),
     NavItem("المصاريف", "assets/expenses.png", "expenses", "expenses_management"),

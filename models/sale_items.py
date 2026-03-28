@@ -35,6 +35,11 @@ class SaleItmesModel:
         except:
             self.con.rollback()
 
+    def get_sale_items_all(self):
+        self.cur.execute("SELECT * FROM sale_items")
+        row = self.cur.fetchall()
+        return row
+    
     def get_sale_items(self, sid):
         self.cur.execute("SELECT * FROM sale_items WHERE sale_id=?", (sid,))
         row = self.cur.fetchall()

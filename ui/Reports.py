@@ -21,9 +21,10 @@ from tkinter.messagebox import showinfo
 
 
 class Reports:
-    def __init__(self, root, cur):
+    def __init__(self, root, cur, con):
         self.root = root
         self.cur = cur
+        self.con = con  # حفظ الاتصال للوصول إلى المصاريف
 
         # إطارات رئيسية
         self.main_container = CTkFrame(self.root, fg_color="transparent")
@@ -434,33 +435,47 @@ class Reports:
         self.suppliers_canvas.get_tk_widget().pack(fill="both", expand=True)
 
     def init_profits_tab(self):
-        """تهيئة تبويب الأرباح"""
+        """تهيئة تبويب الأرباح مع إضافة المصاريف"""
         tab = self.tab_view.tab("الأرباح")
 
-        # إطار علوي للملخصات
+        # إطار علوي للملخصات (5 بطاقات بدلاً من 4)
         summary_frame = CTkFrame(tab)
         summary_frame.pack(fill="x", padx=10, pady=10)
 
         self.profits_summary_widgets = {}
         summaries = [
-            ("total_profit", "صافي الربح", "0"),
             ("total_revenue", "الإيرادات", "0"),
             ("total_cost", "التكلفة", "0"),
-            ("profit_margin", "هامش الربح", "0%"),
+            ("total_expenses", "إجمالي المصاريف", "0"),
+            ("gross_profit", "الربح الإجمالي", "0"),
+            ("net_profit", "هامش الربح", "0"),
         ]
 
+        # استخدام grid مع 5 أعمدة
         for i, (key, label, value) in enumerate(summaries):
             frame = CTkFrame(summary_frame, width=200, height=100)
             frame.grid(row=0, column=i, padx=5, pady=5, sticky="nsew")
             frame.grid_propagate(False)
 
             CTkLabel(frame, text=label, font=("Cairo", 14)).pack(pady=(10, 5))
-            self.profits_summary_widgets[key] = CTkLabel(
-                frame, text=value, font=("Cairo", 20, "bold")
-            )
+            
+            # تلوين خاص لصافي الربح
+            if key == "net_profit":
+                self.profits_summary_widgets[key] = CTkLabel(
+                    frame, text=value, font=("Cairo", 20, "bold"), text_color="#28a745"
+                )
+            elif key == "total_expenses":
+                self.profits_summary_widgets[key] = CTkLabel(
+                    frame, text=value, font=("Cairo", 20, "bold"), text_color="#dc3545"
+                )
+            else:
+                self.profits_summary_widgets[key] = CTkLabel(
+                    frame, text=value, font=("Cairo", 20, "bold")
+                )
             self.profits_summary_widgets[key].pack(pady=(0, 10))
 
-        for i in range(4):
+        # تكبير الأعمدة لـ 5 أعمدة
+        for i in range(5):
             summary_frame.grid_columnconfigure(i, weight=1)
 
         # إطار للرسوم البيانية
@@ -474,6 +489,7 @@ class Reports:
         charts_frame.grid_columnconfigure(1, weight=1)
         charts_frame.grid_rowconfigure(0, weight=1)
         charts_frame.grid_rowconfigure(1, weight=1)
+        charts_frame.grid_rowconfigure(2, weight=1)  # إضافة صف ثالث للمصاريف
 
         # رسم بياني للأرباح اليومية
         daily_profit_frame = CTkFrame(charts_frame)
@@ -529,6 +545,34 @@ class Reports:
             self.category_profit_figure, category_profit_frame
         )
         self.category_profit_canvas.get_tk_widget().pack(fill="both", expand=True)
+
+    def load_expenses(self):
+        """تحميل إجمالي المصاريف المدفوعة في فترة محددة"""
+        from_date = self.start_date.get().strip()
+        to_date = self.end_date.get().strip()
+        
+        if not self.con:
+            return 0
+        
+        try:
+            cur = self.con.cursor()
+            query = """
+                SELECT COALESCE(SUM(amount), 0) as total_expenses
+                FROM expenses 
+                WHERE status = 'مدفوع'
+            """
+            params = []
+            
+            if from_date and to_date:
+                query += " AND date BETWEEN ? AND ?"
+                params.extend([from_date, to_date])
+            
+            cur.execute(query, params)
+            row = cur.fetchone()
+            return row[0] if row else 0
+        except Exception as e:
+            print("Error loading expenses:", e)
+            return 0
 
     def load_all_reports(self):
         """تحميل جميع التقارير"""
@@ -993,7 +1037,7 @@ class Reports:
         self.suppliers_canvas.draw()
 
     def load_profits_report(self):
-        """تحميل تقرير الأرباح"""
+        """تحميل تقرير الأرباح مع خصم المصاريف"""
         start = self.start_date.get().strip() + "00:00:00"
         end = self.end_date.get().strip() + "00:00:00"
 
@@ -1014,19 +1058,35 @@ class Reports:
         row = self.cur.fetchone()
         revenue = row[0] if row else 0
         cost = row[1] if row else 0
-        profit = revenue - cost
-        margin = (profit / revenue * 100) if revenue > 0 else 0
+        gross_profit = revenue - cost
+        # جلب إجمالي المصاريف
+        total_expenses = self.load_expenses()
+        
+        # حساب صافي الربح (بعد خصم المصاريف)
+        net_profit = gross_profit - total_expenses
+        
+        # حساب هامش الربح الصافي
+        net_margin = (net_profit / revenue * 100) if revenue > 0 else 0
 
-        self.profits_summary_widgets["total_profit"].configure(
-            text=format_currency(profit)
-        )
+        # تحديث البطاقات
         self.profits_summary_widgets["total_revenue"].configure(
             text=format_currency(revenue)
         )
         self.profits_summary_widgets["total_cost"].configure(text=format_currency(cost))
-        self.profits_summary_widgets["profit_margin"].configure(text=f"{margin:.1f}%")
+        self.profits_summary_widgets["total_expenses"].configure(
+            text=format_currency(total_expenses)
+        )
+        self.profits_summary_widgets["gross_profit"].configure(
+            text=format_currency(gross_profit)
+        )
+        
+        # تلوين صافي الربح حسب القيمة
+        net_color = "#28a745" if net_profit >= 0 else "#dc3545"
+        self.profits_summary_widgets["net_profit"].configure(
+            text=f"{net_margin:.2f}%", text_color=net_color
+        )
 
-        # الأرباح اليومية
+        # الأرباح اليومية (بعد خصم المصاريف اليومية)
         self.cur.execute(
             """
             SELECT 
@@ -1045,48 +1105,81 @@ class Reports:
         )
 
         daily_data = self.cur.fetchall()
+        
+        # جلب المصاريف اليومية
+        daily_expenses = {}
+        if self.con:
+            try:
+                cur = self.con.cursor()
+                cur.execute(
+                    """
+                    SELECT date, COALESCE(SUM(amount), 0) as total_expenses
+                    FROM expenses 
+                    WHERE date BETWEEN ? AND ?
+                    AND status = 'مدفوع'
+                    GROUP BY date
+                    """,
+                    (start, end),
+                )
+                for exp in cur.fetchall():
+                    daily_expenses[exp[0]] = exp[1]
+            except:
+                pass
 
         self.daily_profit_plot.clear()
         if daily_data:
             dates = [ar(row[0]) for row in daily_data]
             revenues = [row[1] for row in daily_data]
             costs = [row[2] for row in daily_data]
-            profits = [r - c for r, c in zip(revenues, costs)]
+            gross_profits = [r - c for r, c in zip(revenues, costs)]
+            # صافي الربح اليومي = الربح الإجمالي - مصاريف اليوم
+            net_profits = [gross_profits[i] - daily_expenses.get(row[0], 0) for i, row in enumerate(daily_data)]
 
             x = range(len(dates))
-            width = 0.25
+            width = 0.25  # تغيير العرض ليتسع لـ 3 أعمدة
 
+            # رسم التكلفة (أحمر)
             self.daily_profit_plot.bar(
                 [i - width for i in x],
-                revenues,
-                width,
-                label=ar("الإيرادات"),
-                color="#28a745",
-                alpha=0.7,
-            )
-            self.daily_profit_plot.bar(
-                [i for i in x],
                 costs,
                 width,
                 label=ar("التكلفة"),
                 color="#dc3545",
-                alpha=0.7,
+                alpha=0.8,
             )
+            
+            # رسم الربح الإجمالي (أخضر)
+            self.daily_profit_plot.bar(
+                x,
+                gross_profits,
+                width,
+                label=ar("الربح الإجمالي"),
+                color="#28a745",
+                alpha=0.8,
+            )
+            
+            # رسم صافي الربح (أزرق)
             self.daily_profit_plot.bar(
                 [i + width for i in x],
-                profits,
+                net_profits,
                 width,
-                label=ar("الربح"),
+                label=ar("صافي الربح (بعد المصاريف)"),
                 color="#0078da",
-                alpha=0.7,
+                alpha=0.8,
             )
 
             self.daily_profit_plot.set_xlabel(ar("التاريخ"), color="white")
             self.daily_profit_plot.set_ylabel(ar("القيمة"), color="white")
             self.daily_profit_plot.set_xticks(x)
             self.daily_profit_plot.set_xticklabels(dates, rotation=45)
-            self.daily_profit_plot.legend(facecolor="#333333", labelcolor="white")
+            
+            # إضافة خط أفقي عند الصفر
+            self.daily_profit_plot.axhline(y=0, color='white', linestyle='--', linewidth=0.8, alpha=0.5)
+            
+            # إضافة وسيلة الإيضاح
+            self.daily_profit_plot.legend(facecolor="#333333", labelcolor="white", loc='upper left')
             self.daily_profit_plot.tick_params(colors="white")
+
         else:
             self.daily_profit_plot.text(
                 0.5, 0.5, ar("لا توجد بيانات"), ha="center", va="center", color="white"

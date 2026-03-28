@@ -140,7 +140,13 @@ class CostCenter:
         self.root = root
 
         self._build_title()
-        self._build_actions_frame()
+        CTkLabel(
+            self.root,
+            text="...قيد التطوير 🚧",
+            text_color="#888888",
+            font=("Cairo", 40, "bold"),
+        ).pack(padx=10, pady=10)
+        # self._build_actions_frame()
 
     def _build_title(self):
         CTkLabel(

@@ -59,7 +59,7 @@ class ScreenFactory:
         )
 
     def _build_reports(self, parent) -> None:
-        Reports(parent, self._deps.cur)
+        Reports(parent, self._deps.cur, self._deps.con)
 
     def _build_customers(self, parent) -> None:
         Customers(parent, self._deps.customers_db)
@@ -88,7 +88,7 @@ class ScreenFactory:
         Expenses(parent, self._deps.expenses_db)
     
     def _build_settings(self, parent) -> None:
-        Settings(parent, self._deps.settings)
+        Settings(parent, self._deps.settings, self._deps.cur, self._deps.con)
 
     # Mapping kept inside the class to stay self-contained
     @property

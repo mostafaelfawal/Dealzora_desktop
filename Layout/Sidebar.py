@@ -63,7 +63,7 @@ class Sidebar:
         frame.pack(side="right", fill="y")
         frame.pack_propagate(False)
 
-        CTkButton(frame, text="☰", width=40, command=self.toggle).pack(fill="x", pady=5)
+        CTkButton(frame, text="☰", width=40, command=self.toggle).pack(fill="x", pady=5, padx=5)
         return frame
 
     def _build_scroll_area(self) -> CTkScrollableFrame:

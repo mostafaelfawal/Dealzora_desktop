@@ -15,5 +15,6 @@
     "shop_address": "123 شارع النيل، القاهرة",
     "currency_name": "دولاراً",
     "sub_currency_name": "سنتاً",
-    "decimal_places": 1
+    "decimal_places": 1,
+    "user_id": "a735ed77-1585-4c53-b924-9cfbe9aca016"
 }

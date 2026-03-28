@@ -14,22 +14,26 @@ from customtkinter import (
     CTkSegmentedButton,
     set_appearance_mode,
 )
+from firebase.services.upload_to_cloud import UploadToCloud
+from firebase.services.sync_from_cloud import SyncFromCloud
 from tkinter import messagebox, filedialog
 import shutil
 import os
 
 import win32print
 from components.UploadImage import UploadImage
-from components.BackupButton import BackupButton
+from utils.backup_database import backup_database
 from utils.image import image
 from utils.is_number import is_number
 from utils.check_limit import check_limit
 
 
 class Settings:
-    def __init__(self, root, settings_db):
+    def __init__(self, root, settings_db, cur, con):
         self.root = root
         self.vars = {}
+        self.cur = cur
+        self.con = con
 
         # ======= الهيدر =======
         header_frame = CTkFrame(self.root, fg_color="transparent")
@@ -413,8 +417,14 @@ class Settings:
         # ===== أزرار النسخ والاستعادة =====
         buttons_container = CTkFrame(container, fg_color="transparent")
         buttons_container.pack(fill="x", pady=10)
+        
+        # تكوين شبكة الأزرار (3 أعمدة)
+        buttons_container.grid_columnconfigure(0, weight=1)
+        buttons_container.grid_columnconfigure(1, weight=1)
+        buttons_container.grid_columnconfigure(2, weight=1)
 
-        # ===== زر استعادة البيانات =====
+        # ===== الصف الأول: أزرار النسخ والاستعادة =====
+        # زر استعادة البيانات
         CTkButton(
             buttons_container,
             text="استعادة البيانات",
@@ -423,16 +433,60 @@ class Settings:
             hover_color="#d68910",
             command=self.restore_database,
             image=image("assets/data-recovery.png"),
-            height=40,
+            height=45,
             corner_radius=10,
-        ).pack(side="right", padx=5, pady=10)
+        ).grid(row=0, column=0, padx=5, pady=10, sticky="ew")
+        
+        # زر النسخ الاحتياطي اليدوي
+        CTkButton(
+            buttons_container,
+            text="نسخ احتياطي للبيانات",
+            font=("Cairo", 16, "bold"),
+            fg_color="#25b3eb",
+            hover_color="#1b92c2",
+            command=self.handle_backup,
+            image=image("assets/backup_db.png"),
+            height=45,
+            corner_radius=10,
+        ).grid(row=0, column=1, padx=5, pady=10, sticky="ew")
+        
+        # ===== الصف الثاني: أزرار السحابة =====
+        # زر رفع البيانات للسحابة
+        CTkButton(
+            buttons_container,
+            text="رفع البيانات للسحابة",
+            font=("Cairo", 16, "bold"),
+            fg_color="#34dba9",
+            hover_color="#2ccc9c",
+            image=image("assets/cloud.png"),
+            height=45,
+            corner_radius=10,
+            command=self.upload_to_cloud
+        ).grid(row=1, column=0, padx=5, pady=10, sticky="ew")
+        
+        # زر مزامنة مع السحابة
+        CTkButton(
+            buttons_container,
+            text="مزامنة مع السحابة",
+            font=("Cairo", 16, "bold"),
+            fg_color="#0099ff",
+            hover_color="#0077cc",
+            image=image("assets/syncronization.png"),
+            height=45,
+            corner_radius=10,
+            command=self.sync_with_cloud,
+        ).grid(row=1, column=1, padx=5, pady=10, sticky="ew")
 
-        # ===== زر النسخ الاحتياطي اليدوي =====
-        BackupButton(buttons_container, self.get_save_backup_path)
-
-    def get_save_backup_path(self):
-        return self.vars["backup_path"].get()
+    def handle_backup(self):
+        path = self.vars["backup_path"].get()
+        backup_database(path, True)
     
+    def upload_to_cloud(self):
+        UploadToCloud(self.cur, self.con)
+        
+    def sync_with_cloud(self):
+        SyncFromCloud("db/dealzora.db")
+        
     def browse_backup_path(self, path_var):
         """فتح نافذة اختيار المجلد"""
         folder_selected = filedialog.askdirectory(
